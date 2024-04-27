@@ -1,4 +1,4 @@
-// server/models/user.ts
+// server/models/inventory.ts
 
 import mongoose, { Schema } from "mongoose";
 

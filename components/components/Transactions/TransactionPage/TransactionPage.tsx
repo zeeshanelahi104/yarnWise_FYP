@@ -8,7 +8,7 @@ const TransactionPage = () => {
       <ul className="flex gap-[25px] mt-[20px]">
         <li>
           <Link
-            href="/transactions/add-transaction"
+            href="/transactions/addtransaction"
             className={"hover:border-b-2 hover:border-primary-clr"}
           >
             Add Transaction
@@ -25,10 +25,10 @@ const TransactionPage = () => {
         </li> */}
         <li>
           <Link
-            href="/transactions/transactions-record"
+            href="/transactions/manage-transactions"
             className={"hover:border-b-2 hover:border-primary-clr"}
           >
-            View Transactions
+            Manage Transactions
           </Link>
         </li>
       </ul>

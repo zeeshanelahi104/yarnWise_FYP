@@ -1,10 +1,10 @@
 import React from 'react'
-import AddProductForm from '../component/AddProductForm'
+import AddTransactionForm from '../../component/AddTransactionForm'
 
 const Page = () => {
   return (
     <div>
-      <AddProductForm/>
+      <AddTransactionForm/>
     </div>
   )
 }
