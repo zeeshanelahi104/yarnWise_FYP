@@ -60,7 +60,7 @@ const Page = () => {
               <div className="login-field-btn  flex justify-center items-center py-8">
                 <Button
                   type="submit"
-                  className="bg-primary-clr primaryBtn w-[150px]"
+                  className="bg-primary-clr text-white primaryBtn w-[150px] hover:bg-black"
                 >
                   Login with Email
                 </Button>

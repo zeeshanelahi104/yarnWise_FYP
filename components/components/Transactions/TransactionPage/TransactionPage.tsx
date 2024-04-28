@@ -28,7 +28,7 @@ const TransactionPage = () => {
             href="/transactions/manage-transactions"
             className={"hover:border-b-2 hover:border-primary-clr"}
           >
-            Manage Transactions
+            View Transactions
           </Link>
         </li>
       </ul>

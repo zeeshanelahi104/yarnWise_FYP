@@ -1,16 +1,16 @@
-// pages/api/patients.js
+// pages/api/transaction.js
 import { NextRequest, NextResponse } from 'next/server';
 import {connectDB} from '@/lib/db';
-import Inventory from '@/models/inventory';
+import Transaction from '@/models/transaction';
 
 export const GET = async (request: NextRequest) => {
   try {
     await connectDB();
-    const inventory = await Inventory.find({});
+    const transaction = await Transaction.find({});
     return NextResponse.json({
       success: true,
       status: 200,
-      inventory
+      transaction
     });
   } catch (error) {
     console.error(error);
@@ -28,12 +28,12 @@ export const POST = async (request: NextRequest) => {
     await connectDB();
     const req = await request.json();
     console.log("Request",req);
-    const newInventory = await Inventory.create(req);
+    const newTransaction = await Transaction.create(req);
     return NextResponse.json({
       success: true,
       status: 200,
-      message: "Inventory Created",
-      data: newInventory
+      message: "Transaction Created",
+      data: newTransaction
     });
   } catch (error) {
     console.error(error);

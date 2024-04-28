@@ -17,6 +17,22 @@ export interface UserTypes {
     count: string;
     stock: number;
   }
+  export interface Transaction {
+    _id?:string;
+    productName: string;
+    productCount: string;
+    brandName: string;
+    unitPrice: number;
+    quantity: number;
+    totalBill: number;
+    partyName: string;
+    partyArea: string;
+    partyContactNumber: string;
+    brokerName: string;
+    brokerCommissionPercentage: number;
+    paymentType: string;
+    transactionType: string;
+  }
   export interface Role {
     _id?:string;
     role: string;
