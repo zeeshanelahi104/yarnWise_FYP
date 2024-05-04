@@ -71,7 +71,7 @@ console.log("Permissions from sidebar", permissions);
     </div>
     <div
       className={`w-64 sidebar-wrapper pt-10 lg:flex-col bg-[#1E282C] text-white min-h-screen ${
-        pathname === "/auth/login" ? "hidden" : "hidden lg:flex"
+        pathname === "/auth/login" || pathname==="/transactions/manage-transactions" ? "hidden" : "hidden lg:flex"
       }`}
     >
       <div className="sidebar-items-wrapper container  w-[250px] flex flex-col gap-[20px]">

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import {
   Table,
   TableBody,
@@ -14,35 +14,37 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { MdDelete } from "react-icons/md";
-import { FiChevronsLeft,FiChevronsRight } from "react-icons/fi";
-import { FaPen, FaPrint,FaSearch,FaArrowLeft } from "react-icons/fa";
+import { FiChevronsLeft, FiChevronsRight } from "react-icons/fi";
+import { FaPen, FaPrint, FaSearch, FaArrowLeft } from "react-icons/fa";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import {ArrowLeft} from "lucide-react"
+import {
+  useDeleteTransactionMutation,
+  useGetTransactionsQuery,
+} from "@/features/transactionSlice";
+interface TransactionTableProps {}
 
-import { useDeleteTransactionMutation, useGetTransactionsQuery } from "@/features/transactionSlice";
-interface TransactionTableProps {
-   
-}
+const ITEMS_PER_PAGE = 5;
 
-const ITEMS_PER_PAGE = 5
-
-  const TransactionsTable: React.FC<TransactionTableProps> = () => {
-    const {
-      data,
-      isLoading,
-      isSuccess,
-      isError,
-      error,
-    } = useGetTransactionsQuery();
-    console.log("Transactions: ", data)
+const TransactionsTable: React.FC<TransactionTableProps> = () => {
+  const { data, isLoading, isSuccess, isError, error } =
+    useGetTransactionsQuery();
+  console.log("Transactions: ", data);
   const [deleteTransaction] = useDeleteTransactionMutation();
 
-  const handleDeleteTransaction = (id:string) => {
-    deleteTransaction(id).unwrap().then(()=> { toast.success("Transaction Deleted")}
-    ).catch(()=> { toast.error("Error, Deleting Transaction")})
-  }
+  const handleDeleteTransaction = (id: string) => {
+    deleteTransaction(id)
+      .unwrap()
+      .then(() => {
+        toast.success("Transaction Deleted");
+      })
+      .catch(() => {
+        toast.error("Error, Deleting Transaction");
+      });
+  };
   const router = useRouter();
-  const transactionRecord = data?.transaction
-  console.log("transactionRecordtransactionRecord", transactionRecord)
+  const transactionRecord = data?.transaction;
+  console.log("transactionRecordtransactionRecord", transactionRecord);
   const [filteredData, setFilteredData] = useState(transactionRecord);
   const [showSearchInput, setShowSearchInput] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -69,27 +71,22 @@ const ITEMS_PER_PAGE = 5
     setCurrentPage(totalPages);
   };
 
-
   const handleSearch = () => {
-    const filteredData = transactionRecord?.filter((item:any) =>
+    const filteredData = transactionRecord?.filter((item: any) =>
       item.productName.toLowerCase().includes(searchQuery.toLowerCase())
-      
-      
     );
     setFilteredData(filteredData);
     console.log(filteredData);
   };
-  
+
   useEffect(() => {
     handleSearch();
   }, [searchQuery]);
-
 
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = Math.min(startIndex + ITEMS_PER_PAGE, filteredData?.length);
   const currentItems = transactionRecord?.slice(startIndex, endIndex);
 
-  
   const handleInputChange = (event: any) => {
     setSearchQuery(event.target.value);
   };
@@ -97,8 +94,13 @@ const ITEMS_PER_PAGE = 5
   return (
     <>
       <div className="transcations-record-page-wrapper container flex flex-col justify-center gap-10 pt-[45px]">
-        <div className="title text-primary-clr text-center">
-          Transactions Record
+        <div className="flex items-center justify-between">
+          <Link href={"/transactions"}>
+          <ArrowLeft />
+          </Link>
+          
+          <h1 className="title text-primary-clr text-center"> Transactions Record</h1>
+          <div></div>
         </div>
         {/* <div className="table-head-wrapper w-full mt-10 flex items-center justify-between border-2 border-black py-4 px-4">
               {!showSearchInput && (
@@ -185,140 +187,141 @@ const ITEMS_PER_PAGE = 5
                   Transaction Type
                 </TableHead>
                 <TableHead className=" text-primary-clr text-center font-bold uppercase border-2 border-black">
-                Action
-              </TableHead>
+                  Action
+                </TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-            {currentItems && currentItems?.map((transaction: Transaction, index: number) => (
-              <TableRow key={index}>
-                <TableCell className="font-medium text-center border-2 border-black">
-                {transaction?._id
-                    ? transaction?._id
-                        .substring(transaction?._id.length - 4)
-                        .toUpperCase()
-                    : ""}
-                </TableCell>
-                <TableCell className="px-6 py-4 whitespace-nowrap text-center border-2 border-black">
-                  {transaction.productName}
-                </TableCell>
-                <TableCell className="text-center border-2 border-black">
-                  {transaction.productCount}
-                </TableCell>
-                <TableCell className="text-center border-2 border-black">
-                  {transaction.brandName}
-                </TableCell>
-                <TableCell className="text-center border-2 border-black">
-                  {transaction.unitPrice}
-                </TableCell>
-                <TableCell className="text-center border-2 border-black">
-                  {transaction.quantity}
-                </TableCell>
-                <TableCell className=" text-center border-2 border-black">
-                  {transaction.totalBill}
-                </TableCell>
-                <TableCell className=" text-center border-2 border-black">
-                  {transaction.partyName}
-                </TableCell>
-                <TableCell className=" text-center border-2 border-black">
-                  {transaction.partyArea}
-                </TableCell>
-                <TableCell className=" text-center border-2 border-black">
-                  {transaction.partyContactNumber}
-                </TableCell>
-                <TableCell className=" text-center border-2 border-black">
-                  {transaction.brokerName}
-                </TableCell>
-                <TableCell className=" text-center border-2 border-black">
-                  {transaction.brokerCommissionPercentage}
-                </TableCell>
-                <TableCell className=" text-center border-2 border-black">
-                  {transaction.paymentType}
-                </TableCell>
-                <TableCell className=" text-center border-2 border-black">
-                  {transaction.transactionType}
-                </TableCell>
-                <TableCell className="border-2 border-black">
-                  <div className="flex justify-end gap-[20px]">
-                    <Link href={`/transactions/edittransaction/${transaction?._id}`}>
-                      <FaPen size={20} className="text-primary-clr" />
-                    </Link>
-                    
-                      <MdDelete size={20} className="text-primary-clr"
-                       onClick={() =>
-                        handleDeleteTransaction(
-                          transaction?._id ? transaction._id : ""
-                        )
-                      } />
-                 
-                  </div>
-                </TableCell>
-              </TableRow>
-              ))}
-            </TableBody>
+              {currentItems &&
+                currentItems?.map((transaction: Transaction, index: number) => (
+                  <TableRow key={index}>
+                    <TableCell className="font-medium text-center border-2 border-black">
+                      {transaction?._id
+                        ? transaction?._id
+                            .substring(transaction?._id.length - 4)
+                            .toUpperCase()
+                        : ""}
+                    </TableCell>
+                    <TableCell className="px-6 py-4 whitespace-nowrap text-center border-2 border-black">
+                      {transaction.productName}
+                    </TableCell>
+                    <TableCell className="text-center border-2 border-black">
+                      {transaction.productCount}
+                    </TableCell>
+                    <TableCell className="text-center border-2 border-black">
+                      {transaction.brandName}
+                    </TableCell>
+                    <TableCell className="text-center border-2 border-black">
+                      {transaction.unitPrice}
+                    </TableCell>
+                    <TableCell className="text-center border-2 border-black">
+                      {transaction.quantity}
+                    </TableCell>
+                    <TableCell className=" text-center border-2 border-black">
+                      {transaction.totalBill}
+                    </TableCell>
+                    <TableCell className=" text-center border-2 border-black">
+                      {transaction.partyName}
+                    </TableCell>
+                    <TableCell className=" text-center border-2 border-black">
+                      {transaction.partyArea}
+                    </TableCell>
+                    <TableCell className=" text-center border-2 border-black">
+                      {transaction.partyContactNumber}
+                    </TableCell>
+                    <TableCell className=" text-center border-2 border-black">
+                      {transaction.brokerName}
+                    </TableCell>
+                    <TableCell className=" text-center border-2 border-black">
+                      {transaction.brokerCommissionPercentage}
+                    </TableCell>
+                    <TableCell className=" text-center border-2 border-black">
+                      {transaction.paymentType}
+                    </TableCell>
+                    <TableCell className=" text-center border-2 border-black">
+                      {transaction.transactionType}
+                    </TableCell>
+                    <TableCell className="border-2 border-black">
+                      <div className="flex justify-end gap-[20px]">
+                        <Link
+                          href={`/transactions/edittransaction/${transaction?._id}`}
+                        >
+                          <FaPen size={20} className="text-primary-clr" />
+                        </Link>
 
+                        <MdDelete
+                          size={20}
+                          className="text-primary-clr"
+                          onClick={() =>
+                            handleDeleteTransaction(
+                              transaction?._id ? transaction._id : ""
+                            )
+                          }
+                        />
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+            </TableBody>
           </Table>
           {totalPages > 1 && (
-                <div className="pagination-controls flex justify-center py-2 border-2 border-black px-4">
-                  <button
-                    
-                    onClick={goToFirstPage}
-                    disabled={currentPage === 1}
-                    className="border border-black w-9 flex justify-center items-center rounded-[2px] hover:bg-[#DBDFEA]"
-                  >
-                    <FiChevronsLeft className="w-[14px]" color="black"/>
-                  </button>
-                  <button
-                    onClick={goToPreviousPage}
-                    disabled={currentPage === 1}
-                    className="border border-black w-9 flex justify-center items-center hover:bg-[#DBDFEA]"
-                  >
-                    <ChevronLeft className="w-[10px]"color="black" />
-                  </button>
-                  
-                  {[...Array(totalPages).keys()].map((pageNum) => (
-                    <button
-                      key={pageNum}
-                      onClick={() => goToPage(pageNum + 1)}
-                      className={
-                        currentPage === pageNum + 1
-                          ? "text-black bg-primary-clr w-9 h-10  font-medium"
-                          : "border border-black hover:text-cyan hover:bg-[#DBDFEA] text-black font-medium w-9"
-                      }
-                    >
-                      {pageNum + 1}
-                    </button>
-                  ))}
-                  <button
-                    onClick={goToNextPage}
-                    disabled={currentPage === totalPages}
-                    
-                    className="border border-black w-9 flex justify-center items-center hover:bg-[#DBDFEA]"
-                  > 
-                  <ChevronRight className="w-[10px]" color="black"/>
-                  </button>
-                  <button
-                    onClick={goToLastPage}
-                    disabled={currentPage === totalPages}
-                    
-                    className="border border-black w-9 flex justify-center items-center hover:bg-[#DBDFEA]"
-                  >
-                    <FiChevronsRight className="w-[14px]" color="black"/>
-                  </button>
-                </div>
-              )}
+            <div className="pagination-controls flex justify-center py-2 border-2 border-black px-4">
+              <button
+                onClick={goToFirstPage}
+                disabled={currentPage === 1}
+                className="border border-black w-9 flex justify-center items-center rounded-[2px] hover:bg-[#DBDFEA]"
+              >
+                <FiChevronsLeft className="w-[14px]" color="black" />
+              </button>
+              <button
+                onClick={goToPreviousPage}
+                disabled={currentPage === 1}
+                className="border border-black w-9 flex justify-center items-center hover:bg-[#DBDFEA]"
+              >
+                <ChevronLeft className="w-[10px]" color="black" />
+              </button>
+
+              {[...Array(totalPages).keys()].map((pageNum) => (
+                <button
+                  key={pageNum}
+                  onClick={() => goToPage(pageNum + 1)}
+                  className={
+                    currentPage === pageNum + 1
+                      ? "text-black bg-primary-clr w-9 h-10  font-medium"
+                      : "border border-black hover:text-cyan hover:bg-[#DBDFEA] text-black font-medium w-9"
+                  }
+                >
+                  {pageNum + 1}
+                </button>
+              ))}
+              <button
+                onClick={goToNextPage}
+                disabled={currentPage === totalPages}
+                className="border border-black w-9 flex justify-center items-center hover:bg-[#DBDFEA]"
+              >
+                <ChevronRight className="w-[10px]" color="black" />
+              </button>
+              <button
+                onClick={goToLastPage}
+                disabled={currentPage === totalPages}
+                className="border border-black w-9 flex justify-center items-center hover:bg-[#DBDFEA]"
+              >
+                <FiChevronsRight className="w-[14px]" color="black" />
+              </button>
+            </div>
+          )}
         </div>
         <div className="flex justify-end mt-10">
-        <button
-          className="flex justify-end uppercase font-bold"
-          onClick={() => window.print()}
-        >
-          Print
-          <FaPrint size={25} className="ml-2" />
-        </button>
-      </div>
+          <button
+            className="flex justify-end uppercase font-bold"
+            onClick={() => window.print()}
+          >
+            Print
+            <FaPrint size={25} className="ml-2" />
+          </button>
+        </div>
       </div>
     </>
   );
-}
+};
 export default TransactionsTable;

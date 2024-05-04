@@ -66,8 +66,8 @@ const RoleTable: React.FC<RoleTableProps> = () => {
   }, [searchQuery]);
 
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const endIndex = Math.min(startIndex + ITEMS_PER_PAGE, filteredData.length);
-  const currentItems = filteredData.slice(startIndex, endIndex);
+  const endIndex = Math.min(startIndex + ITEMS_PER_PAGE, filteredData?.length);
+  const currentItems = filteredData?.slice(startIndex, endIndex);
 
   const handleInputChange = (event: any) => {
     setSearchQuery(event.target.value);
