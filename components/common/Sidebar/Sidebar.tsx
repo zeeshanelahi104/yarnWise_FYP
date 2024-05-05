@@ -76,6 +76,22 @@ export default function Sidebar() {
             "Dashboard",
             "/dashboard"
           )}
+    <div>
+      <SheetDemo />
+    </div>
+    <div
+      className={`w-64 sidebar-wrapper pt-10 lg:flex-col bg-[#1E282C] text-white min-h-screen ${
+        pathname === "/auth/login" || pathname==="/transactions/manage-transactions" ? "hidden" : "hidden lg:flex"
+      }`}
+    >
+      <div className="sidebar-items-wrapper container  w-[250px] flex flex-col gap-[20px]">
+        {renderSidebarItem(
+          "dashboard",
+          "view",
+          <FaHome color="#008F89" size={20} />,
+          "Dashboard",
+          "/dashboard"
+        )}
 
           <div className="sidebar-item-wrapper">
             <Accordion type="single" collapsible className="w-full space-y-2">
