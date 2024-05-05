@@ -25,7 +25,7 @@ interface TransactionTableProps {
 
 const ITEMS_PER_PAGE = 5
 
-  const TransactionsTable: React.FC<TransactionTableProps> = () => {
+  const PartyTable: React.FC<TransactionTableProps> = () => {
     const {
       data,
       isLoading,
@@ -72,7 +72,7 @@ const ITEMS_PER_PAGE = 5
 
   const handleSearch = () => {
     const filteredData = transactionRecord?.filter((item:any) =>
-      item.productName.toLowerCase().includes(searchQuery.toLowerCase())
+      item.partyName.toLowerCase().includes(searchQuery.toLowerCase())
       
       
     );
@@ -97,9 +97,6 @@ const ITEMS_PER_PAGE = 5
   return (
     <>
       <div className="transcations-record-page-wrapper container flex flex-col justify-center pt-[45px]">
-        <div className="title text-primary-clr text-center">
-          Transactions Record
-        </div>
         <div className="table-head-wrapper w-full mt-10 flex items-center justify-between border-2 border-black py-4 px-4">
               {!showSearchInput && (
                 <>
@@ -173,17 +170,12 @@ const ITEMS_PER_PAGE = 5
                   Party Contact #
                 </TableHead>
                 <TableHead className=" text-primary-clr text-[12px] text-center font-bold uppercase border-2 border-black">
-                  Broker Name
-                </TableHead>
-                <TableHead className=" text-primary-clr text-[12px] text-center font-bold uppercase border-2 border-black">
                   Payment Type
                 </TableHead>
                 <TableHead className=" text-primary-clr text-[12px] text-center font-bold uppercase border-2 border-black">
                   Transaction Type
                 </TableHead>
-                <TableHead className=" text-primary-clr text-[12px] text-center font-bold uppercase border-2 border-black">
-                Action
-              </TableHead>
+                
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -223,30 +215,14 @@ const ITEMS_PER_PAGE = 5
                 <TableCell className=" text-center text-[12px] border-2 border-black">
                   {transaction.partyContactNumber}
                 </TableCell>
-                <TableCell className=" text-center text-[12px] border-2 border-black">
-                  {transaction.brokerName}
-                </TableCell>
+                
                 <TableCell className=" text-center text-[12px] border-2 border-black">
                   {transaction.paymentType}
                 </TableCell>
                 <TableCell className=" text-center text-[12px] border-2 border-black">
                   {transaction.transactionType}
                 </TableCell>
-                <TableCell className="border-2 border-black">
-                  <div className="flex justify-end gap-[20px]">
-                    <Link href={`/transactions/edittransaction/${transaction?._id}`}>
-                      <FaPen size={20} className="text-primary-clr" />
-                    </Link>
-                    
-                      <MdDelete size={20} className="text-primary-clr"
-                       onClick={() =>
-                        handleDeleteTransaction(
-                          transaction?._id ? transaction._id : ""
-                        )
-                      } />
-                 
-                  </div>
-                </TableCell>
+                
               </TableRow>
               ))}
             </TableBody>
@@ -305,11 +281,11 @@ const ITEMS_PER_PAGE = 5
         <div className="flex justify-end mt-10">
         <button
           className="flex justify-end uppercase font-bold"
-          // onClick={() => window.print()}
+          onClick={() => window.print()}
         >
-          <Link href={"/transactions/print-transactions"}>
+          
           Print
-          </Link>
+         
           
           <FaPrint size={25} className="ml-2" />
         </button>
@@ -318,4 +294,4 @@ const ITEMS_PER_PAGE = 5
     </>
   );
 }
-export default TransactionsTable;
+export default PartyTable;

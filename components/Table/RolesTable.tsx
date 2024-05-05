@@ -106,7 +106,7 @@ const RoleTable: React.FC<RoleTableProps> = () => {
               {showSearchInput && (
                 <div className="flex justify-between w-full">
                   <button onClick={() => setShowSearchInput(false)}>
-                    <FaArrowLeft className=" mr-2 flex justify-center items-center w-[16px] -rotate-180"
+                    <FaArrowLeft className=" mr-2 flex justify-center items-center w-[16px]"
                     />
                     
                   </button>
@@ -115,7 +115,7 @@ const RoleTable: React.FC<RoleTableProps> = () => {
                     value={searchQuery}
                     onChange={handleInputChange}
                     className="px-2 w-full focus:outline-none rounded"
-                    placeholder="Search by bill for..."
+                    placeholder="Search by role..."
                   />
                   <button
                     onClick={handleSearch}

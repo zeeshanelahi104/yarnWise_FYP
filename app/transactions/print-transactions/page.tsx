@@ -96,11 +96,11 @@ const ITEMS_PER_PAGE = 5
 
   return (
     <>
-      <div className="transcations-record-page-wrapper container flex flex-col justify-center pt-[45px]">
+      <div className="transcations-record-page-wrapper container flex flex-col justify-center gap-10 pt-[45px]">
         <div className="title text-primary-clr text-center">
           Transactions Record
         </div>
-        <div className="table-head-wrapper w-full mt-10 flex items-center justify-between border-2 border-black py-4 px-4">
+        {/* <div className="table-head-wrapper w-full mt-10 flex items-center justify-between border-2 border-black py-4 px-4">
               {!showSearchInput && (
                 <>
                   <h3 className="text-barlow text-[#364A63] font-bold text-[19px] leading-[19px]">
@@ -118,7 +118,7 @@ const ITEMS_PER_PAGE = 5
               {showSearchInput && (
                 <div className="flex justify-between w-full">
                   <button onClick={() => setShowSearchInput(false)}>
-                    <FaArrowLeft className=" mr-2 flex justify-center items-center w-[16px]"
+                    <FaArrowLeft className=" mr-2 flex justify-center items-center w-[16px] -rotate-180"
                     />
                     
                   </button>
@@ -127,7 +127,7 @@ const ITEMS_PER_PAGE = 5
                     value={searchQuery}
                     onChange={handleInputChange}
                     className="px-2 w-full focus:outline-none rounded"
-                    placeholder="Search by Product Name..."
+                    placeholder="Search by bill for..."
                   />
                   <button
                     onClick={handleSearch}
@@ -137,7 +137,7 @@ const ITEMS_PER_PAGE = 5
                   </button>
                 </div>
               )}
-            </div>
+            </div> */}
         <div className="transactions-table">
           <Table className="min-w-full divide-y divide-gray-200">
             <TableHeader className="border-2 border-black">
@@ -305,12 +305,9 @@ const ITEMS_PER_PAGE = 5
         <div className="flex justify-end mt-10">
         <button
           className="flex justify-end uppercase font-bold"
-          // onClick={() => window.print()}
+          onClick={() => window.print()}
         >
-          <Link href={"/transactions/print-transactions"}>
           Print
-          </Link>
-          
           <FaPrint size={25} className="ml-2" />
         </button>
       </div>
