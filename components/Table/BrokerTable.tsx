@@ -17,7 +17,7 @@ import { MdDelete } from "react-icons/md";
 import { FiChevronsLeft, FiChevronsRight } from "react-icons/fi";
 import { FaPen, FaPrint, FaSearch, FaArrowLeft } from "react-icons/fa";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import {ArrowLeft} from "lucide-react"
+
 import {
   useDeleteTransactionMutation,
   useGetTransactionsQuery,
@@ -26,7 +26,7 @@ interface TransactionTableProps {}
 
 const ITEMS_PER_PAGE = 5;
 
-const TransactionsTable: React.FC<TransactionTableProps> = () => {
+const BrokerTable: React.FC<TransactionTableProps> = () => {
   const { data, isLoading, isSuccess, isError, error } =
     useGetTransactionsQuery();
   console.log("Transactions: ", data);
@@ -73,7 +73,7 @@ const TransactionsTable: React.FC<TransactionTableProps> = () => {
 
   const handleSearch = () => {
     const filteredData = transactionRecord?.filter((item: any) =>
-      item.productName.toLowerCase().includes(searchQuery.toLowerCase())
+      item.brokerName.toLowerCase().includes(searchQuery.toLowerCase())
     );
     setFilteredData(filteredData);
     console.log(filteredData);
@@ -93,48 +93,41 @@ const TransactionsTable: React.FC<TransactionTableProps> = () => {
 
   return (
     <>
-      <div className="transcations-record-page-wrapper container flex flex-col justify-center gap-10 pt-[45px]">
-        <div className="title text-primary-clr text-center">
-          Transactions Record
-        </div>
+      <div className="transcations-record-page-wrapper container flex flex-col justify-center pt-[45px]">
         <div className="table-head-wrapper w-full mt-10 flex items-center justify-between border-2 border-black py-4 px-4">
-              {!showSearchInput && (
-                <>
-                  <h3 className="text-barlow text-[#364A63] font-bold text-[19px] leading-[19px]">
-                    Transaction
-                  </h3>
-                  <div className="icons-wrapper flex justify-between gap-3">
-                    <button onClick={() => setShowSearchInput(true)}>
-                      <FaSearch className="w-[16px]"/>
-                      
-                    </button>
-                    
-                  </div>
-                </>
-              )}
-              {showSearchInput && (
-                <div className="flex justify-between w-full">
-                  <button onClick={() => setShowSearchInput(false)}>
-                    <FaArrowLeft className=" mr-2 flex justify-center items-center w-[16px]"
-                    />
-                    
-                  </button>
-                  <input
-                    type="text"
-                    value={searchQuery}
-                    onChange={handleInputChange}
-                    className="px-2 w-full focus:outline-none rounded"
-                    placeholder="Search by Product Name..."
-                  />
-                  <button
-                    onClick={handleSearch}
-                    className=" text-white px-4 py-1 rounded"
-                  >
-                    <FaSearch className="w-[16px]"/>
-                  </button>
-                </div>
-              )}
+          {!showSearchInput && (
+            <>
+              <h3 className="text-barlow text-[#364A63] font-bold text-[19px] leading-[19px]">
+                Transaction
+              </h3>
+              <div className="icons-wrapper flex justify-between gap-3">
+                <button onClick={() => setShowSearchInput(true)}>
+                  <FaSearch className="w-[16px]" />
+                </button>
+              </div>
+            </>
+          )}
+          {showSearchInput && (
+            <div className="flex justify-between w-full">
+              <button onClick={() => setShowSearchInput(false)}>
+                <FaArrowLeft className=" mr-2 flex justify-center items-center w-[16px]" />
+              </button>
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={handleInputChange}
+                className="px-2 w-full focus:outline-none rounded"
+                placeholder="Search by Broker Name..."
+              />
+              <button
+                onClick={handleSearch}
+                className=" text-white px-4 py-1 rounded"
+              >
+                <FaSearch className="w-[16px]" />
+              </button>
             </div>
+          )}
+        </div>
         <div className="transactions-table">
           <Table className="min-w-full divide-y divide-gray-200">
             <TableHeader className="border-2 border-black">
@@ -160,95 +153,71 @@ const TransactionsTable: React.FC<TransactionTableProps> = () => {
                 <TableHead className=" text-primary-clr text-[12px] text-center font-bold uppercase border-2 border-black">
                   Total Bill
                 </TableHead>
-                <TableHead className=" text-primary-clr text-[12px] text-center font-bold uppercase border-2 border-black">
-                  Party Name
-                </TableHead>
-                <TableHead className=" text-primary-clr text-[12px] text-center font-bold uppercase border-2 border-black">
-                  Party Area
-                </TableHead>
-                <TableHead className=" text-primary-clr text-[12px] text-center font-bold uppercase border-2 border-black">
-                  Party Contact #
-                </TableHead>
+
                 <TableHead className=" text-primary-clr text-[12px] text-center font-bold uppercase border-2 border-black">
                   Broker Name
                 </TableHead>
+
                 <TableHead className=" text-primary-clr text-[12px] text-center font-bold uppercase border-2 border-black">
-                  Payment Type
+                  Action
                 </TableHead>
-                <TableHead className=" text-primary-clr text-[12px] text-center font-bold uppercase border-2 border-black">
-                  Transaction Type
-                </TableHead>
-                <TableHead className=" text-primary-clr text-center font-bold uppercase border-2 border-black">
-                Action
-              </TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-            {currentItems && currentItems?.map((transaction: Transaction, index: number) => (
-              <TableRow key={index}>
-                <TableCell className="font-medium text-center border-2 border-black">
-                {transaction?._id
-                    ? transaction?._id
-                        .substring(transaction?._id.length - 4)
-                        .toUpperCase()
-                    : ""}
-                </TableCell>
-                <TableCell className="px-6 py-4 whitespace-nowrap text-center border-2 border-black">
-                  {transaction.productName}
-                </TableCell>
-                <TableCell className="text-center border-2 border-black">
-                  {transaction.productCount}
-                </TableCell>
-                <TableCell className="text-center border-2 border-black">
-                  {transaction.brandName}
-                </TableCell>
-                <TableCell className="text-center border-2 border-black">
-                  {transaction.unitPrice}
-                </TableCell>
-                <TableCell className="text-center border-2 border-black">
-                  {transaction.quantity}
-                </TableCell>
-                <TableCell className=" text-center border-2 border-black">
-                  {transaction.totalBill}
-                </TableCell>
-                <TableCell className=" text-center border-2 border-black">
-                  {transaction.partyName}
-                </TableCell>
-                <TableCell className=" text-center border-2 border-black">
-                  {transaction.partyArea}
-                </TableCell>
-                <TableCell className=" text-center border-2 border-black">
-                  {transaction.partyContactNumber}
-                </TableCell>
-                <TableCell className=" text-center border-2 border-black">
-                  {transaction.brokerName}
-                </TableCell>
-                <TableCell className=" text-center border-2 border-black">
-                  {transaction.brokerCommissionPercentage}
-                </TableCell>
-                <TableCell className=" text-center border-2 border-black">
-                  {transaction.paymentType}
-                </TableCell>
-                <TableCell className=" text-center border-2 border-black">
-                  {transaction.transactionType}
-                </TableCell>
-                <TableCell className="border-2 border-black">
-                  <div className="flex justify-end gap-[20px]">
-                    <Link href={`/transactions/edittransaction/${transaction?._id}`}>
-                      <FaPen size={20} className="text-primary-clr" />
-                    </Link>
-                    
-                      <MdDelete size={20} className="text-primary-clr"
-                       onClick={() =>
-                        handleDeleteTransaction(
-                          transaction?._id ? transaction._id : ""
-                        )
-                      } />
-                 
-                  </div>
-                </TableCell>
-              </TableRow>
-              ))}
+              {currentItems &&
+                currentItems?.map((transaction: Transaction, index: number) => (
+                  <TableRow key={index}>
+                    <TableCell className="font-medium text-[12px] text-center border-2 border-black">
+                      {transaction?._id
+                        ? transaction?._id
+                            .substring(transaction?._id.length - 4)
+                            .toUpperCase()
+                        : ""}
+                    </TableCell>
+                    <TableCell className="px-6 py-4 text-[12px] whitespace-nowrap text-center border-2 border-black">
+                      {transaction.productName}
+                    </TableCell>
+                    <TableCell className="text-center text-[12px] border-2 border-black">
+                      {transaction.productCount}
+                    </TableCell>
+                    <TableCell className="text-center text-[12px] border-2 border-black">
+                      {transaction.brandName}
+                    </TableCell>
+                    <TableCell className="text-center text-[12px] border-2 border-black">
+                      {transaction.unitPrice}
+                    </TableCell>
+                    <TableCell className="text-center text-[12px] border-2 border-black">
+                      {transaction.quantity}
+                    </TableCell>
+                    <TableCell className=" text-center text-[12px] border-2 border-black">
+                      {transaction.unitPrice * transaction.quantity}
+                    </TableCell>
+
+                    <TableCell className=" text-center text-[12px] border-2 border-black">
+                      {transaction.brokerName}
+                    </TableCell>
+
+                    <TableCell className="border-2 border-black">
+                      <div className="flex justify-end gap-[20px]">
+                        <Link
+                          href={`/transactions/edittransaction/${transaction?._id}`}
+                        >
+                          <FaPen size={20} className="text-primary-clr" />
+                        </Link>
+
+                        <MdDelete
+                          size={20}
+                          className="text-primary-clr"
+                          onClick={() =>
+                            handleDeleteTransaction(
+                              transaction?._id ? transaction._id : ""
+                            )
+                          }
+                        />
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
           {totalPages > 1 && (
@@ -299,16 +268,16 @@ const TransactionsTable: React.FC<TransactionTableProps> = () => {
           )}
         </div>
         <div className="flex justify-end mt-10">
-        <button
-          className="flex justify-end uppercase font-bold"
-          onClick={() => window.print()}
-        >
-          Print
-          <FaPrint size={25} className="ml-2" />
-        </button>
-      </div>
+          <button
+            className="flex justify-end uppercase font-bold"
+            onClick={() => window.print()}
+          >
+            Print
+            <FaPrint size={25} className="ml-2" />
+          </button>
+        </div>
       </div>
     </>
   );
 };
-export default TransactionsTable;
+export default BrokerTable;

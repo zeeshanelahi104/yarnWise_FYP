@@ -116,14 +116,14 @@ const InventoryTable: React.FC<InventoryTableProps> = () => {
         {showSearchInput && (
           <div className="flex justify-between w-full">
             <button onClick={() => setShowSearchInput(false)}>
-              <FaArrowLeft className=" mr-2 flex justify-center items-center w-[16px] -rotate-180" />
+              <FaArrowLeft className=" mr-2 flex justify-center items-center w-[16px]" />
             </button>
             <input
               type="text"
               value={searchQuery}
               onChange={handleInputChange}
               className="px-2 w-full focus:outline-none rounded"
-              placeholder="Search by bill for..."
+              placeholder="Search by Product Name..."
             />
             <button
               onClick={handleSearch}
