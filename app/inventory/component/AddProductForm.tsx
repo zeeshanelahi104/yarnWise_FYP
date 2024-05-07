@@ -32,6 +32,7 @@ export default function AddProductForm() {
 
     useEffect(() => {
         if (data && data.inventory) {
+          console.log("Product Data in useEffect", data.inventory)
             setProduct(data.inventory);
         }
     }, [data]);

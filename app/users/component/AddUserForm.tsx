@@ -19,14 +19,14 @@ export default function AddUserForm() {
   const { id } = params;
   const userId = Array.isArray(id) ? id[0] : id;
   const [user, setUser] = useState<UserTypes>({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    phoneNumber: "",
-    role: "",
-    permissions: {},
-    address: "",
+    "firstName": "",
+    "lastName": "",
+    "email": "",
+    "password": "",
+    "phoneNumber": "",
+    "role": "",
+    "permissions": {},
+    "address": "",
   });
 
   // Fetch user data
@@ -51,6 +51,7 @@ export default function AddUserForm() {
 
   useEffect(() => {
     if (userData && userData.user) {
+      console.log("User Data in UseEffect", userData.user)
       setUser(userData.user);
     }
     if (rolesData && rolesData.role) {

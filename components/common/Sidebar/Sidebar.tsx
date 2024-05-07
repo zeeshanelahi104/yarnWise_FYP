@@ -64,11 +64,16 @@ export default function Sidebar() {
         <SheetDemo />
       </div>
       <div
-        className={`w-64 sidebar-wrapper pt-10 lg:flex-col bg-[#1E282C] text-white min-h-screen ${
-          pathname === "/auth/login" ? "hidden" : "hidden lg:flex"
-        }`}
+        className={`w-[248px] sidebar-wrapper pt-10 lg:flex-col bg-[#1E282C] text-white min-h-screen 
+        ${
+          pathname === "/auth/login" ||
+          pathname === "/transactions/manage-transactions"
+            ? "hidden"
+            : "hidden lg:flex"
+        }
+        `}
       >
-        <div className="sidebar-items-wrapper container  w-[250px] flex flex-col gap-[20px]">
+        <div className="sidebar-items-wrapper w-[250px] flex flex-col gap-[20px]">
           {renderSidebarItem(
             "dashboard",
             "view",
@@ -76,240 +81,248 @@ export default function Sidebar() {
             "Dashboard",
             "/dashboard"
           )}
-    <div>
-      <SheetDemo />
-    </div>
-    <div
-      className={`w-64 sidebar-wrapper pt-10 lg:flex-col bg-[#1E282C] text-white min-h-screen ${
-        pathname === "/auth/login" || pathname==="/transactions/manage-transactions" ? "hidden" : "hidden lg:flex"
-      }`}
-    >
-      <div className="sidebar-items-wrapper container  w-[250px] flex flex-col gap-[20px]">
-        {renderSidebarItem(
-          "dashboard",
-          "view",
-          <FaHome color="#008F89" size={20} />,
-          "Dashboard",
-          "/dashboard"
-        )}
+          <div
+            // className={`w-64 sidebar-wrapper pt-10 lg:flex-col bg-[#1E282C] text-white min-h-screen 
+            // ${
+            //   pathname === "/auth/login" ||
+            //   pathname === "/transactions/manage-transactions"
+            //     ? "hidden w-0"
+            //     : "hidden lg:flex"
+            // }
+            // `}
+          >
+            <div className="sidebar-items-wrapper container  w-[250px] flex flex-col gap-[20px]">
+              {renderSidebarItem(
+                "dashboard",
+                "view",
+                <FaHome color="#008F89" size={20} />,
+                "Dashboard",
+                "/dashboard"
+              )}
 
-          <div className="sidebar-item-wrapper">
-            <Accordion type="single" collapsible className="w-full space-y-2">
-              <AccordionItem value="item-1">
-                <AccordionTrigger>
-                  <div className="flex items-center space-x-4">
-                    <div className="sidebar-item-wrapper flex">
-                      <Link href={"/roles"} className="flex gap-4">
-                        <span className="flex justify-center items-center">
-                          <FaUsers color="#008F89" size={20} />
-                        </span>
-                        <h4 className="flex justify-center items-center text-[15px]">
-                          Roles
-                        </h4>
-                      </Link>
-                    </div>
-                  </div>
-                </AccordionTrigger>
-                <AccordionContent className="space-y-4 bg-[#2C3B41] p-1 w-[217px]">
-                  {renderSidebarItem(
-                    "role",
-                    "create",
-                    <TiUserAdd color="#008F89" size={20} />,
-                    "Add Role",
-                    "/roles/addrole"
-                  )}
+              <div className="sidebar-item-wrapper">
+                <Accordion
+                  type="single"
+                  collapsible
+                  className="w-full space-y-2"
+                >
+                  <AccordionItem value="item-1">
+                    <AccordionTrigger>
+                      <div className="flex items-center space-x-4">
+                        <div className="sidebar-item-wrapper flex">
+                          <Link href={"/roles"} className="flex gap-4">
+                            <span className="flex justify-center items-center">
+                              <FaUsers color="#008F89" size={20} />
+                            </span>
+                            <h4 className="flex justify-center items-center text-[15px]">
+                              Roles
+                            </h4>
+                          </Link>
+                        </div>
+                      </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="space-y-4 bg-[#2C3B41] p-1 ">
+                      {renderSidebarItem(
+                        "role",
+                        "create",
+                        <TiUserAdd color="#008F89" size={20} />,
+                        "Add Role",
+                        "/roles/addrole"
+                      )}
 
-                  {renderSidebarItem(
-                    "role",
-                    "update",
-                    <FaUsers color="#008F89" size={20} />,
-                    "Manage Roles",
-                    "/roles"
-                  )}
-                </AccordionContent>
-              </AccordionItem>
-              <AccordionItem value="item-2">
-                <AccordionTrigger>
-                  <div className="flex items-center space-x-4">
-                    <div className="sidebar-item-wrapper flex">
-                      <Link href={"/users"} className="flex gap-4">
-                        <span className="flex justify-center items-center">
-                          <FaUser color="#008F89" size={20} />
-                        </span>
-                        <h4 className="flex justify-center items-center text-[15px]">
-                          Users
-                        </h4>
-                      </Link>
-                    </div>
-                  </div>
-                </AccordionTrigger>
-                <AccordionContent className="space-y-4 bg-[#2C3B41] p-1 w-[217px]">
-                  {renderSidebarItem(
-                    "user",
-                    "create",
-                    <TiUserAdd color="#008F89" size={20} />,
-                    "Add User",
-                    "/users/adduser"
-                  )}
+                      {renderSidebarItem(
+                        "role",
+                        "update",
+                        <FaUsers color="#008F89" size={20} />,
+                        "Manage Roles",
+                        "/roles"
+                      )}
+                    </AccordionContent>
+                  </AccordionItem>
+                  <AccordionItem value="item-2">
+                    <AccordionTrigger>
+                      <div className="flex items-center space-x-4">
+                        <div className="sidebar-item-wrapper flex">
+                          <Link href={"/users"} className="flex gap-4">
+                            <span className="flex justify-center items-center">
+                              <FaUser color="#008F89" size={20} />
+                            </span>
+                            <h4 className="flex justify-center items-center text-[15px]">
+                              Users
+                            </h4>
+                          </Link>
+                        </div>
+                      </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="space-y-4 bg-[#2C3B41] p-1 ">
+                      {renderSidebarItem(
+                        "user",
+                        "create",
+                        <TiUserAdd color="#008F89" size={20} />,
+                        "Add User",
+                        "/users/adduser"
+                      )}
 
-                  {renderSidebarItem(
-                    "user",
-                    "update",
-                    <FaUsers color="#008F89" size={20} />,
-                    "Manage Users",
-                    "/users"
-                  )}
-                </AccordionContent>
-              </AccordionItem>
-              <AccordionItem value="item-3">
-                <AccordionTrigger>
-                  <div className="flex items-center space-x-4">
-                    <div className="sidebar-item-wrapper flex">
-                      <Link href={"/inventory"} className="flex gap-4">
-                        <span className="flex justify-center items-center">
-                          <IoIosOptions color="#008F89" size={20} />
-                        </span>
-                        <h4 className="flex justify-center items-center text-[15px]">
-                          Inventory
-                        </h4>
-                      </Link>
-                    </div>
-                  </div>
-                </AccordionTrigger>
-                <AccordionContent className="space-y-4 bg-[#2C3B41] p-1 w-[217px]">
-                  {renderSidebarItem(
-                    "inventory",
-                    "create",
-                    <MdAddShoppingCart color="#008F89" size={20} />,
-                    "Add Product",
-                    "/inventory/addproduct"
-                  )}
+                      {renderSidebarItem(
+                        "user",
+                        "update",
+                        <FaUsers color="#008F89" size={20} />,
+                        "Manage Users",
+                        "/users"
+                      )}
+                    </AccordionContent>
+                  </AccordionItem>
+                  <AccordionItem value="item-3">
+                    <AccordionTrigger>
+                      <div className="flex items-center space-x-4">
+                        <div className="sidebar-item-wrapper flex">
+                          <Link href={"/inventory"} className="flex gap-4">
+                            <span className="flex justify-center items-center">
+                              <IoIosOptions color="#008F89" size={20} />
+                            </span>
+                            <h4 className="flex justify-center items-center text-[15px]">
+                              Inventory
+                            </h4>
+                          </Link>
+                        </div>
+                      </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="space-y-4 bg-[#2C3B41] p-1 ">
+                      {renderSidebarItem(
+                        "inventory",
+                        "create",
+                        <MdAddShoppingCart color="#008F89" size={20} />,
+                        "Add Product",
+                        "/inventory/addproduct"
+                      )}
 
-                  {renderSidebarItem(
-                    "inventory",
-                    "update",
-                    <IoIosOptions color="#008F89" size={20} />,
-                    "Manage Products",
-                    "/inventory"
-                  )}
-                </AccordionContent>
-              </AccordionItem>
-              <AccordionItem value="item-4">
-                <AccordionTrigger>
-                  <div className="flex items-center space-x-4">
-                    <div className="sidebar-item-wrapper flex">
-                      <Link href={"/transactions"} className="flex gap-4">
-                        <span className="flex justify-center items-center">
-                          <MdRequestPage color="#008F89" size={20} />
-                        </span>
-                        <h4 className="flex justify-center items-center text-[15px]">
-                          Transactions
-                        </h4>
-                      </Link>
-                    </div>
-                  </div>
-                </AccordionTrigger>
-                <AccordionContent className="space-y-4 bg-[#2C3B41] p-1 w-[217px]">
-                  {renderSidebarItem(
-                    "transactions",
-                    "create",
-                    <FaTag color="#008F89" size={20} />,
-                    "Add Transaction",
-                    "/transactions/addtransaction"
-                  )}
+                      {renderSidebarItem(
+                        "inventory",
+                        "update",
+                        <IoIosOptions color="#008F89" size={20} />,
+                        "Manage Products",
+                        "/inventory"
+                      )}
+                    </AccordionContent>
+                  </AccordionItem>
+                  <AccordionItem value="item-4">
+                    <AccordionTrigger>
+                      <div className="flex items-center space-x-4">
+                        <div className="sidebar-item-wrapper flex">
+                          <Link href={"/transactions"} className="flex gap-4">
+                            <span className="flex justify-center items-center">
+                              <MdRequestPage color="#008F89" size={20} />
+                            </span>
+                            <h4 className="flex justify-center items-center text-[15px]">
+                              Transactions
+                            </h4>
+                          </Link>
+                        </div>
+                      </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="space-y-4 bg-[#2C3B41] p-1 ">
+                      {renderSidebarItem(
+                        "transactions",
+                        "create",
+                        <FaTag color="#008F89" size={20} />,
+                        "Add Transaction",
+                        "/transactions/addtransaction"
+                      )}
 
-                  {renderSidebarItem(
-                    "transactions",
-                    "view",
-                    <FaShoppingCart color="#008F89" size={20} />,
-                    "Manage Transactions",
-                    "/transactions/manage-transactions"
-                  )}
-                </AccordionContent>
-              </AccordionItem>
-              <AccordionItem value="item-5">
-                <AccordionTrigger>
-                  <div className="flex items-center space-x-4">
-                    <div className="sidebar-item-wrapper flex">
-                      <Link href={"/reports"} className="flex gap-4">
-                        <span className="flex justify-center items-center">
-                          <MdBarChart color="#008F89" size={20} />
-                        </span>
-                        <h4 className="flex justify-center items-center text-[15px]">
-                          Reports
-                        </h4>
-                      </Link>
-                    </div>
-                  </div>
-                </AccordionTrigger>
-              </AccordionItem>
-              <AccordionItem value="item-5">
-                <AccordionTrigger>
-                  <div className="flex items-center space-x-4">
-                    <div className="sidebar-item-wrapper flex">
-                      <Link href={"/profile"} className="flex gap-4">
-                        <span className="flex justify-center items-center">
-                          <FaUser color="#008F89" size={20} />
-                        </span>
-                        <h4 className="flex justify-center items-center text-[15px]">
-                          Profile
-                        </h4>
-                        {renderSidebarItem(
-                          "profile",
-                          "view",
-                          <FaUser color="#008F89" size={20} />,
-                          "Profile",
-                          "/profile"
-                        )}
-                      </Link>
-                    </div>
-                  </div>
-                </AccordionTrigger>
-                <AccordionContent>
-                  {renderSidebarItem(
-                    "reports",
-                    "view",
-                    <MdBarChart color="#008F89" size={20} />,
-                    "Reports",
-                    "/reports"
-                  )}
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
-          </div>
+                      {renderSidebarItem(
+                        "transactions",
+                        "view",
+                        <FaShoppingCart color="#008F89" size={20} />,
+                        "Manage Transactions",
+                        "/transactions/manage-transactions"
+                      )}
+                    </AccordionContent>
+                  </AccordionItem>
+                  <AccordionItem value="item-5">
+                    <AccordionTrigger>
+                      <div className="flex items-center space-x-4">
+                        <div className="sidebar-item-wrapper flex">
+                          <Link href={"/reports"} className="flex gap-4">
+                            <span className="flex justify-center items-center">
+                              <MdBarChart color="#008F89" size={20} />
+                            </span>
+                            <h4 className="flex justify-center items-center text-[15px]">
+                              Reports
+                            </h4>
+                          </Link>
+                        </div>
+                      </div>
+                    </AccordionTrigger>
+                  </AccordionItem>
+                  <AccordionItem value="item-5">
+                    <AccordionTrigger>
+                      <div className="flex items-center space-x-4">
+                        <div className="sidebar-item-wrapper flex">
+                          <Link href={"/profile"} className="flex gap-4">
+                            <span className="flex justify-center items-center">
+                              <FaUser color="#008F89" size={20} />
+                            </span>
+                            <h4 className="flex justify-center items-center text-[15px]">
+                              Profile
+                            </h4>
+                            {renderSidebarItem(
+                              "profile",
+                              "view",
+                              <FaUser color="#008F89" size={20} />,
+                              "Profile",
+                              "/profile"
+                            )}
+                          </Link>
+                        </div>
+                      </div>
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      {renderSidebarItem(
+                        "reports",
+                        "view",
+                        <MdBarChart color="#008F89" size={20} />,
+                        "Reports",
+                        "/reports"
+                      )}
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+              </div>
 
-          {renderSidebarItem(
-            "reports",
-            "view",
-            <MdBarChart color="#008F89" size={20} />,
-            "Reports",
-            "/reports"
-          )}
-          {renderSidebarItem(
-            "profile",
-            "view",
-            <FaUser color="#008F89" size={20} />,
-            "Profile",
-            "/profile"
-          )}
+              {renderSidebarItem(
+                "reports",
+                "view",
+                <MdBarChart color="#008F89" size={20} />,
+                "Reports",
+                "/reports"
+              )}
+              {renderSidebarItem(
+                "profile",
+                "view",
+                <FaUser color="#008F89" size={20} />,
+                "Profile",
+                "/profile"
+              )}
 
-          <div className="sidebar-item-wrapper space-x-4">
-            <div className="sidebar-item-wrapper flex gap-4">
-              <span className="flex justify-center items-center">
-                <PiSignOutBold color="#008F89" size={20} />
-              </span>
+              <div className="sidebar-item-wrapper space-x-4">
+                <div className="sidebar-item-wrapper flex gap-4">
+                  <span className="flex justify-center items-center">
+                    <PiSignOutBold color="#008F89" size={20} />
+                  </span>
 
-              <button onClick={() => signOut({ callbackUrl: "/auth/login" })}>
-                <h4 className="flex justify-center items-center text-[15px]">
-                  Sign Out
-                </h4>
-              </button>
+                  <button
+                    onClick={() => signOut({ callbackUrl: "/auth/login" })}
+                  >
+                    <h4 className="flex justify-center items-center text-[15px]">
+                      Sign Out
+                    </h4>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      </div>
-      </div>
     </>
-  )
+  );
 }
