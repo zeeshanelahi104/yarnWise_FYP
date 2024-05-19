@@ -33,6 +33,7 @@ export default function AddTransactionForm() {
     transactionType: "",
   });
 
+
   const { data, isLoading, isSuccess, isError, error } =
     useGetTransactionQuery(id);
   const [addTransaction] = useAddTransactionMutation();
@@ -43,7 +44,11 @@ export default function AddTransactionForm() {
       setTransaction(data.transaction);
     }
   }, [data]);
-
+ // Calculate totalBill whenever quantity or unitPrice changes
+ useEffect(() => {
+  const newTotalBill = transaction.quantity * transaction.unitPrice;
+  setTransaction(prevTransaction => ({ ...prevTransaction, totalBill: newTotalBill }));
+}, [transaction.quantity, transaction.unitPrice]);
   const handleChange = (field: string, value: any) => {
     setTransaction((prevData) => ({ ...prevData, [field]: value }));
   };
@@ -180,16 +185,17 @@ export default function AddTransactionForm() {
                 onChange={(e) => handleChange('quantity', e.target.value)}
               />
             </div>
-            {/* <div>
+            <div>
             <Label>Total Bill</Label>
               <Input
                 type="text"
                 placeholder="Bill"
                 className="rounded-[10px] w-full  border-2 border-primary-clr"
-                value={""}
+                value={transaction?.totalBill}
+                onChange={(e) => handleChange('totalBill', e.target.value)}
                 disabled
               />
-            </div> */}
+            </div>
             <div>
               <Label>Enter Party Name</Label>
               <Input

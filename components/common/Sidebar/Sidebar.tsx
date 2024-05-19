@@ -222,7 +222,7 @@ export default function Sidebar() {
                     </AccordionTrigger>
                     <AccordionContent className="space-y-4 bg-[#2C3B41] p-1 ">
                       {renderSidebarItem(
-                        "transactions",
+                        "transaction",
                         "create",
                         <FaTag color="#008F89" size={20} />,
                         "Add Transaction",
@@ -230,7 +230,7 @@ export default function Sidebar() {
                       )}
 
                       {renderSidebarItem(
-                        "transactions",
+                        "transaction",
                         "view",
                         <FaShoppingCart color="#008F89" size={20} />,
                         "Manage Transactions",

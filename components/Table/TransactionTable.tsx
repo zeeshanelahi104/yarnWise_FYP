@@ -173,6 +173,9 @@ const TransactionsTable: React.FC<TransactionTableProps> = () => {
                   Broker Name
                 </TableHead>
                 <TableHead className=" text-primary-clr text-[12px] text-center font-bold uppercase border-2 border-black">
+                  Broker Commission %
+                </TableHead>
+                <TableHead className=" text-primary-clr text-[12px] text-center font-bold uppercase border-2 border-black">
                   Payment Type
                 </TableHead>
                 <TableHead className=" text-primary-clr text-[12px] text-center font-bold uppercase border-2 border-black">
