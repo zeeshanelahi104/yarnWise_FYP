@@ -2,7 +2,6 @@
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -10,14 +9,13 @@ import {
 } from "@/components/ui/table";
 import { Transaction } from "@/types";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { MdDelete } from "react-icons/md";
 import { FiChevronsLeft, FiChevronsRight } from "react-icons/fi";
 import { FaPen, FaPrint, FaSearch, FaArrowLeft } from "react-icons/fa";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import {ArrowLeft} from "lucide-react"
+import { ArrowLeft } from "lucide-react";
 import {
   useDeleteTransactionMutation,
   useGetTransactionsQuery,
@@ -42,10 +40,10 @@ const TransactionsTable: React.FC<TransactionTableProps> = () => {
         toast.error("Error, Deleting Transaction");
       });
   };
-  const router = useRouter();
   const transactionRecord = data?.transaction;
-  console.log("transactionRecordtransactionRecord", transactionRecord);
   const [filteredData, setFilteredData] = useState(transactionRecord);
+  console.log("Filtered Data",filteredData);
+  
   const [showSearchInput, setShowSearchInput] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
@@ -93,165 +91,173 @@ const TransactionsTable: React.FC<TransactionTableProps> = () => {
 
   return (
     <>
-      <div className="transcations-record-page-wrapper container flex flex-col justify-center gap-10 pt-[45px]">
-        <div className="title text-primary-clr text-center">
-          Transactions Record
+      <div className="transcations-record-page-wrapper container flex flex-col justify-center pt-[45px]">
+        <div className="page-header flex justify-between">
+          <div className="back-btn">
+            <Link href={"/transactions"}>
+              <FaArrowLeft />
+            </Link>
+          </div>
+          <div className="title text-primary-clr text-center">
+            Transactions Record
+          </div>
+          <div></div>
         </div>
+
         <div className="table-head-wrapper w-full mt-10 flex items-center justify-between border-2 border-black py-4 px-4">
-              {!showSearchInput && (
-                <>
-                  <h3 className="text-barlow text-[#364A63] font-bold text-[19px] leading-[19px]">
-                    Transaction
-                  </h3>
-                  <div className="icons-wrapper flex justify-between gap-3">
-                    <button onClick={() => setShowSearchInput(true)}>
-                      <FaSearch className="w-[16px]"/>
-                      
-                    </button>
-                    
-                  </div>
-                </>
-              )}
-              {showSearchInput && (
-                <div className="flex justify-between w-full">
-                  <button onClick={() => setShowSearchInput(false)}>
-                    <FaArrowLeft className=" mr-2 flex justify-center items-center w-[16px]"
-                    />
-                    
-                  </button>
-                  <input
-                    type="text"
-                    value={searchQuery}
-                    onChange={handleInputChange}
-                    className="px-2 w-full focus:outline-none rounded"
-                    placeholder="Search by Product Name..."
-                  />
-                  <button
-                    onClick={handleSearch}
-                    className=" text-white px-4 py-1 rounded"
-                  >
-                    <FaSearch className="w-[16px]"/>
-                  </button>
-                </div>
-              )}
+          {!showSearchInput && (
+            <>
+              <h3 className="text-barlow text-[#364A63] font-bold text-[19px] leading-[19px]">
+                Transactions
+              </h3>
+              <div className="icons-wrapper flex justify-between gap-3">
+                <button onClick={() => setShowSearchInput(true)}>
+                  <FaSearch className="w-[16px]" />
+                </button>
+              </div>
+            </>
+          )}
+          {showSearchInput && (
+            <div className="flex justify-between w-full">
+              <button onClick={() => setShowSearchInput(false)}>
+                <FaArrowLeft className=" mr-2 flex justify-center items-center w-[16px]" />
+              </button>
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={handleInputChange}
+                className="px-2 w-full focus:outline-none rounded"
+                placeholder="Search by Product Name..."
+              />
+              <button
+                onClick={handleSearch}
+                className=" text-white px-4 py-1 rounded"
+              >
+                <FaSearch className="w-[16px]" />
+              </button>
             </div>
+          )}
+        </div>
         <div className="transactions-table">
           <Table className="min-w-full divide-y divide-gray-200">
             <TableHeader className="border-2 border-black">
               <TableRow>
-                <TableHead className="text-center text-[12px] text-primary-clr font-bold uppercase border-2 border-black">
+                <TableHead className="text-center text-[9px] text-primary-clr font-bold uppercase border-2 border-black">
                   ID
                 </TableHead>
-                <TableHead className="text-primary-clr text-[12px] text-center font-bold uppercase border-2 border-black">
-                  Product Name
+                <TableHead className="text-primary-clr whitespace-nowrap text-[9px] text-center font-bold uppercase border-2 border-black">
+                  Order Details
                 </TableHead>
-                <TableHead className="text-primary-clr text-[12px] text-center font-bold uppercase border-2 border-black">
+                {/* <TableHead className="text-primary-clr text-[9px] text-center font-bold uppercase border-2 border-black">
                   Product Count
                 </TableHead>
-                <TableHead className="px-6 py-4  text-[12px] whitespace-nowrap text-primary-clr text-center font-bold uppercase border-2 border-black">
+                <TableHead className="px-6 py-4  text-[9px] whitespace-nowrap text-primary-clr text-center font-bold uppercase border-2 border-black">
                   Brand Name
+                </TableHead> */}
+                <TableHead className="px-6 py-4 text-[9px] whitespace-nowrap text-primary-clr text-center font-bold uppercase border-2 border-black">
+                  Calculations
                 </TableHead>
-                <TableHead className="px-6 py-4 text-[12px] whitespace-nowrap text-primary-clr text-center font-bold uppercase border-2 border-black">
-                  Unit Price
-                </TableHead>
-                <TableHead className=" text-primary-clr text-[12px] text-center font-bold uppercase border-2 border-black">
+                {/* <TableHead className=" text-primary-clr text-[9px] text-center font-bold uppercase border-2 border-black">
                   Quantity
-                </TableHead>
-                <TableHead className=" text-primary-clr text-[12px] text-center font-bold uppercase border-2 border-black">
+                </TableHead> */}
+                <TableHead className=" text-primary-clr text-[9px] text-center font-bold uppercase border-2 border-black">
                   Total Bill
                 </TableHead>
-                <TableHead className=" text-primary-clr text-[12px] text-center font-bold uppercase border-2 border-black">
-                  Party Name
+                <TableHead className=" text-primary-clr text-[9px] text-center font-bold uppercase border-2 border-black">
+                  Party Details
                 </TableHead>
-                <TableHead className=" text-primary-clr text-[12px] text-center font-bold uppercase border-2 border-black">
+                {/* <TableHead className=" text-primary-clr text-[9px] text-center font-bold uppercase border-2 border-black">
                   Party Area
                 </TableHead>
-                <TableHead className=" text-primary-clr text-[12px] text-center font-bold uppercase border-2 border-black">
+                <TableHead className=" text-primary-clr text-[9px] text-center font-bold uppercase border-2 border-black">
                   Party Contact #
-                </TableHead>
-                <TableHead className=" text-primary-clr text-[12px] text-center font-bold uppercase border-2 border-black">
+                </TableHead> */}
+                <TableHead className=" text-primary-clr text-[9px] text-center font-bold uppercase border-2 border-black">
                   Broker Name
                 </TableHead>
-                <TableHead className=" text-primary-clr text-[12px] text-center font-bold uppercase border-2 border-black">
-                  Broker Commission %
-                </TableHead>
-                <TableHead className=" text-primary-clr text-[12px] text-center font-bold uppercase border-2 border-black">
+                <TableHead className=" text-primary-clr text-[9px] text-center font-bold uppercase border-2 border-black">
                   Payment Type
                 </TableHead>
-                <TableHead className=" text-primary-clr text-[12px] text-center font-bold uppercase border-2 border-black">
+                <TableHead className=" text-primary-clr text-[9px] text-center font-bold uppercase border-2 border-black">
                   Transaction Type
                 </TableHead>
                 <TableHead className=" text-primary-clr text-center font-bold uppercase border-2 border-black">
-                Action
-              </TableHead>
+                  Action
+                </TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-            {currentItems && currentItems?.map((transaction: Transaction, index: number) => (
-              <TableRow key={index}>
-                <TableCell className="font-medium text-center border-2 border-black">
-                {transaction?._id
-                    ? transaction?._id
-                        .substring(transaction?._id.length - 4)
-                        .toUpperCase()
-                    : ""}
-                </TableCell>
-                <TableCell className="px-6 py-4 whitespace-nowrap text-center border-2 border-black">
-                  {transaction.productName}
-                </TableCell>
-                <TableCell className="text-center border-2 border-black">
+              {currentItems &&
+                currentItems?.map((transaction: Transaction, index: number) => (
+                  <TableRow key={index}>
+                    <TableCell className="font-medium text-[9px] text-center border-2 border-black">
+                      {transaction?._id
+                        ? transaction?._id
+                            .substring(transaction?._id.length - 4)
+                            .toUpperCase()
+                        : ""}
+                    </TableCell>
+                    <TableCell className="px-6 whitespace-nowrap py-4 text-[11px] border-2 border-black">
+                      {transaction.productName}, {transaction.brandName} ,{" "}
+                      {transaction.productCount}
+                    </TableCell>
+                    {/* <TableCell className="text-center text-[9px] border-2 border-black">
                   {transaction.productCount}
                 </TableCell>
-                <TableCell className="text-center border-2 border-black">
+                <TableCell className="text-center text-[9px] border-2 border-black">
                   {transaction.brandName}
-                </TableCell>
-                <TableCell className="text-center border-2 border-black">
-                  {transaction.unitPrice}
-                </TableCell>
-                <TableCell className="text-center border-2 border-black">
+                </TableCell> */}
+                    <TableCell className="text-center text-[11px] border-2 border-black">
+                      {transaction.quantity} bags @ {transaction.unitPrice}
+                    </TableCell>
+                    {/* <TableCell className="text-center text-[9px] border-2 border-black">
                   {transaction.quantity}
-                </TableCell>
-                <TableCell className=" text-center border-2 border-black">
-                  {transaction.totalBill}
-                </TableCell>
-                <TableCell className=" text-center border-2 border-black">
-                  {transaction.partyName}
-                </TableCell>
-                <TableCell className=" text-center border-2 border-black">
+                </TableCell> */}
+                    <TableCell className=" text-center text-[11px] border-2 border-black">
+                      {transaction.totalBill}
+                    </TableCell>
+                    <TableCell className=" text-center text-[11px] border-2 border-black">
+                      {transaction.partyName} , {transaction.partyArea} ,{" "}
+                      {transaction.partyContactNumber}
+                    </TableCell>
+                    {/* <TableCell className=" text-center text-[9px] border-2 border-black">
                   {transaction.partyArea}
                 </TableCell>
-                <TableCell className=" text-center border-2 border-black">
+                <TableCell className=" text-center text-[9px] border-2 border-black">
                   {transaction.partyContactNumber}
-                </TableCell>
-                <TableCell className=" text-center border-2 border-black">
-                  {transaction.brokerName}
-                </TableCell>
-                <TableCell className=" text-center border-2 border-black">
+                </TableCell> */}
+                    <TableCell className=" text-center text-[11px] border-2 border-black">
+                      {transaction.brokerName}
+                    </TableCell>
+                    {/* <TableCell className=" text-center text-[9px] border-2 border-black">
                   {transaction.brokerCommissionPercentage}
-                </TableCell>
-                <TableCell className=" text-center border-2 border-black">
-                  {transaction.paymentType}
-                </TableCell>
-                <TableCell className=" text-center border-2 border-black">
-                  {transaction.transactionType}
-                </TableCell>
-                <TableCell className="border-2 border-black">
-                  <div className="flex justify-end gap-[20px]">
-                    <Link href={`/transactions/edittransaction/${transaction?._id}`}>
-                      <FaPen size={20} className="text-primary-clr" />
-                    </Link>
-                    
-                      <MdDelete size={20} className="text-primary-clr"
-                       onClick={() =>
-                        handleDeleteTransaction(
-                          transaction?._id ? transaction._id : ""
-                        )
-                      } />
-                 
-                  </div>
-                </TableCell>
-              </TableRow>
-              ))}
+                </TableCell> */}
+                    <TableCell className=" text-center text-[11px] border-2 border-black">
+                      {transaction.paymentType}
+                    </TableCell>
+                    <TableCell className=" text-center text-[11px] border-2 border-black">
+                      {transaction.transactionType}
+                    </TableCell>
+                    <TableCell className="border-2 border-black">
+                      <div className="flex justify-end gap-[20px]">
+                        <Link
+                          href={`/transactions/edittransaction/${transaction?._id}`}
+                        >
+                          <FaPen size={20} className="text-primary-clr" />
+                        </Link>
+                        <button
+                          onClick={() =>
+                            handleDeleteTransaction(
+                              transaction?._id ? transaction._id : ""
+                            )
+                          }
+                        >
+                          <MdDelete size={20} className="text-primary-clr" />
+                        </button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
           {totalPages > 1 && (
@@ -302,14 +308,14 @@ const TransactionsTable: React.FC<TransactionTableProps> = () => {
           )}
         </div>
         <div className="flex justify-end mt-10">
-        <button
-          className="flex justify-end uppercase font-bold"
-          onClick={() => window.print()}
-        >
-          Print
-          <FaPrint size={25} className="ml-2" />
-        </button>
-      </div>
+          <button
+            className="flex justify-end uppercase font-bold"
+            onClick={() => window.print()}
+          >
+            Print
+            <FaPrint size={25} className="ml-2" />
+          </button>
+        </div>
       </div>
     </>
   );

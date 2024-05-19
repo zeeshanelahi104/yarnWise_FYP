@@ -82,14 +82,14 @@ export default function Sidebar() {
             "/dashboard"
           )}
           <div
-            // className={`w-64 sidebar-wrapper pt-10 lg:flex-col bg-[#1E282C] text-white min-h-screen 
-            // ${
-            //   pathname === "/auth/login" ||
-            //   pathname === "/transactions/manage-transactions"
-            //     ? "hidden w-0"
-            //     : "hidden lg:flex"
-            // }
-            // `}
+          // className={`w-64 sidebar-wrapper pt-10 lg:flex-col bg-[#1E282C] text-white min-h-screen
+          // ${
+          //   pathname === "/auth/login" ||
+          //   pathname === "/transactions/manage-transactions"
+          //     ? "hidden w-0"
+          //     : "hidden lg:flex"
+          // }
+          // `}
           >
             <div className="sidebar-items-wrapper container  w-[250px] flex flex-col gap-[20px]">
               {renderSidebarItem(
@@ -99,7 +99,9 @@ export default function Sidebar() {
                 "Dashboard",
                 "/dashboard"
               )}
-
+              <Link href={"/"} className="inline-flex gap-4">
+                <FaHome color="#008F89" size={20} /> Dashboard
+              </Link>
               <div className="sidebar-item-wrapper">
                 <Accordion
                   type="single"
@@ -238,54 +240,33 @@ export default function Sidebar() {
                       )}
                     </AccordionContent>
                   </AccordionItem>
-                  <AccordionItem value="item-5">
-                    <AccordionTrigger>
-                      <div className="flex items-center space-x-4">
-                        <div className="sidebar-item-wrapper flex">
-                          <Link href={"/reports"} className="flex gap-4">
-                            <span className="flex justify-center items-center">
-                              <MdBarChart color="#008F89" size={20} />
-                            </span>
-                            <h4 className="flex justify-center items-center text-[15px]">
-                              Reports
-                            </h4>
-                          </Link>
-                        </div>
-                      </div>
-                    </AccordionTrigger>
-                  </AccordionItem>
-                  <AccordionItem value="item-5">
-                    <AccordionTrigger>
-                      <div className="flex items-center space-x-4">
-                        <div className="sidebar-item-wrapper flex">
-                          <Link href={"/profile"} className="flex gap-4">
-                            <span className="flex justify-center items-center">
-                              <FaUser color="#008F89" size={20} />
-                            </span>
-                            <h4 className="flex justify-center items-center text-[15px]">
-                              Profile
-                            </h4>
-                            {renderSidebarItem(
-                              "profile",
-                              "view",
-                              <FaUser color="#008F89" size={20} />,
-                              "Profile",
-                              "/profile"
-                            )}
-                          </Link>
-                        </div>
-                      </div>
-                    </AccordionTrigger>
-                    <AccordionContent>
+
+                  <div className="flex items-center space-x-4">
+                    <div className="sidebar-item-wrapper flex">
+                      <Link href={"/reports"} className="flex gap-4">
+                        <span className="flex justify-center items-center">
+                          <MdBarChart color="#008F89" size={20} />
+                        </span>
+                        <h4 className="flex justify-center items-center text-[15px]">
+                          Reports
+                        </h4>
+                      </Link>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-4">
+                    <div className="sidebar-item-wrapper flex">
                       {renderSidebarItem(
-                        "reports",
+                        "profile",
                         "view",
-                        <MdBarChart color="#008F89" size={20} />,
-                        "Reports",
-                        "/reports"
+                        <FaUser color="#008F89" size={20} />,
+                        "Profile",
+                        "/profile"
                       )}
-                    </AccordionContent>
-                  </AccordionItem>
+                      <Link href={"/profile"} className="inline-flex gap-4">
+                        <FaUser color="#008F89" size={20} /> Profile
+                      </Link>
+                    </div>
+                  </div>
                 </Accordion>
               </div>
 

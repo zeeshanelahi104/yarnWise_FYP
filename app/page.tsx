@@ -1,5 +1,6 @@
 "use client"
 import Sidebar from "@/components/common/Sidebar/Sidebar";
+import Dashboard from "@/components/components/Dashboard/Dashboard";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 export default function Page(){
@@ -11,6 +12,7 @@ export default function Page(){
         <div>
             <h1>Home</h1>
             <h2>Hi {session?.user.role}</h2>
+            <Dashboard />
         </div>
         </>
     )
