@@ -7,7 +7,7 @@ export default function Page(){
         <>
             <div className="simgle-report-page-wrapper">
                 <div className="page-heading flex justify-between items-center">
-                    <div className="back-btn">
+                    <div className="back-btn ml-10">
                         <Link href={"/reports"}>
                             <FaArrowLeft color={"primary-clr"} size={20}/>
                         </Link>

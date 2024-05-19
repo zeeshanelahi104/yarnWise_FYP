@@ -92,6 +92,7 @@ export default function Sidebar() {
           "Dashboard",
           "/dashboard"
         )}
+        <Link href={"/"} className="inline-flex gap-4"><FaHome color="#008F89" size={20}/> Dashboard</Link>
 
           <div className="sidebar-item-wrapper">
             <Accordion type="single" collapsible className="w-full space-y-2">
