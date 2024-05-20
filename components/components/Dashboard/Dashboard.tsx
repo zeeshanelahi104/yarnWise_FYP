@@ -11,19 +11,20 @@ interface TransactionTableProps {}
 
 export default function Dashboard(){
     
-    const {data:transaction} = useGetTransactionsQuery()
-    console.log(transaction);
+    const {data:transactions} = useGetTransactionsQuery()
+    // console.log("Transaction in Dashboard",transactions);
+    // console.log("Transaction in Dashboard",transactions.length);
     
-    
-    // const transactionsLength = transactions.length()
+    // const transactionsLength = transactions?.transaction.length;
+    // console.log("Transaction Length", transactionsLength);
     return(
         <>
             <div className="dashboard-items-wrapper container pt-[45px]">
-                <div className="items-wrapper grid grid-cols-2 gap-5">
+                <div className="items-wrapper grid grid-cols-2 gap-3">
                     <div className="single-item bg-blue-400 w-[350px]">
                         <div className="flex justify-between p-5">
                             <div className="count flex flex-col justify-between gap-4 text-white text-[20px]">
-                                <p className="font-bold text-[30px]">{""}</p>
+                                <p className="font-bold text-[30px]">{8}</p>
                                 <p>Total Products</p>
                             </div>
                             <div className="icon flex justify-center items-center">
