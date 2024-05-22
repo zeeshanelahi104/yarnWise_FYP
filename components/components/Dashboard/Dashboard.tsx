@@ -21,7 +21,7 @@ export default function Dashboard() {
   const inventoriesLength = inventories?.inventory.length;
   return (
     <>
-      <div className="dashboard-items-wrapper container pt-[45px]">
+      <div className="dashboard-items-wrapper flex justify-center items-center container pt-[45px]">
         <div className="items-wrapper grid grid-cols-2 gap-5">
           <div className="single-item bg-blue-400 w-[350px]">
             <div className="flex justify-between p-5">

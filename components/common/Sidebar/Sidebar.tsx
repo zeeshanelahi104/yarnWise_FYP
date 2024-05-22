@@ -240,6 +240,72 @@ export default function Sidebar() {
                       )}
                     </AccordionContent>
                   </AccordionItem>
+                  <AccordionItem value="item-5">
+                    <AccordionTrigger>
+                      <div className="flex items-center space-x-4">
+                        <div className="sidebar-item-wrapper flex">
+                          <Link href={"#"} className="flex gap-4">
+                            <span className="flex justify-center items-center">
+                              <MdRequestPage color="#008F89" size={20} />
+                            </span>
+                            <h4 className="flex justify-center items-center text-[15px]">
+                              Brokers
+                            </h4>
+                          </Link>
+                        </div>
+                      </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="space-y-4 bg-[#2C3B41] p-1 ">
+                      {renderSidebarItem(
+                        "broker",
+                        "create",
+                        <FaTag color="#008F89" size={20} />,
+                        "Add Broker",
+                        "/broker/addbroker"
+                      )}
+
+                      {renderSidebarItem(
+                        "broker",
+                        "view",
+                        <FaShoppingCart color="#008F89" size={20} />,
+                        "Manage Brokers",
+                        "/broker"
+                      )}
+                    </AccordionContent>
+                  </AccordionItem>
+                  <AccordionItem value="item-6">
+                    <AccordionTrigger>
+                      <div className="flex items-center space-x-4">
+                        <div className="sidebar-item-wrapper flex">
+                          <Link href={"#"} className="flex gap-4">
+                            <span className="flex justify-center items-center">
+                              <MdRequestPage color="#008F89" size={20} />
+                            </span>
+                            <h4 className="flex justify-center items-center text-[15px]">
+                              Parties
+                            </h4>
+                          </Link>
+                        </div>
+                      </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="space-y-4 bg-[#2C3B41] p-1 ">
+                      {renderSidebarItem(
+                        "parties",
+                        "create",
+                        <FaTag color="#008F89" size={20} />,
+                        "Add Party",
+                        "/parties/addParty"
+                      )}
+
+                      {renderSidebarItem(
+                        "parties",
+                        "view",
+                        <FaShoppingCart color="#008F89" size={20} />,
+                        "Manage Parties",
+                        "/parties"
+                      )}
+                    </AccordionContent>
+                  </AccordionItem>
 
                   <div className="flex items-center space-x-4">
                     <div className="sidebar-item-wrapper flex">
@@ -270,20 +336,7 @@ export default function Sidebar() {
                 </Accordion>
               </div>
 
-              {renderSidebarItem(
-                "reports",
-                "view",
-                <MdBarChart color="#008F89" size={20} />,
-                "Reports",
-                "/reports"
-              )}
-              {renderSidebarItem(
-                "profile",
-                "view",
-                <FaUser color="#008F89" size={20} />,
-                "Profile",
-                "/profile"
-              )}
+              
 
               <div className="sidebar-item-wrapper space-x-4">
                 <div className="sidebar-item-wrapper flex gap-4">

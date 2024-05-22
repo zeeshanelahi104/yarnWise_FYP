@@ -6,7 +6,7 @@
 
 @layer utilities {
     .primaryBtn {
-      @apply text-white font-medium bg-primary-clr p-2 hover:bg-white transition-all ease-in-out delay-150 duration-300 hover:text-white;
+      @apply text-white font-medium rounded-[5px] bg-primary-clr p-2 hover:bg-white transition-all ease-in-out delay-150 duration-300 hover:text-black;
     }
     .title{
       @apply text-[35px] font-bold
