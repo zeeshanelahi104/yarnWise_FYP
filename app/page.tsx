@@ -8,7 +8,7 @@ export default function Page() {
   console.log("session at dashboard", session);
   return (
     <>
-      <ProtectedRoute requiredPermissions={["view"]} entity="dashboard">
+      {/* <ProtectedRoute requiredPermissions={["view"]} entity="dashboard"> */}
         <div>
           <div className="flex items-center flex-col">
             <h1>Home</h1>
@@ -16,7 +16,7 @@ export default function Page() {
           </div>
           <Dashboard />
         </div>
-      </ProtectedRoute>
+      {/* </ProtectedRoute> */}
     </>
   );
 }
