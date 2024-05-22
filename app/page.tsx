@@ -1,19 +1,22 @@
-"use client"
-import Sidebar from "@/components/common/Sidebar/Sidebar";
+"use client";
+import ProtectedRoute from "@/components/PrivateRoute";
 import Dashboard from "@/components/components/Dashboard/Dashboard";
 import { useSession } from "next-auth/react";
-import { useState } from "react";
-export default function Page(){
-    const [newFirstName, setNewFirstName] = useState("")
-    const {data:session, status, update}= useSession()
-    console.log("session at dashboard", session)
-    return(
-        <>
+
+export default function Page() {
+  const { data: session, status } = useSession();
+  console.log("session at dashboard", session);
+  return (
+    <>
+      <ProtectedRoute requiredPermissions={["view"]} entity="dashboard">
         <div>
+          <div className="flex items-center flex-col">
             <h1>Home</h1>
             <h2>Hi {session?.user.role}</h2>
-            <Dashboard />
+          </div>
+          <Dashboard />
         </div>
-        </>
-    )
+      </ProtectedRoute>
+    </>
+  );
 }
