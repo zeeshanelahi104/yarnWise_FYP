@@ -276,7 +276,7 @@ export default function Sidebar() {
                         </div>
                       </div>
                     </AccordionTrigger>
-                    <AccordionContent>
+                    <div>
                       {renderSidebarItem(
                         "reports",
                         "view",
@@ -284,7 +284,7 @@ export default function Sidebar() {
                         "Reports",
                         "/reports"
                       )}
-                    </AccordionContent>
+                    </div>
                   </AccordionItem>
                 </Accordion>
               </div>

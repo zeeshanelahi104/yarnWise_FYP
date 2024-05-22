@@ -33,7 +33,6 @@ export default function AddTransactionForm() {
     transactionType: "",
   });
 
-
   const { data, isLoading, isSuccess, isError, error } =
     useGetTransactionQuery(id);
   const [addTransaction] = useAddTransactionMutation();
@@ -44,11 +43,14 @@ export default function AddTransactionForm() {
       setTransaction(data.transaction);
     }
   }, [data]);
- // Calculate totalBill whenever quantity or unitPrice changes
- useEffect(() => {
-  const newTotalBill = transaction.quantity * transaction.unitPrice;
-  setTransaction(prevTransaction => ({ ...prevTransaction, totalBill: newTotalBill }));
-}, [transaction.quantity, transaction.unitPrice]);
+  // Calculate totalBill whenever quantity or unitPrice changes
+  useEffect(() => {
+    const newTotalBill = transaction.quantity * transaction.unitPrice;
+    setTransaction((prevTransaction) => ({
+      ...prevTransaction,
+      totalBill: newTotalBill,
+    }));
+  }, [transaction.quantity, transaction.unitPrice]);
   const handleChange = (field: string, value: any) => {
     setTransaction((prevData) => ({ ...prevData, [field]: value }));
   };
@@ -58,14 +60,14 @@ export default function AddTransactionForm() {
       paymentType: e.target.value,
     }));
   };
-  
+
   const handleTransactionTypeChange = (e: any) => {
     setTransaction((prevTransaction) => ({
       ...prevTransaction,
       transactionType: e.target.value,
     }));
   };
-  
+
   const handleSave = async (e: React.MouseEvent<HTMLButtonElement>) => {
     let dataToSend = { ...transaction };
 
@@ -126,7 +128,7 @@ export default function AddTransactionForm() {
       <div className="add-transaction-page-wrapper pt-[45px] container gap-10 flex flex-col justify-center">
         <div className="page-heading">
           <h1 className="title text-center text-primary-clr">
-          {id ? "Edit": "Add"} Transaction
+            {id ? "Edit" : "Add"} Transaction
           </h1>
         </div>
         <div className="add-transaction-form-wrapper flex flex-col gap-4">
@@ -138,7 +140,7 @@ export default function AddTransactionForm() {
                 placeholder="Product Name"
                 className="rounded-[10px] w-full  border-2 border-primary-clr"
                 value={transaction?.productName}
-                onChange={(e) => handleChange('productName', e.target.value)}
+                onChange={(e) => handleChange("productName", e.target.value)}
               />
             </div>
             <div>
@@ -148,7 +150,7 @@ export default function AddTransactionForm() {
                 placeholder="Product Count"
                 className="rounded-[10px] w-full] border-2 border-primary-clr"
                 value={transaction?.productCount}
-                onChange={(e) => handleChange('productCount', e.target.value)}
+                onChange={(e) => handleChange("productCount", e.target.value)}
               />
             </div>
           </div>
@@ -160,7 +162,7 @@ export default function AddTransactionForm() {
                 placeholder="Brand Name"
                 className="rounded-[10px] w-full  border-2 border-primary-clr"
                 value={transaction?.brandName}
-                onChange={(e) => handleChange('brandName', e.target.value)}
+                onChange={(e) => handleChange("brandName", e.target.value)}
               />
             </div>
             <div>
@@ -170,7 +172,7 @@ export default function AddTransactionForm() {
                 placeholder="Unit Price"
                 className="rounded-[10px] w-full border-2 border-primary-clr"
                 value={transaction?.unitPrice}
-                onChange={(e) => handleChange('unitPrice', e.target.value)}
+                onChange={(e) => handleChange("unitPrice", e.target.value)}
               />
             </div>
           </div>
@@ -182,20 +184,22 @@ export default function AddTransactionForm() {
                 placeholder="Quantity"
                 className="rounded-[10px] w-full  border-2 border-primary-clr"
                 value={transaction?.quantity}
-                onChange={(e) => handleChange('quantity', e.target.value)}
+                onChange={(e) => handleChange("quantity", e.target.value)}
               />
             </div>
             <div>
-            <Label>Total Bill</Label>
+              <Label>Total Bill</Label>
               <Input
                 type="text"
                 placeholder="Bill"
                 className="rounded-[10px] w-full  border-2 border-primary-clr"
                 value={transaction?.totalBill}
-                onChange={(e) => handleChange('totalBill', e.target.value)}
+                onChange={(e) => handleChange("totalBill", e.target.value)}
                 disabled
               />
             </div>
+          </div>
+          <div className="form-wrapper grid grid-cols-1 lg:grid-cols-2 gap-4">
             <div>
               <Label>Enter Party Name</Label>
               <Input
@@ -203,11 +207,9 @@ export default function AddTransactionForm() {
                 placeholder="Party Name"
                 className="rounded-[10px] w-full  border-2 border-primary-clr"
                 value={transaction?.partyName}
-                onChange={(e) => handleChange('partyName', e.target.value)}
+                onChange={(e) => handleChange("partyName", e.target.value)}
               />
             </div>
-          </div>
-          <div className="form-wrapper grid grid-cols-1 lg:grid-cols-2 gap-4">
             <div>
               <Label>Enter Party Contact Number</Label>
               <Input
@@ -215,9 +217,13 @@ export default function AddTransactionForm() {
                 placeholder="Party Contact Number"
                 className="rounded-[10px] w-full border-2 border-primary-clr"
                 value={transaction?.partyContactNumber}
-                onChange={(e) => handleChange('partyContactNumber', e.target.value)}
+                onChange={(e) =>
+                  handleChange("partyContactNumber", e.target.value)
+                }
               />
             </div>
+          </div>
+          <div className="form-wrapper grid grid-cols-1 lg:grid-cols-2 gap-4">
             <div>
               <Label>Enter Party Area</Label>
               <Input
@@ -225,7 +231,7 @@ export default function AddTransactionForm() {
                 placeholder="Party Area"
                 className="rounded-[10px] w-full border-2 border-primary-clr"
                 value={transaction?.partyArea}
-                onChange={(e) => handleChange('partyArea', e.target.value)}
+                onChange={(e) => handleChange("partyArea", e.target.value)}
               />
             </div>
 
@@ -236,7 +242,7 @@ export default function AddTransactionForm() {
                 placeholder="Broker Name"
                 className="rounded-[10px] w-full border-2 border-primary-clr"
                 value={transaction?.brokerName}
-                onChange={(e) => handleChange('brokerName', e.target.value)}
+                onChange={(e) => handleChange("brokerName", e.target.value)}
               />
             </div>
             <div>
@@ -246,16 +252,20 @@ export default function AddTransactionForm() {
                 placeholder="Broker Comission Percentage"
                 className="rounded-[10px] w-full border-2 border-primary-clr"
                 value={transaction?.brokerCommissionPercentage}
-                onChange={(e) => handleChange('brokerCommissionPercentage', e.target.value)}
+                onChange={(e) =>
+                  handleChange("brokerCommissionPercentage", e.target.value)
+                }
               />
             </div>
           </div>
           <div className="form-wrapper grid grid-cols-1 lg:grid-cols-2 gap-4">
             <div className="flex flex-col gap-2">
               <Label>Select Payment Type</Label>
-              <select className="rounded-[10px] h-10 w-full  border-2 border-primary-clr"
+              <select
+                className="rounded-[10px] h-10 w-full  border-2 border-primary-clr"
                 value={transaction?.paymentType}
-                onChange={handlePaymentTypeChange}>
+                onChange={handlePaymentTypeChange}
+              >
                 <option>Select Payment Type</option>
                 <option>Debit</option>
                 <option>Credit</option>
@@ -263,9 +273,11 @@ export default function AddTransactionForm() {
             </div>
             <div className="flex flex-col gap-2">
               <Label>Select Transaction Type</Label>
-              <select className="rounded-[10px] h-10 w-full  border-2 border-primary-clr"
-              value={transaction?.transactionType}
-              onChange={handleTransactionTypeChange}>
+              <select
+                className="rounded-[10px] h-10 w-full  border-2 border-primary-clr"
+                value={transaction?.transactionType}
+                onChange={handleTransactionTypeChange}
+              >
                 <option>Select Transaction Type</option>
                 <option>Sale</option>
                 <option>Purchase</option>
@@ -273,10 +285,15 @@ export default function AddTransactionForm() {
             </div>
           </div>
         </div>
-        
-      <div className="add-product-btn mx-auto mt-10 m-5">
-        <Button className="primaryBtn w-[150px] hover:bg-black  hover:text-white text-white" onClick={handleSave}>{id ? "Edit": "Add"} Transaction</Button>
-      </div>
+
+        <div className="add-product-btn mx-auto mt-10 m-5">
+          <Button
+            className="primaryBtn w-[150px] hover:bg-black  hover:text-white text-white"
+            onClick={handleSave}
+          >
+            {id ? "Edit" : "Add"} Transaction
+          </Button>
+        </div>
       </div>
     </>
   );

@@ -1,6 +1,6 @@
 // api/auth/login.ts
 import { NextApiRequest, NextApiResponse } from 'next';
-import { signIn, replaceSession } from 'next-auth/react';
+import { signIn } from 'next-auth/react';
 import axios from 'axios';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -20,7 +20,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     // Replace session to create a new one
-    await replaceSession(req, { ...user, id: user.id });
+    // await replaceSession(req, { ...user, id: user.id });
 
     // Sign in the user
     await signIn('credentials', { email, password, callbackUrl: '/' });
