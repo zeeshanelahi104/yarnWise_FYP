@@ -14,15 +14,6 @@ export const authOptions: NextAuthOptions = {
         token.permssions = session.permissions
       }
       if (user) {
-
-        // // Store the user ID in the token
-        // token.id = user.id as string;
-        
-        // token.role = user.role;
-        // console.log("user.permissions",user.permissions)
-        // if (user.permissions) {
-        //   token.permissions = user.permissions;
-        // }
         return{
           ...token,
           id: user.id,

@@ -14,15 +14,6 @@ const TransactionPage = () => {
             Add Transaction
           </Link>
         </li>
-        {/* <li>
-          <Link
-            href="/transactions/sales.
-            "
-            className={"hover:border-b-2 hover:border-primary-clr"}
-          >
-            Sell Product
-          </Link>
-        </li> */}
         <li>
           <Link
             href="/transactions/manage-transactions"
