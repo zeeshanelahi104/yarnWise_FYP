@@ -27,7 +27,6 @@ const ITEMS_PER_PAGE = 5;
 const TransactionsTable: React.FC<TransactionTableProps> = () => {
   const { data, isLoading, isSuccess, isError, error } =
     useGetTransactionsQuery();
-  console.log("Transactions: ", data);
   const [deleteTransaction] = useDeleteTransactionMutation();
 
   const handleDeleteTransaction = (id: string) => {
@@ -42,7 +41,6 @@ const TransactionsTable: React.FC<TransactionTableProps> = () => {
   };
   const transactionRecord = data?.transaction;
   const [filteredData, setFilteredData] = useState(transactionRecord);
-  console.log("Filtered Data",filteredData);
   
   const [showSearchInput, setShowSearchInput] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -74,7 +72,6 @@ const TransactionsTable: React.FC<TransactionTableProps> = () => {
       item.productName.toLowerCase().includes(searchQuery.toLowerCase())
     );
     setFilteredData(filteredData);
-    console.log(filteredData);
   };
 
   useEffect(() => {
@@ -176,10 +173,16 @@ const TransactionsTable: React.FC<TransactionTableProps> = () => {
                   Broker Name
                 </TableHead>
                 <TableHead className=" text-primary-clr text-[9px] text-center font-bold uppercase border-2 border-black">
-                  Payment Type
+                  Transaction Type
                 </TableHead>
                 <TableHead className=" text-primary-clr text-[9px] text-center font-bold uppercase border-2 border-black">
-                  Transaction Type
+                  Debit
+                </TableHead>
+                <TableHead className=" text-primary-clr text-[9px] text-center font-bold uppercase border-2 border-black">
+                  Credit
+                </TableHead>
+                <TableHead className=" text-primary-clr text-[9px] text-center font-bold uppercase border-2 border-black">
+                  Status
                 </TableHead>
                 <TableHead className=" text-primary-clr text-center font-bold uppercase border-2 border-black">
                   Action
@@ -218,7 +221,6 @@ const TransactionsTable: React.FC<TransactionTableProps> = () => {
                     </TableCell>
                     <TableCell className=" text-center text-[11px] border-2 border-black">
                       {transaction.partyName} , {transaction.partyArea} ,{" "}
-                      {transaction.partyContactNumber}
                     </TableCell>
                     {/* <TableCell className=" text-center text-[9px] border-2 border-black">
                   {transaction.partyArea}
@@ -233,10 +235,16 @@ const TransactionsTable: React.FC<TransactionTableProps> = () => {
                   {transaction.brokerCommissionPercentage}
                 </TableCell> */}
                     <TableCell className=" text-center text-[11px] border-2 border-black">
-                      {transaction.paymentType}
+                      {transaction.transactionType}
                     </TableCell>
                     <TableCell className=" text-center text-[11px] border-2 border-black">
-                      {transaction.transactionType}
+                      {transaction.debit}
+                    </TableCell>
+                    <TableCell className=" text-center text-[11px] border-2 border-black">
+                      {transaction.credit}
+                    </TableCell>
+                    <TableCell className=" text-center text-[11px] border-2 border-black">
+                      {/* {transaction.status} */}
                     </TableCell>
                     <TableCell className="border-2 border-black">
                       <div className="flex justify-end gap-[20px]">

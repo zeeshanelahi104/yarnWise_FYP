@@ -31,7 +31,7 @@ const UsersTable: React.FC<UserTableProps> = () => {
   const [showSearchInput, setShowSearchInput] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
-  const totalPages = Math.ceil(filteredData.length / ITEMS_PER_PAGE);
+  const totalPages = Math.ceil(filteredData?.length / ITEMS_PER_PAGE);
 
   const handleDeleteUser = (id: string) => {
     deleteUser(id)
@@ -65,11 +65,10 @@ const UsersTable: React.FC<UserTableProps> = () => {
   };
 
   const handleSearch = () => {
-    const filteredData = usersRecord.filter((item: any) =>
+    const filteredData = usersRecord?.filter((item: any) =>
       item.lastName.toLowerCase().includes(searchQuery.toLowerCase())
     );
     setFilteredData(filteredData);
-    console.log(filteredData);
   };
 
   useEffect(() => {
@@ -77,8 +76,8 @@ const UsersTable: React.FC<UserTableProps> = () => {
   }, [searchQuery]);
 
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const endIndex = Math.min(startIndex + ITEMS_PER_PAGE, filteredData.length);
-  const currentItems = filteredData.slice(startIndex, endIndex);
+  const endIndex = Math.min(startIndex + ITEMS_PER_PAGE, filteredData?.length);
+  const currentItems = filteredData?.slice(startIndex, endIndex);
 
   const handleInputChange = (event: any) => {
     setSearchQuery(event.target.value);

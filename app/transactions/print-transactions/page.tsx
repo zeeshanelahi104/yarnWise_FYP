@@ -33,7 +33,6 @@ const ITEMS_PER_PAGE = 5
       isError,
       error,
     } = useGetTransactionsQuery();
-    console.log("Transactions: ", data)
   const [deleteTransaction] = useDeleteTransactionMutation();
 
   const handleDeleteTransaction = (id:string) => {
@@ -42,7 +41,6 @@ const ITEMS_PER_PAGE = 5
   }
   const router = useRouter();
   const transactionRecord = data?.transaction
-  console.log("transactionRecordtransactionRecord", transactionRecord)
   const [filteredData, setFilteredData] = useState(transactionRecord);
   const [showSearchInput, setShowSearchInput] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -77,7 +75,6 @@ const ITEMS_PER_PAGE = 5
       
     );
     setFilteredData(filteredData);
-    console.log(filteredData);
   };
   
   useEffect(() => {
@@ -221,13 +218,13 @@ const ITEMS_PER_PAGE = 5
                   {transaction.partyArea}
                 </TableCell>
                 <TableCell className=" text-center text-[12px] border-2 border-black">
-                  {transaction.partyContactNumber}
+                  {/* {transaction.partyContactNumber} */}
                 </TableCell>
                 <TableCell className=" text-center text-[12px] border-2 border-black">
                   {transaction.brokerName}
                 </TableCell>
                 <TableCell className=" text-center text-[12px] border-2 border-black">
-                  {transaction.paymentType}
+                  {/* {transaction.paymentType} */}
                 </TableCell>
                 <TableCell className=" text-center text-[12px] border-2 border-black">
                   {transaction.transactionType}

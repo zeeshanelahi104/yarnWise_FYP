@@ -1,10 +1,10 @@
 import React from "react";
+import AddBrokerForm from "../../component/AddBrokerForm";
 import ProtectedRoute from "@/components/PrivateRoute";
-import AddBrokerForm from "../component/AddBrokerForm";
 
 const Page = () => {
   return (
-    <ProtectedRoute requiredPermissions={["create"]} entity="broker">
+    <ProtectedRoute requiredPermissions={["update"]} entity="broker">
       <div>
         <AddBrokerForm />
       </div>

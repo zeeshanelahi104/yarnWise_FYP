@@ -41,7 +41,6 @@ export const PUT = async (request: NextRequest, { params }: { params: { id: stri
     const db = await connectDB();
     const req = await request.json();
     const userId = params?.id ? new ObjectId(params.id) : null;
-    console.log("User ID from Api route file", userId)
     const query = userId ? { _id: userId } : {};
 
     let user = await User.findOne(query);

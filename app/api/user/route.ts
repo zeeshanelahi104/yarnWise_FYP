@@ -5,7 +5,6 @@ import User from '@/models/user';
 
 export const GET = async (request: NextRequest) => {
   // const req2 = await request.json();
-  // console.log("Credentials", req2)
   try {
     await connectDB();
     
@@ -37,7 +36,6 @@ export const POST = async (request: NextRequest) => {
   try {
     await connectDB();
     const req = await request.json();
-    console.log("Request",req);
     const newUser = await User.create(req);
     return NextResponse.json({
       success: true,

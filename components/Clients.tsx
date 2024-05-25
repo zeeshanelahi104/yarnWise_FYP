@@ -1,65 +1,4 @@
-// "use client";
-// import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react';
-// import { useRouter } from 'next/navigation';
-// import { toast, Toaster } from 'react-hot-toast';
-// import Link from 'next/link';
 
-// interface User {
-//   _id: string;
-// }
-
-// interface ContextType {
-//   user: User;
-//   setUser: React.Dispatch<React.SetStateAction<User>>;
-// }
-
-// export const Context = createContext<ContextType | undefined>(undefined);
-
-// interface ContextProviderProps {
-//   children: ReactNode;
-// }
-
-// export const ContextProvider = ({ children }: ContextProviderProps) => {
-//   const [user, setUser] = useState<User>({ _id: '' }); 
-
-//   return (
-//     <Context.Provider value={{ user, setUser }}>
-//       {children}
-//       <Toaster />
-//     </Context.Provider>
-//   );
-// };
-
-// export const LogoutBtn = () => {
-//   const [user, setUser] = useState<User>({ _id: '' }); 
-//   const router = useRouter();
-  
-//   const logoutHandler = async () => {
-//     try {
-//       const res = await fetch('/api/auth/logout');
-//       const data = await res.json();
-
-//       if (!data.success) toast.error(data.message);
-//       else {
-//         setUser({ _id: '' }); // Reset user state
-//         toast.success(data.message);
-//         router.push("/login")
-//       }
-//     } catch (error) {
-//       if (typeof error === 'string') {
-//         toast.error(error);
-//       } else {
-//         toast.error('An error occurred during logout.');
-//       }
-//     }
-//   };
-
-//   return  (
-//     <button className="btn" onClick={logoutHandler}>
-//       Logout
-//     </button>
-//   ) 
-// };
 "use client";
 import { createContext, ReactNode, useEffect, useState } from 'react';
 import {useRouter} from 'next/navigation';
@@ -121,7 +60,6 @@ const router = useRouter();
 
   const handleLogin = async (userData: User, rememberMe: boolean) => {
     try {
-      console.log("User Data yuytytyt",userData);
       setUser(userData);
       document.cookie = `token=${userData.token}; path=/;${rememberMe ? 'max-age=31536000' : ''}`;
       // toast.success('Login successful!');

@@ -10,7 +10,6 @@ const Page = () => {
   const { isLoading, isSuccess, isError, error } = useGetInventoriesQuery();
 
   const { data } = useSession();
-  console.log("User is Here", data);
 
   return (
     <ProtectedRoute requiredPermissions={["view"]} entity="inventory">

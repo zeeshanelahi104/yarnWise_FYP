@@ -17,18 +17,12 @@ import {
 import { signOut, useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import SheetDemo from "../Sheet/Sheet";
-import { useGetUserQuery } from "@/features/userSlice";
 
 export default function Sidebar() {
   const { data } = useSession();
-  console.log("Session Data", data);
   const pathname = usePathname();
-  // const { data } = useGetUserQuery(userID);
-  // console.log("User Data at Sidebar", data);
   let role = data?.user?.role;
-  console.log("Role from sidebar", role);
   let permissions = data?.user?.permissions;
-  console.log("Permissions from sidebar", permissions);
   const hasPermission = (module: any, action: any) => {
     if (!permissions) return false;
     const modulePermissions = permissions[module];
@@ -67,7 +61,8 @@ export default function Sidebar() {
         className={`w-[248px] sidebar-wrapper pt-10 lg:flex-col bg-[#1E282C] text-white min-h-screen 
         ${
           pathname === "/auth/login" ||
-          pathname === "/transactions/manage-transactions"
+          pathname === "/transactions/manage-transactions" ||
+          pathname === "/reports/transactions-report"
             ? "hidden"
             : "hidden lg:flex"
         }
@@ -134,7 +129,7 @@ export default function Sidebar() {
 
                       {renderSidebarItem(
                         "role",
-                        "update",
+                        "view",
                         <FaUsers color="#008F89" size={20} />,
                         "Manage Roles",
                         "/roles"
@@ -167,7 +162,7 @@ export default function Sidebar() {
 
                       {renderSidebarItem(
                         "user",
-                        "update",
+                        "view",
                         <FaUsers color="#008F89" size={20} />,
                         "Manage Users",
                         "/users"
@@ -200,7 +195,7 @@ export default function Sidebar() {
 
                       {renderSidebarItem(
                         "inventory",
-                        "update",
+                        "view",
                         <IoIosOptions color="#008F89" size={20} />,
                         "Manage Products",
                         "/inventory"
@@ -290,7 +285,7 @@ export default function Sidebar() {
                     </AccordionTrigger>
                     <AccordionContent className="space-y-4 bg-[#2C3B41] p-1 ">
                       {renderSidebarItem(
-                        "parties",
+                        "party",
                         "create",
                         <FaTag color="#008F89" size={20} />,
                         "Add Party",
@@ -298,7 +293,7 @@ export default function Sidebar() {
                       )}
 
                       {renderSidebarItem(
-                        "parties",
+                        "party",
                         "view",
                         <FaShoppingCart color="#008F89" size={20} />,
                         "Manage Parties",

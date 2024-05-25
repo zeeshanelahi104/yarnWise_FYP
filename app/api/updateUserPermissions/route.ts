@@ -9,7 +9,6 @@ export const POST = async (request: NextRequest) => {
         const { userId, permissions } = await request.json();
         // Update user permissions in the database
         const userWithUpdatedPermissions = await User.findByIdAndUpdate(userId, { permissions });
-        console.log("userWithUpdatedPermissions",userWithUpdatedPermissions)
         return NextResponse.json({
             success: true,
             status: 200,

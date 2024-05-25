@@ -5,7 +5,6 @@ import { useSession } from "next-auth/react";
 
 export default function Page() {
   const { data: session, status } = useSession();
-  console.log("session at dashboard", session);
   return (
     <>
       {/* <ProtectedRoute requiredPermissions={["view"]} entity="dashboard"> */}

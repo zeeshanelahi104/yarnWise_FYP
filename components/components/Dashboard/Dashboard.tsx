@@ -1,5 +1,4 @@
 "use client";
-import { useState } from "react";
 import Link from "next/link";
 import { FaArrowRight, FaUsers } from "react-icons/fa";
 import { FaBagShopping } from "react-icons/fa6";
@@ -14,7 +13,6 @@ export default function Dashboard() {
   const { data: users } = useGetUsersQuery();
   const { data: roles } = useGetRolesQuery();
   const { data: inventories } = useGetInventoriesQuery();
-  console.log("inventories at dashboard", inventories)
   const transactionsLength = transactions?.transaction.length;
   const usersLength = users?.user.length;
   const rolesLength = roles?.role.length;

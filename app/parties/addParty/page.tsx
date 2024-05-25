@@ -4,7 +4,7 @@ import AddPartyForm from "../component/AddPartyForm";
 
 const Page = () => {
   return (
-    <ProtectedRoute requiredPermissions={["create"]} entity="role">
+    <ProtectedRoute requiredPermissions={["create"]} entity="party">
       <div>
         <AddPartyForm />
       </div>

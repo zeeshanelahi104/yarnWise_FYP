@@ -17,12 +17,8 @@ const ProtectedRoute = ({ children, requiredPermissions, entity }: ProtectedRout
   useEffect(() => {
     if (status === 'loading') return; // Do nothing while loading
 
-    // Console log to inspect session data
-    console.log("Session data:", session);
-
     const userPermissionsObj = session?.user?.permissions;
     if (!userPermissionsObj || typeof userPermissionsObj !== 'object') {
-      console.error("User permissions is not a valid object:", userPermissionsObj);
       router.push('/unauthorized'); // Redirect to an unauthorized page
       return;
     }

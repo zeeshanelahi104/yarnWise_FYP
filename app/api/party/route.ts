@@ -1,16 +1,16 @@
-// pages/api/transaction.js
+// pages/api/party.js
 import { NextRequest, NextResponse } from 'next/server';
 import {connectDB} from '@/lib/db';
-import Transaction from '@/models/transaction';
+import Party from '@/models/party';
 
 export const GET = async (request: NextRequest) => {
   try {
     await connectDB();
-    const transaction = await Transaction.find({});
+    const party = await Party.find({});
     return NextResponse.json({
       success: true,
       status: 200,
-      transaction
+      party
     });
   } catch (error) {
     console.error(error);
@@ -27,12 +27,12 @@ export const POST = async (request: NextRequest) => {
   try {
     await connectDB();
     const req = await request.json();
-    const newTransaction = await Transaction.create(req);
+    const newparty = await Party.create(req);
     return NextResponse.json({
       success: true,
       status: 200,
-      message: "Transaction Created",
-      data: newTransaction
+      message: "Party Created",
+      data: newparty
     });
   } catch (error) {
     console.error(error);

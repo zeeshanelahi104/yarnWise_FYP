@@ -85,7 +85,8 @@ const InventoryTable: React.FC<InventoryTableProps> = () => {
 
   useEffect(() => {
     handleSearch();
-  }, [searchQuery]);
+    setFilteredData(inventoryRecord);
+  }, [searchQuery, filteredData]);
 
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = Math.min(startIndex + ITEMS_PER_PAGE, filteredData.length);

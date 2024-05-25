@@ -2,13 +2,12 @@
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Transaction } from "@/types";
+import { Party, Transaction } from "@/types";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -19,33 +18,30 @@ import { FaPen, FaPrint, FaSearch, FaArrowLeft } from "react-icons/fa";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import {
-  useDeleteTransactionMutation,
-  useGetTransactionsQuery,
-} from "@/features/transactionSlice";
-interface TransactionTableProps {}
+  useDeletePartyMutation,
+  useGetPartiesQuery,
+} from "@/features/partySlice";
+interface PartyTableProps {}
 
 const ITEMS_PER_PAGE = 5;
 
-const PartyTable: React.FC<TransactionTableProps> = () => {
-  const { data, isLoading, isSuccess, isError, error } =
-    useGetTransactionsQuery();
-  console.log("Transactions: ", data);
-  const [deleteTransaction] = useDeleteTransactionMutation();
+const PartyTable: React.FC<PartyTableProps> = () => {
+  const { data, isLoading, isSuccess, isError, error } = useGetPartiesQuery();
+  const [deleteParty] = useDeletePartyMutation();
 
-  const handleDeleteTransaction = (id: string) => {
-    deleteTransaction(id)
+  const handleDeleteParty = (id: string) => {
+    deleteParty(id)
       .unwrap()
       .then(() => {
-        toast.success("Transaction Deleted");
+        toast.success("Party Deleted");
       })
       .catch(() => {
-        toast.error("Error, Deleting Transaction");
+        toast.error("Error, Deleting Party");
       });
   };
   const router = useRouter();
-  const transactionRecord = data?.transaction;
-  console.log("transactionRecordtransactionRecord", transactionRecord);
-  const [filteredData, setFilteredData] = useState(transactionRecord);
+  const partyRecord = data?.party;
+  const [filteredData, setFilteredData] = useState(partyRecord);
   const [showSearchInput, setShowSearchInput] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
@@ -72,20 +68,19 @@ const PartyTable: React.FC<TransactionTableProps> = () => {
   };
 
   const handleSearch = () => {
-    const filteredData = transactionRecord?.filter((item: any) =>
+    const filteredData = partyRecord?.filter((item: any) =>
       item.partyName.toLowerCase().includes(searchQuery.toLowerCase())
     );
     setFilteredData(filteredData);
-    console.log(filteredData);
   };
 
   useEffect(() => {
     handleSearch();
-  }, [searchQuery]);
+  }, [searchQuery,filteredData]);
 
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = Math.min(startIndex + ITEMS_PER_PAGE, filteredData?.length);
-  const currentItems = transactionRecord?.slice(startIndex, endIndex);
+  const currentItems = partyRecord?.slice(startIndex, endIndex);
 
   const handleInputChange = (event: any) => {
     setSearchQuery(event.target.value);
@@ -98,7 +93,7 @@ const PartyTable: React.FC<TransactionTableProps> = () => {
           {!showSearchInput && (
             <>
               <h3 className="text-barlow text-[#364A63] font-bold text-[19px] leading-[19px]">
-                Transactions
+                Parties
               </h3>
               <div className="icons-wrapper flex justify-between gap-3">
                 <button onClick={() => setShowSearchInput(true)}>
@@ -136,57 +131,78 @@ const PartyTable: React.FC<TransactionTableProps> = () => {
                   ID
                 </TableHead>
                 <TableHead className="text-primary-clr text-[11px] text-center font-bold uppercase border-2 border-black">
-                  Order Details
+                  Party Name
                 </TableHead>
                 <TableHead className="text-primary-clr text-[11px] text-center font-bold uppercase border-2 border-black">
-                  Calculations
-                </TableHead>
-
-                <TableHead className=" text-primary-clr text-[11px] text-center font-bold uppercase border-2 border-black">
-                  Total Bill
+                  Owner Name
                 </TableHead>
                 <TableHead className=" text-primary-clr text-[11px] text-center font-bold uppercase border-2 border-black">
-                  Party Details
-                </TableHead>
-
-                <TableHead className=" text-primary-clr text-[11px] text-center font-bold uppercase border-2 border-black">
-                  Payment Type
+                  Party Area
                 </TableHead>
                 <TableHead className=" text-primary-clr text-[11px] text-center font-bold uppercase border-2 border-black">
-                  Transaction Type
+                  Address
+                </TableHead>
+                <TableHead className=" text-primary-clr text-[11px] text-center font-bold uppercase border-2 border-black">
+                  Contact Number
+                </TableHead>
+                <TableHead className=" text-primary-clr text-[11px] text-center font-bold uppercase border-2 border-black">
+                  Balance
+                </TableHead>
+                <TableHead className=" text-primary-clr text-[11px] text-center font-bold uppercase border-2 border-black">
+                  Status
+                </TableHead>
+                <TableHead className=" text-primary-clr text-[11px] text-center font-bold uppercase border-2 border-black">
+                  Action
                 </TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {currentItems &&
-                currentItems?.map((transaction: Transaction, index: number) => (
+                currentItems?.map((party: Party, index: number) => (
                   <TableRow key={index}>
                     <TableCell className="font-medium text-[11px] text-center border-2 border-black">
-                      {transaction?._id
-                        ? transaction?._id
-                            .substring(transaction?._id.length - 4)
+                      {party?._id
+                        ? party?._id
+                            .substring(party?._id.length - 4)
                             .toUpperCase()
                         : ""}
                     </TableCell>
                     <TableCell className="px-6 py-4 text-[11px] whitespace-nowrap text-center border-2 border-black">
-                      {transaction.productName} , {transaction.brandName} ,
-                      {transaction.productCount}
+                      {party.partyName}
                     </TableCell>
                     <TableCell className="text-center text-[11px] border-2 border-black">
-                      {transaction.quantity} bags @ {transaction.unitPrice}
+                      {party.ownerName}
                     </TableCell>
                     <TableCell className=" text-center text-[11px] border-2 border-black">
-                      {transaction.unitPrice * transaction.quantity}
+                      {party.partyArea}
                     </TableCell>
                     <TableCell className=" text-center text-[11px] border-2 border-black">
-                      {transaction.partyName} , {transaction.partyArea} ,{" "}
-                      {transaction.partyContactNumber}
+                      {party.address}
                     </TableCell>
                     <TableCell className=" text-center text-[11px] border-2 border-black">
-                      {transaction.paymentType}
+                      {party.contactNumber}
                     </TableCell>
                     <TableCell className=" text-center text-[11px] border-2 border-black">
-                      {transaction.transactionType}
+                      {party.balance}
+                    </TableCell>
+                    <TableCell className=" text-center text-[11px] border-2 border-black">
+                      {party.status}
+                    </TableCell>
+                    <TableCell className="border-2 border-black">
+                      <div className="flex justify-end gap-[20px]">
+                        <Link href={`/parties/editparty/${party?._id}`}>
+                          <FaPen size={20} className="text-primary-clr" />
+                        </Link>
+                        <button>
+                          <MdDelete
+                            size={20}
+                            className="text-primary-clr"
+                            onClick={() =>
+                              handleDeleteParty(party?._id ? party._id : "")
+                            }
+                          />
+                        </button>
+                      </div>
                     </TableCell>
                   </TableRow>
                 ))}
@@ -234,7 +250,10 @@ const PartyTable: React.FC<TransactionTableProps> = () => {
                 disabled={currentPage === totalPages}
                 className="border border-black w-9 flex justify-center items-center hover:bg-[#DBDFEA]"
               >
-                <FiChevronsRight className="w-[14px]" color="black" />
+                <FiChevronsRight
+                  color="black"
+                  className="w-[14px] text-primary-clr cursor-pointer"
+                />
               </button>
             </div>
           )}

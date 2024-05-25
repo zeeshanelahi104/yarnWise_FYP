@@ -37,11 +37,9 @@ export const DELETE = async (request: NextRequest, { params }: { params: { id: s
 };
 
 export const PUT = async (request: NextRequest, { params }: { params: { id: string } }) => {
-  console.log("🚀 ~ PUT ~ id:", params?.id)
   try {
     const db = await connectDB();
     const req = await request.json();
-    console.log("🚀 ~ PUT ~ req:", req)
     const inventoryId = params?.id ? new ObjectId(params.id) : null;
 
     const query = inventoryId ? { _id: inventoryId } : {};
@@ -73,9 +71,12 @@ export const PUT = async (request: NextRequest, { params }: { params: { id: stri
   }
 };
 export const GET = async (request: NextRequest, { params }: { params: { id: string } }) => {
-  console.log("🚀 ~ GET ~ id:", params.id)
+  console.log("Received PUT request for inventory ID:", params?.id);
+
   try {
     const db = await connectDB();
+    const req = await request.json();
+    console.log("Received data:", req);
     const inventoryId = params?.id ? new ObjectId(params.id) : null;
 
     const query = inventoryId ? { _id: inventoryId } : {};

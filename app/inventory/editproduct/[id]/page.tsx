@@ -4,11 +4,11 @@ import ProtectedRoute from '@/components/PrivateRoute'
 
 const Page = () => {
   return (
-    // <ProtectedRoute requiredPermissions={["update"]} entity="inventory">
+    <ProtectedRoute requiredPermissions={["update"]} entity="inventory">
     <div>
       <AddProductForm/>
     </div>
-    // </ProtectedRoute>
+    </ProtectedRoute>
   )
 }
 

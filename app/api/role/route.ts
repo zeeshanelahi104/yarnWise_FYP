@@ -27,7 +27,6 @@ export const POST = async (request: NextRequest) => {
   try {
     await connectDB();
     const req = await request.json();
-    console.log("Request",req);
     const newRole = await Role.create(req);
     return NextResponse.json({
       success: true,

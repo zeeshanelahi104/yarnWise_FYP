@@ -1,16 +1,16 @@
-// pages/api/transaction.js
+// pages/api/Broker.js
 import { NextRequest, NextResponse } from 'next/server';
 import {connectDB} from '@/lib/db';
-import Transaction from '@/models/transaction';
+import Broker from '@/models/broker';
 
 export const GET = async (request: NextRequest) => {
   try {
     await connectDB();
-    const transaction = await Transaction.find({});
+    const broker = await Broker.find({});
     return NextResponse.json({
       success: true,
       status: 200,
-      transaction
+      broker
     });
   } catch (error) {
     console.error(error);
@@ -27,12 +27,12 @@ export const POST = async (request: NextRequest) => {
   try {
     await connectDB();
     const req = await request.json();
-    const newTransaction = await Transaction.create(req);
+    const newBroker = await Broker.create(req);
     return NextResponse.json({
       success: true,
       status: 200,
-      message: "Transaction Created",
-      data: newTransaction
+      message: "Broker Created",
+      data: newBroker
     });
   } catch (error) {
     console.error(error);

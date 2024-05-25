@@ -27,16 +27,37 @@ export interface UserTypes {
     totalBill: number;
     partyName: string;
     partyArea: string;
-    partyContactNumber: string;
     brokerName: string;
     brokerCommissionPercentage: number;
-    paymentType: string;
     transactionType: string;
+    debit: number;
+    credit: number;
+    balance: number;
+    status: string;
   }
   export interface Role {
     _id?:string;
     role: string;
     permissions: object;
+  }
+ 
+  export interface Broker {
+    _id?:string;
+    name: string;
+    address: string;
+    contactNumber: string;
+    
+  }
+ 
+  export interface Party {
+    _id?:string;
+    partyName: string;
+    ownerName: string;
+    partyArea: string;
+    address: string;
+    contactNumber: string;
+    balance: number;
+    status: string;
   }
  
   export interface Response {

@@ -7,7 +7,6 @@ export const POST = async (request: NextRequest) => {
     try {
       await connectDB();
       const req = await request.json();
-      // console.log("Request",req);
       const users = await User.find({role: req?.role})
       return NextResponse.json({
         success: true,

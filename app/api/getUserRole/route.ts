@@ -6,7 +6,6 @@ export const POST = async (request: NextRequest) => {
     try {
       await connectDB();
       const req = await request.json();
-      // console.log("Request",req);
       const user = await User.find({email: req?.email})
       console.log("User in getUserRole", user);
       return NextResponse.json({

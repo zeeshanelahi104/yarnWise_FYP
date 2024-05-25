@@ -1,30 +1,30 @@
 import { connectDB } from "@/lib/db";
 import { ObjectId } from "mongodb";
 import { NextRequest, NextResponse } from "next/server";
-import Transaction from '@/models/transaction';
+import Party from '@/models/party';
 
 export const DELETE = async (request: NextRequest, { params }: { params: { id: string } }) => {
   try {
     await connectDB();
-    const transactionId = params?.id ? new ObjectId(params.id) : null;
+    const partyId = params?.id ? new ObjectId(params.id) : null;
 
-    const query = transactionId ? { _id: transactionId } : {};
+    const query = partyId ? { _id: partyId } : {};
 
-    let transaction = await Transaction.findOne(query);
+    let party = await Party.findOne(query);
 
-    if (!transaction) {
+    if (!party) {
       return NextResponse.json({
         success: false,
-        error: "Transaction not found!!!"
+        error: "Party not found!!!"
       }, { status: 404});
     }
 
-    await Transaction.deleteOne(query);
+    await Party.deleteOne(query);
 
     return NextResponse.json({
       success: true,
       status: 200,
-      error: "Transaction Deleted"
+      error: "Party Deleted"
     });
 
   } catch (error) {
@@ -40,25 +40,25 @@ export const PUT = async (request: NextRequest, { params }: { params: { id: stri
   try {
     const db = await connectDB();
     const req = await request.json();
-    const transactionId = params?.id ? new ObjectId(params.id) : null;
+    const partyId = params?.id ? new ObjectId(params.id) : null;
 
-    const query = transactionId ? { _id: transactionId } : {};
+    const query = partyId ? { _id: partyId } : {};
 
-    let transaction = await Transaction.findOne(query);
+    let party = await Party.findOne(query);
 
-    if (!transaction) {
+    if (!party) {
       return NextResponse.json({
         success: false,
-        error: "Transaction not found!!!"
+        error: "Party not found!!!"
       }, {status: 404});
     }
 
-    await Transaction.updateOne(query, { $set: req });
+    await Party.updateOne(query, { $set: req });
 
     return NextResponse.json({
       success: true,
       status: 200,
-      message: "Transaction Updated",
+      message: "Party Updated",
       appointment: req
     });
 
@@ -73,23 +73,23 @@ export const PUT = async (request: NextRequest, { params }: { params: { id: stri
 export const GET = async (request: NextRequest, { params }: { params: { id: string } }) => {
   try {
     const db = await connectDB();
-    const transactionId = params?.id ? new ObjectId(params.id) : null;
+    const partyId = params?.id ? new ObjectId(params.id) : null;
 
-    const query = transactionId ? { _id: transactionId } : {};
+    const query = partyId ? { _id: partyId } : {};
 
-    let transaction = await Transaction.findOne(query);
+    let party = await Party.findOne(query);
 
-    if (!transaction) {
+    if (!party) {
       return NextResponse.json({
         success: false,
-        error: "Transaction not found!!!"
+        error: "Party not found!!!"
       }, {status: 404});
     }
 
     return NextResponse.json({
       success: true,
       status: 200,
-      transaction
+      party
     });
 
   } catch (error) {

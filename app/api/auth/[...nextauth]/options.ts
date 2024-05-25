@@ -6,10 +6,10 @@ export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   session: {
     strategy: "jwt",
+    maxAge: 3 * 60 * 60,
   },
   callbacks: {
     async jwt({ token, user, session, trigger }) {
-      console.log("jwt callbacks", {token,user, session})
       if(trigger === "update" && session.permissions){
         token.permssions = session.permissions
       }
@@ -27,7 +27,6 @@ export const authOptions: NextAuthOptions = {
     },
 
     async session({ session, token, user }) {
-      console.log("Session Callbacks", {token,user, session})
       return{
         ...session,
         user: {
@@ -63,7 +62,6 @@ export const authOptions: NextAuthOptions = {
             email: credentials?.email,
           };
           const response = await axios.post(url, postData);
-          // console.log("Response Data:", response.data);
           const user = response.data.data[0];
 
           if (

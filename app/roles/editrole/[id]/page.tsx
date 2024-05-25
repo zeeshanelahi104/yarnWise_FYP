@@ -4,7 +4,7 @@ import ProtectedRoute from "@/components/PrivateRoute";
 
 const Page = () => {
   return (
-    <ProtectedRoute requiredPermissions={["view"]} entity="role">
+    <ProtectedRoute requiredPermissions={["update"]} entity="role">
       <div>
         <AddRoleForm />
       </div>
