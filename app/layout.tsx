@@ -83,7 +83,7 @@ export default function RootLayout({ children, session }: RootLayoutProps) {
                   
                   <div className="flex-1">
                     <Toaster />
-                    {/* <Navbar /> */}
+                    <Navbar />
                     {children}
                   </div>
                 </div>
