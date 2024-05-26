@@ -229,7 +229,6 @@ export default function AddTransactionForm() {
     newStock: number
   ) => {
     if (!inventoryItem._id) {
-      console.error("Inventory item ID is undefined. Cannot update stock.");
       return;
     }
     const updatedInventory = { ...inventoryItem, stock: newStock };
@@ -244,9 +243,6 @@ export default function AddTransactionForm() {
     newStatus: string
   ) => {
     if (!partyItem._id) {
-      console.error(
-        "Party item ID is undefined. Cannot update balance and status."
-      );
       return;
     }
     const updatedParty = {
@@ -321,7 +317,6 @@ export default function AddTransactionForm() {
               if (partyItem.status === "Dr") {
                 newBalance = -partyItem.balance + difCredit - difBill;
               } else {
-                console.log(" gotttttt itt");
                 newBalance = partyItem.balance + difCredit - difBill;
               }
             } else {
@@ -330,18 +325,14 @@ export default function AddTransactionForm() {
               if (partyItem.status === "Dr") {
                 newBalance = -partyItem.balance + difCredit - difBill;
               } else {
-                console.log(" yyeeyyyy should work");
-
                 newBalance = partyItem.balance + difCredit - difBill;
-                console.log("old balance", partyItem.balance);
-                console.log("dif credit", difCredit);
-                console.log("difBill", difBill);
-                console.log("newBalance", newBalance);
               }
             }
 
             let newStatus = newBalance < 0 ? "Dr" : "Cr";
             newBalance = Math.abs(newBalance);
+            transaction.balance = newBalance;
+            transaction.status = newStatus;
             await updateBalanceAndStatus(partyItem, newBalance, newStatus);
           }
           setTransaction({
@@ -398,6 +389,8 @@ export default function AddTransactionForm() {
             }
             let newStatus = newBalance < 0 ? "Dr" : "Cr";
             newBalance = Math.abs(newBalance);
+            transaction.balance = newBalance;
+            transaction.status = newStatus;
             await updateBalanceAndStatus(partyItem, newBalance, newStatus);
           }
           setTransaction({

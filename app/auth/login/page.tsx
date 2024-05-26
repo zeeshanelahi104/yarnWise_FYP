@@ -30,14 +30,15 @@ const Page = () => {
   };
   return (
     <div className="login-page-wrapper container bg-login-bg h-[100vh]">
+  
+      <div className="flex flex-col justify-center items-center">
       <h1 className="text-white flex justify-center items-center pt-10 text-[40px] font-bold uppercase">
         Login
       </h1>
-      <div className="flex justify-center items-center">
-        <div className="login-form-wrapper mt-10 bg-[#D9D9D9] flex justify-center items-center rounded-[10px] w-full md:w-[450px] p-5">
-          <div className="login-form-inner-wrapper">
-            <form onSubmit={handleSubmit}>
-              <div className="login-fields mt-5 flex flex-col justify-center items-center gap-5">
+        <div className="login-form-wrapper bg-[#D9D9D9] flex justify-center items-center rounded-[10px] w-full md:w-[450px] p-5">
+          <div className="login-form-inner-wrapper w-full">
+            <form onSubmit={handleSubmit} className="w-full">
+              <div className="login-fields mt-5 flex flex-col justify-center items-center gap-5 w-full">
                 <Input
                   type="text"
                   name="email"
@@ -62,7 +63,7 @@ const Page = () => {
                   type="submit"
                   className="bg-primary-clr text-white primaryBtn w-[150px] hover:bg-black hover:text-white"
                 >
-                  Login with Email
+                  Login
                 </Button>
               </div>
             </form>
