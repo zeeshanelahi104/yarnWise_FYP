@@ -272,7 +272,7 @@ export default function Sidebar() {
                     <AccordionTrigger>
                       <div className="flex items-center space-x-4">
                         <div className="sidebar-item-wrapper flex">
-                          <Link href={"#"} className="flex gap-4">
+                          <Link href={"/parties"} className="flex gap-4">
                             <span className="flex justify-center items-center">
                               <MdRequestPage color="#008F89" size={20} />
                             </span>
