@@ -13,10 +13,10 @@ export default function Dashboard() {
   const { data: users } = useGetUsersQuery();
   const { data: roles } = useGetRolesQuery();
   const { data: inventories } = useGetInventoriesQuery();
-  const transactionsLength = transactions?.transaction.length;
-  const usersLength = users?.user.length;
-  const rolesLength = roles?.role.length;
-  const inventoriesLength = inventories?.inventory.length;
+  const transactionsLength = transactions?.transaction?.length;
+  const usersLength = users?.user?.length;
+  const rolesLength = roles?.role?.length;
+  const inventoriesLength = inventories?.inventory?.length;
   return (
     <>
       <div className="dashboard-items-wrapper flex justify-center items-center container pt-[45px]">

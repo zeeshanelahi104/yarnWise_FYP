@@ -42,11 +42,13 @@ const InventoryTable: React.FC<InventoryTableProps> = () => {
       .unwrap()
       .then(() => {
         toast.success("Inventory Deleted");
+        setFilteredData((prevData: any[]) => prevData.filter(item => item._id !== id));
       })
       .catch(() => {
         toast.error("Error, Deleting Inventory");
       });
   };
+
   const router = useRouter();
   const inventoryRecord = data?.inventory;
   const [filteredData, setFilteredData] = useState(inventoryRecord);
@@ -82,11 +84,15 @@ const InventoryTable: React.FC<InventoryTableProps> = () => {
     setFilteredData(filteredData);
     console.log(filteredData);
   };
+  useEffect(() => {
+    if (inventoryRecord) {
+      setFilteredData(inventoryRecord);
+    }
+  }, [inventoryRecord]);
 
   useEffect(() => {
     handleSearch();
-    setFilteredData(inventoryRecord);
-  }, [searchQuery, filteredData]);
+  }, [searchQuery]);
 
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = Math.min(startIndex + ITEMS_PER_PAGE, filteredData.length);

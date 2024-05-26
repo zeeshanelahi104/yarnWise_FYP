@@ -34,6 +34,9 @@ const TransactionsTable: React.FC<TransactionTableProps> = () => {
       .unwrap()
       .then(() => {
         toast.success("Transaction Deleted");
+        setFilteredData((prevData: any[]) =>
+          prevData.filter((item) => item._id !== id)
+        );
       })
       .catch(() => {
         toast.error("Error, Deleting Transaction");
@@ -41,7 +44,7 @@ const TransactionsTable: React.FC<TransactionTableProps> = () => {
   };
   const transactionRecord = data?.transaction;
   const [filteredData, setFilteredData] = useState(transactionRecord);
-  
+
   const [showSearchInput, setShowSearchInput] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
@@ -76,7 +79,7 @@ const TransactionsTable: React.FC<TransactionTableProps> = () => {
 
   useEffect(() => {
     handleSearch();
-  }, [searchQuery]);
+  }, [searchQuery, transactionRecord]);
 
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = Math.min(startIndex + ITEMS_PER_PAGE, filteredData?.length);
@@ -182,6 +185,9 @@ const TransactionsTable: React.FC<TransactionTableProps> = () => {
                   Credit
                 </TableHead>
                 <TableHead className=" text-primary-clr text-[9px] text-center font-bold uppercase border-2 border-black">
+                  Balance
+                </TableHead>
+                <TableHead className=" text-primary-clr text-[9px] text-center font-bold uppercase border-2 border-black">
                   Status
                 </TableHead>
                 <TableHead className=" text-primary-clr text-center font-bold uppercase border-2 border-black">
@@ -201,39 +207,24 @@ const TransactionsTable: React.FC<TransactionTableProps> = () => {
                         : ""}
                     </TableCell>
                     <TableCell className="px-6 whitespace-nowrap py-4 text-[11px] border-2 border-black">
-                      {transaction.productName}, {transaction.brandName} ,{" "}
+                      {transaction.productName}, {transaction.brandName}
                       {transaction.productCount}
                     </TableCell>
-                    {/* <TableCell className="text-center text-[9px] border-2 border-black">
-                  {transaction.productCount}
-                </TableCell>
-                <TableCell className="text-center text-[9px] border-2 border-black">
-                  {transaction.brandName}
-                </TableCell> */}
                     <TableCell className="text-center text-[11px] border-2 border-black">
                       {transaction.quantity} bags @ {transaction.unitPrice}
                     </TableCell>
-                    {/* <TableCell className="text-center text-[9px] border-2 border-black">
-                  {transaction.quantity}
-                </TableCell> */}
                     <TableCell className=" text-center text-[11px] border-2 border-black">
                       {transaction.totalBill}
                     </TableCell>
                     <TableCell className=" text-center text-[11px] border-2 border-black">
-                      {transaction.partyName} , {transaction.partyArea} ,{" "}
+                      {transaction.partyName} , {transaction.partyArea}
                     </TableCell>
-                    {/* <TableCell className=" text-center text-[9px] border-2 border-black">
-                  {transaction.partyArea}
-                </TableCell>
-                <TableCell className=" text-center text-[9px] border-2 border-black">
-                  {transaction.partyContactNumber}
-                </TableCell> */}
                     <TableCell className=" text-center text-[11px] border-2 border-black">
                       {transaction.brokerName}
                     </TableCell>
                     {/* <TableCell className=" text-center text-[9px] border-2 border-black">
-                  {transaction.brokerCommissionPercentage}
-                </TableCell> */}
+                      {transaction.brokerCommissionPercentage} %
+                    </TableCell> */}
                     <TableCell className=" text-center text-[11px] border-2 border-black">
                       {transaction.transactionType}
                     </TableCell>
@@ -244,7 +235,10 @@ const TransactionsTable: React.FC<TransactionTableProps> = () => {
                       {transaction.credit}
                     </TableCell>
                     <TableCell className=" text-center text-[11px] border-2 border-black">
-                      {/* {transaction.status} */}
+                      {transaction.balance}
+                    </TableCell>
+                    <TableCell className=" text-center text-[11px] border-2 border-black">
+                      {transaction.status}
                     </TableCell>
                     <TableCell className="border-2 border-black">
                       <div className="flex justify-end gap-[20px]">

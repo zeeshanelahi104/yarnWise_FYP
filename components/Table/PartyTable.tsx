@@ -34,6 +34,7 @@ const PartyTable: React.FC<PartyTableProps> = () => {
       .unwrap()
       .then(() => {
         toast.success("Party Deleted");
+        setFilteredData((prevData: any[]) => prevData.filter(item => item._id !== id));
       })
       .catch(() => {
         toast.error("Error, Deleting Party");
@@ -76,7 +77,7 @@ const PartyTable: React.FC<PartyTableProps> = () => {
 
   useEffect(() => {
     handleSearch();
-  }, [searchQuery,filteredData]);
+  }, [searchQuery,partyRecord]);
 
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = Math.min(startIndex + ITEMS_PER_PAGE, filteredData?.length);

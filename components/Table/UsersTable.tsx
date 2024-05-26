@@ -38,6 +38,7 @@ const UsersTable: React.FC<UserTableProps> = () => {
       .unwrap()
       .then(() => {
         toast.success("User Deleted");
+        setFilteredData((prevData: any[]) => prevData.filter(item => item._id !== id));
       })
       .catch(() => {
         toast.error("Error, Deleting User");

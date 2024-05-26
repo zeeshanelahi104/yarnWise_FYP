@@ -353,6 +353,7 @@ const RoleTable: React.FC<RoleTableProps> = () => {
       .unwrap()
       .then(() => {
         toast.success("Role Deleted");
+        setFilteredData((prevData: any[]) => prevData.filter(item => item._id !== id));
       })
       .catch(() => {
         toast.error("Error, Deleting Role");
