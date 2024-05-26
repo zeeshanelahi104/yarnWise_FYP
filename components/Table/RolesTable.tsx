@@ -95,9 +95,9 @@
 //                   <div className="icons-wrapper flex justify-between gap-3">
 //                     <button onClick={() => setShowSearchInput(true)}>
 //                       <FaSearch className="w-[16px]"/>
-                      
+
 //                     </button>
-                    
+
 //                   </div>
 //                 </>
 //               )}
@@ -106,7 +106,7 @@
 //                   <button onClick={() => setShowSearchInput(false)}>
 //                     <FaArrowLeft className=" mr-2 flex justify-center items-center w-[16px]"
 //                     />
-                    
+
 //                   </button>
 //                   <input
 //                     type="text"
@@ -219,7 +219,7 @@
 //         {totalPages > 1 && (
 //                 <div className="pagination-controls flex justify-start py-2 border-2 border-black px-4">
 //                   <button
-                    
+
 //                     onClick={goToFirstPage}
 //                     disabled={currentPage === 1}
 //                     className="border border-black w-9 flex justify-center items-center rounded-[2px] hover:bg-[#DBDFEA]"
@@ -233,7 +233,7 @@
 //                   >
 //                     <ChevronLeft className="w-[10px]"color="black" />
 //                   </button>
-                  
+
 //                   {[...Array(totalPages).keys()].map((pageNum) => (
 //                     <button
 //                       key={pageNum}
@@ -250,15 +250,15 @@
 //                   <button
 //                     onClick={goToNextPage}
 //                     disabled={currentPage === totalPages}
-                    
+
 //                     className="border border-black w-9 flex justify-center items-center hover:bg-[#DBDFEA]"
-//                   > 
+//                   >
 //                   <ChevronRight className="w-[10px]" color="black"/>
 //                   </button>
 //                   <button
 //                     onClick={goToLastPage}
 //                     disabled={currentPage === totalPages}
-                    
+
 //                     className="border border-black w-9 flex justify-center items-center hover:bg-[#DBDFEA]"
 //                   >
 //                     <FiChevronsRight className="w-[14px]" color="black"/>
@@ -270,8 +270,6 @@
 //   );
 // };
 // export default RoleTable;
-
-
 
 "use client";
 import { useState, useEffect } from "react";
@@ -287,13 +285,12 @@ import {
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { FiChevronsLeft, FiChevronsRight } from "react-icons/fi";
 import { useDeleteRoleMutation, useGetRolesQuery } from "@/features/roleSlice";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+import Link from "next/link"
 import toast from "react-hot-toast";
 import { FaPen, FaSearch, FaArrowLeft } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { TiTick, TiTimes } from "react-icons/ti";
-
+import { useSession } from "next-auth/react";
 interface RoleTableProps {}
 
 const ITEMS_PER_PAGE = 5;
@@ -308,6 +305,10 @@ const RoleTable: React.FC<RoleTableProps> = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const totalPages = Math.ceil(filteredData.length / ITEMS_PER_PAGE);
 
+  const { data: session } = useSession();
+
+  const permissionCheck = session?.user.permissions.role.includes("delete");
+  
   const goToPage = (page: any) => {
     setCurrentPage(page);
   };
@@ -353,7 +354,9 @@ const RoleTable: React.FC<RoleTableProps> = () => {
       .unwrap()
       .then(() => {
         toast.success("Role Deleted");
-        setFilteredData((prevData: any[]) => prevData.filter(item => item._id !== id));
+        setFilteredData((prevData: any[]) =>
+          prevData.filter((item) => item._id !== id)
+        );
       })
       .catch(() => {
         toast.error("Error, Deleting Role");
@@ -390,7 +393,10 @@ const RoleTable: React.FC<RoleTableProps> = () => {
               className="px-2 w-full focus:outline-none rounded"
               placeholder="Search by role..."
             />
-            <button onClick={handleSearch} className=" text-white px-4 py-1 rounded">
+            <button
+              onClick={handleSearch}
+              className=" text-white px-4 py-1 rounded"
+            >
               <FaSearch className="w-[16px]" />
             </button>
           </div>
@@ -434,17 +440,22 @@ const RoleTable: React.FC<RoleTableProps> = () => {
                           <td className="font-bold" align="center">
                             {module.toUpperCase()}
                           </td>
-                          {["create", "update", "view", "delete"].map((permission) => (
-                            <td key={permission} className="text-center">
-                              {module === "report" && permission !== "view" ? (
-                                "-"
-                              ) : role.permissions[module].includes(permission) ? (
-                                <TiTick color="green" />
-                              ) : (
-                                <TiTimes color="red" />
-                              )}
-                            </td>
-                          ))}
+                          {["create", "update", "view", "delete"].map(
+                            (permission) => (
+                              <td key={permission} className="text-center">
+                                {module === "report" &&
+                                permission !== "view" ? (
+                                  "-"
+                                ) : role.permissions[module].includes(
+                                    permission
+                                  ) ? (
+                                  <TiTick color="green" />
+                                ) : (
+                                  <TiTimes color="red" />
+                                )}
+                              </td>
+                            )
+                          )}
                         </tr>
                       ))}
                     </tbody>
@@ -456,13 +467,17 @@ const RoleTable: React.FC<RoleTableProps> = () => {
                       <FaPen size={20} className="text-primary-clr" />
                     </Link>
                     <button>
-                      <MdDelete
-                        size={20}
-                        className="text-primary-clr"
-                        onClick={() =>
-                          handleDeleteRole(role?._id ? role._id : "")
-                        }
-                      />
+                      {permissionCheck === false ? (
+                        <div></div>
+                      ) : (
+                        <MdDelete
+                          size={20}
+                          className="text-primary-clr"
+                          onClick={() =>
+                            handleDeleteRole(role?._id ? role._id : "")
+                          }
+                        />
+                      )}
                     </button>
                   </div>
                 </TableCell>

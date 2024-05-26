@@ -9,9 +9,8 @@ export default function Page() {
     <>
       {/* <ProtectedRoute requiredPermissions={["view"]} entity="dashboard"> */}
         <div>
-          <div className="flex items-center flex-col">
-            <h1>Home</h1>
-            <h2>Hi {session?.user.role}</h2>
+          <div className="flex items-center flex-col py-5">
+            <h2 className="font-bold">Welcome Back {session?.user.role}</h2>
           </div>
           <Dashboard />
         </div>

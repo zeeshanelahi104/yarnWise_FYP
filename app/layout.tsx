@@ -55,6 +55,7 @@ import { Theme } from '@radix-ui/themes';
 import { AuthProvider } from '@/context/AuthProvider';
 import { ReactNode } from 'react';
 import SessionProviderWrapper from '@/components/SessionProviderWrapper';
+import Navbar from '@/components/common/Navbar/Navbar';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -79,8 +80,10 @@ export default function RootLayout({ children, session }: RootLayoutProps) {
               <Theme>
                 <div className="flex">
                   <Sidebar />
+                  
                   <div className="flex-1">
                     <Toaster />
+                    {/* <Navbar /> */}
                     {children}
                   </div>
                 </div>

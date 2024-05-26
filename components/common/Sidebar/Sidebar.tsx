@@ -206,7 +206,10 @@ export default function Sidebar() {
                     <AccordionTrigger>
                       <div className="flex items-center space-x-4">
                         <div className="sidebar-item-wrapper flex">
-                          <Link href={"/transactions/manage-transactions"} className="flex gap-4">
+                          <Link
+                            href={"/transactions/manage-transactions"}
+                            className="flex gap-4"
+                          >
                             <span className="flex justify-center items-center">
                               <MdRequestPage color="#008F89" size={20} />
                             </span>
@@ -272,7 +275,7 @@ export default function Sidebar() {
                     <AccordionTrigger>
                       <div className="flex items-center space-x-4">
                         <div className="sidebar-item-wrapper flex">
-                          <Link href={"#"} className="flex gap-4">
+                          <Link href={"/parties"} className="flex gap-4">
                             <span className="flex justify-center items-center">
                               <MdRequestPage color="#008F89" size={20} />
                             </span>
@@ -302,7 +305,7 @@ export default function Sidebar() {
                     </AccordionContent>
                   </AccordionItem>
 
-                  <div className="flex items-center space-x-4">
+                  <div className="flex items-center space-x-4 py-2">
                     <div className="sidebar-item-wrapper flex">
                       <Link href={"/reports"} className="flex gap-4">
                         <span className="flex justify-center items-center">
@@ -314,7 +317,7 @@ export default function Sidebar() {
                       </Link>
                     </div>
                   </div>
-                  <div className="flex items-center space-x-4">
+                  <div className="flex items-center space-x-4 py-2">
                     <div className="sidebar-item-wrapper flex">
                       {renderSidebarItem(
                         "profile",
@@ -330,8 +333,6 @@ export default function Sidebar() {
                   </div>
                 </Accordion>
               </div>
-
-              
 
               <div className="sidebar-item-wrapper space-x-4">
                 <div className="sidebar-item-wrapper flex gap-4">

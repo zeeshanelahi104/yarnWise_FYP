@@ -16,7 +16,7 @@ import { MdDelete } from "react-icons/md";
 import { FiChevronsLeft, FiChevronsRight } from "react-icons/fi";
 import { FaPen, FaPrint, FaSearch, FaArrowLeft } from "react-icons/fa";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-
+import { useSession } from "next-auth/react";
 import {
   useDeletePartyMutation,
   useGetPartiesQuery,
@@ -34,7 +34,9 @@ const PartyTable: React.FC<PartyTableProps> = () => {
       .unwrap()
       .then(() => {
         toast.success("Party Deleted");
-        setFilteredData((prevData: any[]) => prevData.filter(item => item._id !== id));
+        setFilteredData((prevData: any[]) =>
+          prevData.filter((item) => item._id !== id)
+        );
       })
       .catch(() => {
         toast.error("Error, Deleting Party");
@@ -47,6 +49,9 @@ const PartyTable: React.FC<PartyTableProps> = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const totalPages = Math.ceil(filteredData?.length / ITEMS_PER_PAGE);
+  const { data: session } = useSession();
+
+  const permissionCheck = session?.user.permissions.party.includes("delete");
 
   const goToPage = (page: any) => {
     setCurrentPage(page);
@@ -77,7 +82,7 @@ const PartyTable: React.FC<PartyTableProps> = () => {
 
   useEffect(() => {
     handleSearch();
-  }, [searchQuery,partyRecord]);
+  }, [searchQuery, partyRecord]);
 
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = Math.min(startIndex + ITEMS_PER_PAGE, filteredData?.length);
@@ -195,13 +200,17 @@ const PartyTable: React.FC<PartyTableProps> = () => {
                           <FaPen size={20} className="text-primary-clr" />
                         </Link>
                         <button>
-                          <MdDelete
-                            size={20}
-                            className="text-primary-clr"
-                            onClick={() =>
-                              handleDeleteParty(party?._id ? party._id : "")
-                            }
-                          />
+                          {permissionCheck === false ? (
+                            <div></div>
+                          ) : (
+                            <MdDelete
+                              size={20}
+                              className="text-primary-clr"
+                              onClick={() =>
+                                handleDeleteParty(party?._id ? party._id : "")
+                              }
+                            />
+                          )}
                         </button>
                       </div>
                     </TableCell>

@@ -11,23 +11,17 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FiChevronsLeft, FiChevronsRight } from "react-icons/fi";
-import {
-  FaPen,
-  FaPrint,
-  FaSearch,
-  FaArrowLeft,
-} from "react-icons/fa";
+import { FaPen, FaPrint, FaSearch, FaArrowLeft } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
-import Image from "next/image";
 import {
   useDeleteInventoryMutation,
   useGetInventoriesQuery,
 } from "@/features/inventorySlice";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useSession } from "next-auth/react";
 interface InventoryTableProps {}
 
 const ITEMS_PER_PAGE = 5;
@@ -42,14 +36,18 @@ const InventoryTable: React.FC<InventoryTableProps> = () => {
       .unwrap()
       .then(() => {
         toast.success("Inventory Deleted");
-        setFilteredData((prevData: any[]) => prevData.filter(item => item._id !== id));
+        setFilteredData((prevData: any[]) =>
+          prevData.filter((item) => item._id !== id)
+        );
       })
       .catch(() => {
         toast.error("Error, Deleting Inventory");
       });
   };
+  const { data: session } = useSession();
+  const permissionCheck =
+    session?.user.permissions.inventory.includes("delete");
 
-  const router = useRouter();
   const inventoryRecord = data?.inventory;
   const [filteredData, setFilteredData] = useState(inventoryRecord);
   const [showSearchInput, setShowSearchInput] = useState(false);
@@ -192,15 +190,19 @@ const InventoryTable: React.FC<InventoryTableProps> = () => {
                     <Link href={`/inventory/editproduct/${inventory?._id}`}>
                       <FaPen className="text-primary-clr cursor-pointer mt-1" />
                     </Link>
-                    <MdDelete
-                      size={20}
-                      className="text-primary-clr cursor-pointer"
-                      onClick={() =>
-                        handleDeleteInventory(
-                          inventory?._id ? inventory._id : ""
-                        )
-                      }
-                    />
+                    {permissionCheck === false ? (
+                      <div></div>
+                    ) : (
+                      <MdDelete
+                        size={20}
+                        className="text-primary-clr cursor-pointer"
+                        onClick={() =>
+                          handleDeleteInventory(
+                            inventory?._id ? inventory._id : ""
+                          )
+                        }
+                      />
+                    )}
                   </div>
                 </TableCell>
               </TableRow>

@@ -25,7 +25,7 @@ interface TransactionTableProps {}
 
 const ITEMS_PER_PAGE = 5;
 
-const TransactionsTable: React.FC<TransactionTableProps> = () => {
+const BrokerReportTable: React.FC<TransactionTableProps> = () => {
   const { data, isLoading, isSuccess, isError, error } =
     useGetTransactionsQuery();
   const [deleteTransaction] = useDeleteTransactionMutation();
@@ -50,10 +50,7 @@ const TransactionsTable: React.FC<TransactionTableProps> = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const totalPages = Math.ceil(filteredData?.length / ITEMS_PER_PAGE);
-  const { data: session } = useSession();
-
-  const permissionCheck =
-    session?.user.permissions.transaction.includes("delete");
+  
   const goToPage = (page: any) => {
     setCurrentPage(page);
   };
@@ -98,12 +95,12 @@ const TransactionsTable: React.FC<TransactionTableProps> = () => {
       <div className="transcations-record-page-wrapper container flex flex-col justify-center pt-[45px]">
         <div className="page-header flex justify-between">
           <div className="back-btn">
-            <Link href={"/"}>
+            <Link href={"/reports"}>
               <FaArrowLeft />
             </Link>
           </div>
           <div className="title text-primary-clr text-center">
-            Transactions Record
+            Brokers Record
           </div>
           <div></div>
         </div>
@@ -168,22 +165,7 @@ const TransactionsTable: React.FC<TransactionTableProps> = () => {
                   Broker Name
                 </TableHead>
                 <TableHead className=" text-primary-clr text-[9px] text-center font-bold uppercase border-2 border-black">
-                  Transaction Type
-                </TableHead>
-                <TableHead className=" text-primary-clr text-[9px] text-center font-bold uppercase border-2 border-black">
-                  Debit
-                </TableHead>
-                <TableHead className=" text-primary-clr text-[9px] text-center font-bold uppercase border-2 border-black">
-                  Credit
-                </TableHead>
-                <TableHead className=" text-primary-clr text-[9px] text-center font-bold uppercase border-2 border-black">
-                  Balance
-                </TableHead>
-                <TableHead className=" text-primary-clr text-[9px] text-center font-bold uppercase border-2 border-black">
-                  Status
-                </TableHead>
-                <TableHead className=" text-primary-clr text-center font-bold uppercase border-2 border-black">
-                  Action
+                  Broker Percentage
                 </TableHead>
               </TableRow>
             </TableHeader>
@@ -216,41 +198,7 @@ const TransactionsTable: React.FC<TransactionTableProps> = () => {
                     </TableCell>
 
                     <TableCell className=" text-center text-[11px] border-2 border-black">
-                      {transaction.transactionType}
-                    </TableCell>
-                    <TableCell className=" text-center text-[11px] border-2 border-black">
-                      {transaction.debit}
-                    </TableCell>
-                    <TableCell className=" text-center text-[11px] border-2 border-black">
-                      {transaction.credit}
-                    </TableCell>
-                    <TableCell className=" text-center text-[11px] border-2 border-black">
-                      {transaction.balance}
-                    </TableCell>
-                    <TableCell className=" text-center text-[11px] border-2 border-black">
-                      {transaction.status}
-                    </TableCell>
-                    <TableCell className="border-2 border-black">
-                      <div className="flex justify-end gap-[20px]">
-                        <Link
-                          href={`/transactions/edittransaction/${transaction?._id}`}
-                        >
-                          <FaPen size={20} className="text-primary-clr" />
-                        </Link>
-                        {permissionCheck === false ? (
-                          <div></div>
-                        ) : (
-                          <button
-                            onClick={() =>
-                              handleDeleteTransaction(
-                                transaction?._id ? transaction._id : ""
-                              )
-                            }
-                          >
-                            <MdDelete size={20} className="text-primary-clr" />
-                          </button>
-                        )}
-                      </div>
+                      {transaction.brokerCommissionPercentage}
                     </TableCell>
                   </TableRow>
                 ))}
@@ -316,4 +264,4 @@ const TransactionsTable: React.FC<TransactionTableProps> = () => {
     </>
   );
 };
-export default TransactionsTable;
+export default BrokerReportTable;

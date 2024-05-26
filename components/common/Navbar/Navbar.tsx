@@ -1,45 +1,37 @@
-import logo from "../../../../public/images/logo.png"
-import Image from "next/image";
-import Link from "next/link";
-
-const navbarItems = [
-  {
-    id: 1,
-    title: "Login",
-    href: "/login",
-  },
-  {
-    id: 2,
-    title: "Register User",
-    href: "/register",
-  },
-  {
-    id: 3,
-    title: "Dashboard",
-    href: "/dashboard",
-  },
-];
-
+"use client";
+import { signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 export default function Navbar() {
+  const { data: session } = useSession();
+  const userRole = session?.user.role;
+
   return (
     <>
-      <div className="navbar-wrapper bg-primary-clr container">
-        <div className="navbar-inner-wrapper flex justify-between">
-          <div className="navbar-logo-wrapper pt-3 flex w-[120px]">
-            <Link href={"/"}>
-              <Image src={logo} alt="logo" className="pointer-events-none" />
-            </Link>
+      <div className="navbar-wrapper flex justify-between bg-gray-700 container py-2">
+        <div className="logo-wrapper"></div>
+        <div className="heading-section flex flex-col text-center text-white">
+          <h1 className="font-bold">Welcome to YarnWise</h1>
+          <p>A digital platform, where you can manage your inventory</p>
+        </div>
+        <div className="profile-dropdown flex gap-1 justify-center items-center">
+          <div className="dropdown-open-logo">
+            <img
+              className="inline-block rounded-full "
+              src={`https://ui-avatars.com/api/?name=${userRole}&size=100&rounded=true&color=fff&background=000&format=svg`}
+              width="32"
+              height="32"
+              alt="Image Description"
+            />
           </div>
-          <div className="navbar-items-wrapper flex justify-center items-center">
-            <ul className="flex gap-7">
-              {navbarItems.map((item, index) => (
-                <li key={index}>
-                  <Link href={item.href}>{item.title}</Link>
-                </li>
-              ))}
-            </ul>
+          <div className="logout-btn">
+            <button
+              className="text-white"
+              onClick={() => signOut({ callbackUrl: "/auth/login" })}
+            >
+              Logout
+            </button>
           </div>
-        </div>{" "}
+        </div>
       </div>
     </>
   );

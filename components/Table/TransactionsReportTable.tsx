@@ -25,7 +25,7 @@ interface TransactionTableProps {}
 
 const ITEMS_PER_PAGE = 5;
 
-const TransactionsTable: React.FC<TransactionTableProps> = () => {
+const TransactionsReportTable: React.FC<TransactionTableProps> = () => {
   const { data, isLoading, isSuccess, isError, error } =
     useGetTransactionsQuery();
   const [deleteTransaction] = useDeleteTransactionMutation();
@@ -182,9 +182,6 @@ const TransactionsTable: React.FC<TransactionTableProps> = () => {
                 <TableHead className=" text-primary-clr text-[9px] text-center font-bold uppercase border-2 border-black">
                   Status
                 </TableHead>
-                <TableHead className=" text-primary-clr text-center font-bold uppercase border-2 border-black">
-                  Action
-                </TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -229,28 +226,6 @@ const TransactionsTable: React.FC<TransactionTableProps> = () => {
                     </TableCell>
                     <TableCell className=" text-center text-[11px] border-2 border-black">
                       {transaction.status}
-                    </TableCell>
-                    <TableCell className="border-2 border-black">
-                      <div className="flex justify-end gap-[20px]">
-                        <Link
-                          href={`/transactions/edittransaction/${transaction?._id}`}
-                        >
-                          <FaPen size={20} className="text-primary-clr" />
-                        </Link>
-                        {permissionCheck === false ? (
-                          <div></div>
-                        ) : (
-                          <button
-                            onClick={() =>
-                              handleDeleteTransaction(
-                                transaction?._id ? transaction._id : ""
-                              )
-                            }
-                          >
-                            <MdDelete size={20} className="text-primary-clr" />
-                          </button>
-                        )}
-                      </div>
                     </TableCell>
                   </TableRow>
                 ))}
@@ -316,4 +291,4 @@ const TransactionsTable: React.FC<TransactionTableProps> = () => {
     </>
   );
 };
-export default TransactionsTable;
+export default TransactionsReportTable;

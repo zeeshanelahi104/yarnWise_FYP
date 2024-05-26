@@ -13,22 +13,21 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FiChevronsLeft, FiChevronsRight } from "react-icons/fi";
-import {
-  FaPen,
-  FaPrint,
-  FaSearch,
-  FaArrowLeft,
-} from "react-icons/fa";
+import { FaPen, FaPrint, FaSearch, FaArrowLeft } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useDeleteBrokerMutation, useGetBrokersQuery } from "@/features/brokerSlice";
+import {
+  useDeleteBrokerMutation,
+  useGetBrokersQuery,
+} from "@/features/brokerSlice";
+import { useSession } from "next-auth/react";
+
 interface BrokerTableProps {}
 
 const ITEMS_PER_PAGE = 5;
 
 const BrokerTable: React.FC<BrokerTableProps> = () => {
-  const { data, isLoading, isSuccess, isError, error } =
-    useGetBrokersQuery();
+  const { data, isLoading, isSuccess, isError, error } = useGetBrokersQuery();
   const [deleteBroker] = useDeleteBrokerMutation();
 
   const handleDeleteBroker = (id: string) => {
@@ -36,7 +35,9 @@ const BrokerTable: React.FC<BrokerTableProps> = () => {
       .unwrap()
       .then(() => {
         toast.success("Broker Deleted");
-        setFilteredData((prevData: any[]) => prevData.filter(item => item._id !== id));
+        setFilteredData((prevData: any[]) =>
+          prevData.filter((item) => item._id !== id)
+        );
       })
       .catch(() => {
         toast.error("Error, Deleting Broker");
@@ -49,6 +50,9 @@ const BrokerTable: React.FC<BrokerTableProps> = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const totalPages = Math.ceil(filteredData?.length / ITEMS_PER_PAGE);
+  const { data: session } = useSession();
+
+  const permissionCheck = session?.user.permissions.broker.includes("delete");
 
   const goToPage = (page: any) => {
     setCurrentPage(page);
@@ -79,7 +83,7 @@ const BrokerTable: React.FC<BrokerTableProps> = () => {
 
   useEffect(() => {
     handleSearch();
-  }, [searchQuery,brokerRecord]);
+  }, [searchQuery, brokerRecord]);
 
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = Math.min(startIndex + ITEMS_PER_PAGE, filteredData?.length);
@@ -92,13 +96,13 @@ const BrokerTable: React.FC<BrokerTableProps> = () => {
   return (
     <div className="products-wrapper w-full container">
       <div className="text-center">
-        <h1 className="title text-primary-clr w-full">Broker</h1>
+        <h1 className="title text-primary-clr w-full">Brokers</h1>
       </div>
       <div className="table-head-wrapper w-full mt-10 flex items-center justify-between border-2 border-black py-4 px-4">
         {!showSearchInput && (
           <>
             <h3 className="text-barlow text-[#364A63] font-bold text-[19px] leading-[19px]">
-            Broker
+              Broker
             </h3>
             <div className="icons-wrapper flex justify-between gap-3">
               <button onClick={() => setShowSearchInput(true)}>
@@ -154,9 +158,7 @@ const BrokerTable: React.FC<BrokerTableProps> = () => {
               <TableRow key={index}>
                 <TableCell className="px-6 py-4 whitespace-nowrap font-medium text-center border-2 border-black">
                   {broker?._id
-                    ? broker._id
-                        .substring(broker._id.length - 4)
-                        .toUpperCase()
+                    ? broker._id.substring(broker._id.length - 4).toUpperCase()
                     : ""}
                 </TableCell>
                 <TableCell className="px-6 py-4 whitespace-nowrap text-center border-2 border-black">
@@ -168,21 +170,23 @@ const BrokerTable: React.FC<BrokerTableProps> = () => {
                 <TableCell className="text-center border-2 border-black">
                   {broker.address}
                 </TableCell>
-                
+
                 <TableCell className="border-2 border-black">
                   <div className="flex justify-end gap-[20px]">
                     <Link href={`/broker/editbroker/${broker?._id}`}>
                       <FaPen className="text-primary-clr cursor-pointer mt-1" />
                     </Link>
-                    <MdDelete
-                      size={20}
-                      className="text-primary-clr cursor-pointer"
-                      onClick={() =>
-                        handleDeleteBroker(
-                          broker?._id ? broker._id : ""
-                        )
-                      }
-                    />
+                    {permissionCheck === false ? (
+                      <div></div>
+                    ) : (
+                      <MdDelete
+                        size={20}
+                        className="text-primary-clr cursor-pointer"
+                        onClick={() =>
+                          handleDeleteBroker(broker?._id ? broker._id : "")
+                        }
+                      />
+                    )}
                   </div>
                 </TableCell>
               </TableRow>
