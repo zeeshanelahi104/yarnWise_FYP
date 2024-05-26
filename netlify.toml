@@ -1,0 +1,12 @@
+[build]
+  command = "npm run build"
+  publish = "out"
+  commandTimeout = 1800
+
+[plugins]
+  [[plugins]]
+    package = "@netlify/plugin-nextjs"
+
+[environment]
+  NODE_ENV = "production"
+  NODE_OPTIONS = "--max-old-space-size=4096"
