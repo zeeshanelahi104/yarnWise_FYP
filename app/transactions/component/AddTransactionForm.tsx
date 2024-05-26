@@ -256,41 +256,234 @@ export default function AddTransactionForm() {
     }).unwrap();
   };
 
+  // const handleSave = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  //   e.preventDefault();
+
+  //   const inventoryItem = inventories.find(
+  //     (item) =>
+  //       item.name === transaction.productName &&
+  //       item.count === transaction.productCount &&
+  //       item.brand === transaction.brandName
+  //   );
+
+  //   const partyItem = parties.find(
+  //     (item) =>
+  //       item.partyName === transaction.partyName &&
+  //       item.partyArea === transaction.partyArea
+  //   );
+
+  //   if (transaction.transactionType === "Sale" && inventoryItem) {
+  //     if (inventoryItem.stock === 0) {
+  //       toast.error("Out of stock");
+  //       return;
+  //     } else if (transaction.quantity > inventoryItem.stock) {
+  //       toast.error(
+  //         `You have just ${inventoryItem.stock} number of bags to sell`
+  //       );
+  //       return;
+  //     }
+  //   }
+
+  //   let dataToSend = { ...transaction };
+  //   if (dataToSend._id) {
+  //     delete dataToSend._id;
+  //   }
+
+  //   if (transactionId) {
+  //     updateTransaction({ transactionId, body: dataToSend })
+  //       .unwrap()
+  //       .then(async () => {
+  //         if (inventoryItem) {
+  //           const newStock =
+  //             transaction.transactionType === "Purchase"
+  //               ? inventoryItem.stock + transaction.quantity
+  //               : inventoryItem.stock - transaction.quantity;
+  //           await updateStock(inventoryItem, newStock);
+  //         }
+  //         if (partyItem) {
+  //           let difBill = 0;
+  //           let difCredit = 0;
+  //           let remainingAmount = 0;
+  //           let newBalance = 0;
+  //           // let oldStatus =  partyItem.status;
+  //           const newTotalBill = transaction.quantity * transaction.unitPrice;
+  //           remainingAmount = transaction.credit - newTotalBill;
+
+  //           //help him or not
+
+  //           if (transaction.transactionType === "Sale") {
+  //             difCredit = transaction.credit - oldCredit;
+  //             difBill = transaction.totalBill - oldBill;
+  //             if (partyItem.status === "Dr") {
+  //               newBalance = -partyItem.balance + difCredit - difBill;
+  //             } else {
+  //               newBalance = partyItem.balance + difCredit - difBill;
+  //             }
+  //           } else {
+  //             difCredit = -transaction.credit - oldCredit;
+  //             difBill = -transaction.totalBill - oldBill;
+  //             if (partyItem.status === "Dr") {
+  //               newBalance = -partyItem.balance + difCredit - difBill;
+  //             } else {
+  //               newBalance = partyItem.balance + difCredit - difBill;
+  //             }
+  //           }
+
+  //           let newStatus = newBalance < 0 ? "Dr" : "Cr";
+  //           newBalance = Math.abs(newBalance);
+  //           transaction.balance = newBalance;
+  //           transaction.status = newStatus;
+  //           await updateBalanceAndStatus(partyItem, newBalance, newStatus);
+  //         }
+  //         setTransaction({
+  //           productName: "",
+  //           productCount: "",
+  //           brandName: "",
+  //           unitPrice: 0,
+  //           quantity: 0,
+  //           totalBill: 0,
+  //           partyName: "",
+  //           partyArea: "",
+  //           brokerName: "",
+  //           brokerCommissionPercentage: 0,
+  //           transactionType: "",
+  //           debit: 0,
+  //           credit: 0,
+  //           balance: 0,
+  //           status: "",
+  //         });
+  //         toast.success("Transaction updated successfully");
+  //         router.push("/transactions");
+  //       })
+  //       .catch((error) => {
+  //         console.error("Error updating transaction:", error);
+  //         toast.error("Failed to update transaction");
+  //       });
+  //   } else {
+  //     // add transaction
+  //     addTransaction(transaction)
+  //       .unwrap()
+  //       .then(async () => {
+  //         toast.success("Transaction added successfully");
+
+  //         if (inventoryItem) {
+  //           const newStock =
+  //             transaction.transactionType === "Purchase"
+  //               ? inventoryItem.stock + Number(transaction.quantity)
+  //               : inventoryItem.stock - Number(transaction.quantity);
+  //           await updateStock(inventoryItem, newStock);
+  //         }
+  //         if (partyItem) {
+  //           const newTotalBill = transaction.quantity * transaction.unitPrice;
+  //           let remainingAmount = 0;
+  //           let newBalance = 0;
+  //           if (transaction.transactionType === "Sale") {
+  //             remainingAmount = transaction.credit - newTotalBill;
+  //           } else {
+  //             remainingAmount = -transaction.credit + newTotalBill;
+  //           }
+  //           if (partyItem.status === "Dr") {
+  //             newBalance = -partyItem.balance + remainingAmount;
+  //           } else {
+  //             newBalance = partyItem.balance + remainingAmount;
+  //           }
+  //           let newStatus = newBalance < 0 ? "Dr" : "Cr";
+  //           newBalance = Math.abs(newBalance);
+  //           transaction.balance = newBalance;
+  //           transaction.status = newStatus;
+  //           await updateBalanceAndStatus(partyItem, newBalance, newStatus);
+  //         }
+  //         setTransaction({
+  //           productName: "",
+  //           productCount: "",
+  //           brandName: "",
+  //           unitPrice: 0,
+  //           quantity: 0,
+  //           totalBill: 0,
+  //           partyName: "",
+  //           partyArea: "",
+  //           brokerName: "",
+  //           brokerCommissionPercentage: 0,
+  //           transactionType: "",
+  //           debit: 0,
+  //           credit: 0,
+  //           balance: 0,
+  //           status: "",
+  //         });
+  //         router.push("/transactions");
+  //       })
+  //       .catch((error) => {
+  //         console.error("Error adding transaction:", error);
+  //         toast.error("Failed to add transaction");
+  //       });
+  //   }
+  // };
   const handleSave = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-
+  
     const inventoryItem = inventories.find(
       (item) =>
         item.name === transaction.productName &&
         item.count === transaction.productCount &&
         item.brand === transaction.brandName
     );
-
+  
     const partyItem = parties.find(
       (item) =>
         item.partyName === transaction.partyName &&
         item.partyArea === transaction.partyArea
     );
-
+  
     if (transaction.transactionType === "Sale" && inventoryItem) {
       if (inventoryItem.stock === 0) {
         toast.error("Out of stock");
         return;
       } else if (transaction.quantity > inventoryItem.stock) {
         toast.error(
-          `You have just ${inventoryItem.stock} number of bags to sell` 
+          `You have just ${inventoryItem.stock} number of bags to sell`
         );
         return;
       }
     }
-
+  
     let dataToSend = { ...transaction };
     if (dataToSend._id) {
       delete dataToSend._id;
     }
-
+  
+    // Calculate new balance and status for the transaction
+    const newTotalBill = transaction.quantity * transaction.unitPrice;
+    let remainingAmount = 0;
+    let newBalance = 0;
+    let newStatus = "";
+  
+    if (transaction.transactionType === "Sale") {
+      remainingAmount = transaction.credit - newTotalBill;
+    } else {
+      remainingAmount = -transaction.credit + newTotalBill;
+    }
+  
+    if (partyItem) {
+      if (partyItem.status === "Dr") {
+        newBalance = -partyItem.balance + remainingAmount;
+      } else {
+        newBalance = partyItem.balance + remainingAmount;
+      }
+  
+      newStatus = newBalance < 0 ? "Dr" : "Cr";
+      newBalance = Math.abs(newBalance);
+      transaction.balance = newBalance;
+      transaction.status = newStatus;
+      await updateBalanceAndStatus(partyItem, newBalance, newStatus);
+    } else {
+      newStatus = newBalance < 0 ? "Dr" : "Cr";
+      newBalance = Math.abs(newBalance);
+      transaction.balance = newBalance;
+      transaction.status = newStatus;
+    }
+  
     if (transactionId) {
-      updateTransaction({ transactionId, body: dataToSend })
+      updateTransaction({ transactionId, body: { ...dataToSend, balance: newBalance, status: newStatus } })
         .unwrap()
         .then(async () => {
           if (inventoryItem) {
@@ -305,12 +498,9 @@ export default function AddTransactionForm() {
             let difCredit = 0;
             let remainingAmount = 0;
             let newBalance = 0;
-            // let oldStatus =  partyItem.status;
             const newTotalBill = transaction.quantity * transaction.unitPrice;
             remainingAmount = transaction.credit - newTotalBill;
-
-            //help him or not
-
+  
             if (transaction.transactionType === "Sale") {
               difCredit = transaction.credit - oldCredit;
               difBill = transaction.totalBill - oldBill;
@@ -328,8 +518,8 @@ export default function AddTransactionForm() {
                 newBalance = partyItem.balance + difCredit - difBill;
               }
             }
-
-            let newStatus = newBalance < 0 ? "Dr" : "Cr";
+  
+            newStatus = newBalance < 0 ? "Dr" : "Cr";
             newBalance = Math.abs(newBalance);
             transaction.balance = newBalance;
             transaction.status = newStatus;
@@ -360,12 +550,11 @@ export default function AddTransactionForm() {
           toast.error("Failed to update transaction");
         });
     } else {
-      // add transaction
-      addTransaction(transaction)
+      addTransaction({ ...transaction, balance: newBalance, status: newStatus })
         .unwrap()
         .then(async () => {
           toast.success("Transaction added successfully");
-
+  
           if (inventoryItem) {
             const newStock =
               transaction.transactionType === "Purchase"
@@ -387,7 +576,7 @@ export default function AddTransactionForm() {
             } else {
               newBalance = partyItem.balance + remainingAmount;
             }
-            let newStatus = newBalance < 0 ? "Dr" : "Cr";
+            newStatus = newBalance < 0 ? "Dr" : "Cr";
             newBalance = Math.abs(newBalance);
             transaction.balance = newBalance;
             transaction.status = newStatus;
@@ -418,6 +607,7 @@ export default function AddTransactionForm() {
         });
     }
   };
+  
 
   return (
     <>
