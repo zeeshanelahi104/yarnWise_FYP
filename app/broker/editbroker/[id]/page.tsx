@@ -1,6 +1,6 @@
 import React from "react";
-import AddBrokerForm from "../../component/AddBrokerForm";
 import ProtectedRoute from "@/components/PrivateRoute";
+import AddBrokerForm from "@/app/broker/component/AddBrokerForm";
 
 const Page = () => {
   return (
