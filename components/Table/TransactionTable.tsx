@@ -53,7 +53,7 @@ const TransactionsTable: React.FC<TransactionTableProps> = () => {
   const { data: session } = useSession();
 
   const permissionCheck =
-    session?.user.permissions.transaction.includes("delete");
+    session?.user?.permissions?.transaction?.includes("delete");
   const goToPage = (page: any) => {
     setCurrentPage(page);
   };

@@ -4,7 +4,7 @@ import { signOut } from "next-auth/react";
 import { useSession } from "next-auth/react";
 export default function Navbar() {
   const { data: session } = useSession();
-  const userRole = session?.user.role;
+  const userRole = session?.user?.role;
 
   return (
     <>

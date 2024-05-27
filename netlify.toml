@@ -2,9 +2,6 @@
   command = "npm run build"
   publish = ".next"
 
-[context.production.environment]
-  NODE_ENV = "production"
-  NODE_OPTIONS = "--max-old-space-size=4096"
-
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
+[plugins]
+  [[plugins]]
+    package = "@netlify/plugin-nextjs"
