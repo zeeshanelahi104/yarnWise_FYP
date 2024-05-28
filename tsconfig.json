@@ -24,6 +24,13 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/TestPage/page.jsx", "components/login-btn.jsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "app/broker/addbroker/**/*.tsx",
+    "app/broker/editbroker/**/*.tsx"
+  ],
   "exclude": ["node_modules"]
 }
