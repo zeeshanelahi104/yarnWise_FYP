@@ -83,7 +83,7 @@ export default function AddBrokerForm() {
         <div className="single-input flex flex-col gap-2">
           <label htmlFor="">Enter Broker Contact Number</label>
           <Input
-            type="text"
+            type="number"
             className="w-full border border-black font-bold mt-2"
             placeholder="Enter Broker Contact Number"
             value={broker?.contactNumber}
