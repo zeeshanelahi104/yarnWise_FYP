@@ -4,8 +4,7 @@ import { FaHome, FaUser, FaTag, FaShoppingCart, FaUsers } from "react-icons/fa";
 import { PiSignOutBold } from "react-icons/pi";
 import { MdAddShoppingCart } from "react-icons/md";
 import { IoIosOptions } from "react-icons/io";
-import { MdRequestPage } from "react-icons/md";
-import { MdBarChart } from "react-icons/md";
+import { MdRequestPage, MdBarChart } from "react-icons/md";
 import { TiUserAdd } from "react-icons/ti";
 import Link from "next/link";
 import {
@@ -21,9 +20,10 @@ import SheetDemo from "../Sheet/Sheet";
 export default function Sidebar() {
   const { data } = useSession();
   const pathname = usePathname();
-  let role = data?.user?.role;
-  let permissions = data?.user?.permissions;
-  const hasPermission = (module: any, action: any) => {
+  const role = data?.user?.role;
+  const permissions = data?.user?.permissions;
+
+  const hasPermission = (module: string, action: string) => {
     if (!permissions) return false;
     const modulePermissions = permissions[module];
     if (!modulePermissions) return false;
@@ -31,11 +31,11 @@ export default function Sidebar() {
   };
 
   const renderSidebarItem = (
-    module: any,
-    action: any,
-    icon: any,
-    label: any,
-    href: any
+    module: string,
+    action: string,
+    icon: JSX.Element,
+    label: string,
+    href: string
   ) => {
     if (role === "admin" || hasPermission(module, action)) {
       return (
@@ -76,17 +76,8 @@ export default function Sidebar() {
             "Dashboard",
             "/dashboard"
           )}
-          <div
-          // className={`w-64 sidebar-wrapper pt-10 lg:flex-col bg-[#1E282C] text-white min-h-screen
-          // ${
-          //   pathname === "/auth/login" ||
-          //   pathname === "/transactions/manage-transactions"
-          //     ? "hidden w-0"
-          //     : "hidden lg:flex"
-          // }
-          // `}
-          >
-            <div className="sidebar-items-wrapper container  w-[250px] flex flex-col gap-[20px]">
+          <div>
+            <div className="sidebar-items-wrapper container w-[250px] flex flex-col gap-[20px]">
               {renderSidebarItem(
                 "dashboard",
                 "view",

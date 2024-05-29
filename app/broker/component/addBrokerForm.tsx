@@ -14,7 +14,7 @@ import {
   useUpdateBrokerMutation,
 } from "@/features/brokerSlice";
 
-const AddBrokerForm = () => {
+export default function AddBrokerForm() {
   const params = useParams();
   const router = useRouter();
   const { id } = params;
@@ -115,4 +115,3 @@ const AddBrokerForm = () => {
     </div>
   );
 };
-export default AddBrokerForm;

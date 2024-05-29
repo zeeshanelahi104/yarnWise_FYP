@@ -4,7 +4,9 @@ import { signOut } from "next-auth/react";
 import { useSession } from "next-auth/react";
 export default function Navbar() {
   const { data: session } = useSession();
-  const userRole = session?.user?.role;
+  console.log("Session at Navbar", session)
+  console.log("Session at Navbar", session?.user?.role)
+  // const userRole = session?.user?.role;
 
   return (
     <>
@@ -20,7 +22,7 @@ export default function Navbar() {
           <div className="dropdown-open-logo ">
             <img
               className="inline-block rounded-full "
-              src={`https://ui-avatars.com/api/?name=${userRole}&size=100&rounded=true&color=fff&background=000&format=svg`}
+              src={`https://ui-avatars.com/api/?name=user&size=100&rounded=true&color=fff&background=000&format=svg`}
               width="50"
               height="50"
               alt="Image Description"
