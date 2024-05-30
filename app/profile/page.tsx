@@ -3,10 +3,11 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { MdEdit } from "react-icons/md";
 import { useSession } from "next-auth/react";
+import { SessionTypes } from "@/types";
 
 
 export default function Page(){
-  const { data: session, status } = useSession();
+  const { data: session, status } = useSession() as SessionTypes;
   
     return(
         <div className="user-profile-section-wrapper w-full pt-[45px] container">
@@ -24,7 +25,7 @@ export default function Page(){
         />
         <div className="flex flex-col gap-[5px]">
           <h2 className="text-[30px]">User Name</h2>
-          <p className="text-[24px]">{session?.user.user?.email}</p>
+          <p className="text-[24px]">{session?.user?.email}</p>
           <h3 className="text-[20px]">M 12yrs</h3>
         </div>
       </div>
