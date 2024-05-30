@@ -6,8 +6,8 @@ import { usePathname } from "next/navigation";
 export default function Navbar() {
   const { data: session } = useSession();
   console.log("Session at Navbar", session)
-  // console.log("Session at Navbar", session?.user?.role)
-  // const userRole = session?.user?.role;
+  console.log("Session at Navbar", session?.user?.role)
+  const userRole = session?.user?.role;
 const pathname = usePathname()
   return (
     <>
