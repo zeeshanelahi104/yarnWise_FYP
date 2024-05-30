@@ -9,7 +9,6 @@ import React from "react";
 const Page = () => {
   const { isLoading, isSuccess, isError, error } = useGetInventoriesQuery();
 
-  const { data } = useSession();
 
   return (
     <ProtectedRoute requiredPermissions={["view"]} entity="inventory">

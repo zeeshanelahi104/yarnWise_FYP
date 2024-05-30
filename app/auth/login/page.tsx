@@ -7,6 +7,7 @@ import React, {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {signIn } from "next-auth/react";
+import RootLayout from "@/app/layout";
 type LoginInput = {
   email: string;
   password: string;
@@ -29,6 +30,7 @@ const Page = () => {
     });
   };
   return (
+    <RootLayout applyMargins={false}>
     <div className="login-page-wrapper container bg-login-bg h-[100vh]">
   
       <div className="flex flex-col justify-center items-center">
@@ -71,6 +73,8 @@ const Page = () => {
         </div>
       </div>
     </div>
+    </RootLayout>
+
   );
 };
 

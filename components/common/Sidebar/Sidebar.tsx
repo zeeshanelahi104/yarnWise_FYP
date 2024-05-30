@@ -13,9 +13,10 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { signOut, useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import SheetDemo from "../Sheet/Sheet";
+import { SessionTypes } from "@/types";
 
 export default function Sidebar() {
-  const { data } = useSession();
+  const { data } = useSession() as SessionTypes;
   const pathname = usePathname();
   let role = data?.user?.role;
   let permissions = data?.user?.permissions;

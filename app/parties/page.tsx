@@ -16,7 +16,6 @@ const Page = () => {
         <div className="page-header flex justify-between">
           <div className="back-icon"></div>
           <div className="page-title title text-primary-clr">Parties</div>
-          <div></div>
         </div>
         {isLoading && <Loader style="items-center h-[70vh]" />}
         {!isLoading && <PartyTable />}

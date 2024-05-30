@@ -1,4 +1,14 @@
 
+export interface RolePermissions {
+  user: string[];
+  role: string[];
+  inventory: string[];
+  transaction: string[];
+  broker: string[];
+  party: string[];
+  report: string[];
+  dashboard: string[];
+}
 export interface UserTypes {
     _id?: string;
     firstName: string;
@@ -6,7 +16,7 @@ export interface UserTypes {
     email: string;
     password: string;
     role: string;
-    permissions: object;
+    permissions: RolePermissions;
     address: string;
     phoneNumber: string;
   }
@@ -38,7 +48,7 @@ export interface UserTypes {
   export interface Role {
     _id?:string;
     role: string;
-    permissions: object;
+    permissions: RolePermissions;
   }
  
   export interface Broker {
@@ -66,3 +76,11 @@ export interface UserTypes {
     message?: string;
     success?: boolean
   }
+
+  export interface SessionTypes {
+    data: {
+      user: UserTypes | null;
+    };
+    status: "authenticated" | "loading" | "unauthenticated";
+  }
+  

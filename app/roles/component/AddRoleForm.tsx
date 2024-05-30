@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Role } from "@/types";
+import { Role, RolePermissions } from "@/types";
 import { signIn } from "next-auth/react";
 import { useSession } from "next-auth/react";
 import {
@@ -14,20 +14,6 @@ import {
 import toast from "react-hot-toast";
 import Link from "next/link";
 import axios from "axios";
-interface RolePermissions {
-  user: string[];
-  role: string[];
-  inventory: string[];
-  transaction: string[];
-  broker: string[];
-  party: string[];
-  report: string[];
-}
-
-interface RoleState {
-  role: string;
-  permissions: RolePermissions;
-}
 
 export default function AddRoleForm() {
   const params = useParams();
@@ -35,7 +21,7 @@ export default function AddRoleForm() {
   const { data: session, status, update } = useSession();
   const { id } = params;
   const roleId = Array.isArray(id) ? id[0] : id;
-  const [role, setRole] = useState<RoleState>({
+  const [role, setRole] = useState<Role>({
     role: "",
     permissions: {
       user: [],
@@ -45,6 +31,7 @@ export default function AddRoleForm() {
       broker: [],
       party: [],
       report: [],
+      dashboard: [],
     },
   });
 
@@ -144,6 +131,7 @@ export default function AddRoleForm() {
           broker: [],
           party: [],
           report: [],
+          dashboard: [],
         },
       });
       router.push("/roles");
@@ -208,26 +196,28 @@ export default function AddRoleForm() {
                             </td>
                           )
                         )} */}
-                        {["create", "update","view", "delete"].map((permission) => (
-                          <td key={permission} className="text-center">
-                            <input
-                              type="checkbox"
-                              id={`${category}-${permission}`}
-                              value={`${category}-${permission}`}
-                              name={`${category}-${permission}`}
-                              checked={permissions.includes(permission)}
-                              onChange={() =>
-                                handleChange(
-                                  category as keyof RolePermissions,
-                                  permission
-                                )
-                              }
-                              disabled={
-                                category === "report" && permission !== "view"
-                              }
-                            />
-                          </td>
-                        ))}
+                        {["create", "update", "view", "delete"].map(
+                          (permission) => (
+                            <td key={permission} className="text-center">
+                              <input
+                                type="checkbox"
+                                id={`${category}-${permission}`}
+                                value={`${category}-${permission}`}
+                                name={`${category}-${permission}`}
+                                checked={permissions.includes(permission)}
+                                onChange={() =>
+                                  handleChange(
+                                    category as keyof RolePermissions,
+                                    permission
+                                  )
+                                }
+                                disabled={
+                                  category === "report" && permission !== "view"
+                                }
+                              />
+                            </td>
+                          )
+                        )}
                       </tr>
                     )
                   )}

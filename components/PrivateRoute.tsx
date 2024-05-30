@@ -3,6 +3,8 @@
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { ReactNode, useEffect } from 'react';
+import Loader from './Loader';
+import { SessionTypes } from '@/types';
 
 interface ProtectedRouteProps {
   children: ReactNode;
@@ -11,7 +13,7 @@ interface ProtectedRouteProps {
 }
 
 const ProtectedRoute = ({ children, requiredPermissions, entity }: ProtectedRouteProps) => {
-  const { data: session, status } = useSession();
+  const { data: session, status } = useSession() as SessionTypes;
   const router = useRouter();
 
   useEffect(() => {
@@ -36,7 +38,8 @@ const ProtectedRoute = ({ children, requiredPermissions, entity }: ProtectedRout
 
   // Show loading state while loading or if permissions check fails
   if (status === 'loading' || (session && !requiredPermissions.every(permission => (session?.user?.permissions?.[entity] || []).includes(permission)))) {
-    return <div>Loading...</div>; // or a loading spinner
+    return <Loader style="items-center h-[90vh]" />
+
   }
 
   return <>{children}</>;

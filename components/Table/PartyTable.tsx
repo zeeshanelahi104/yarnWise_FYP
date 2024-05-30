@@ -7,7 +7,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Party, Transaction } from "@/types";
+import { Party, SessionTypes } from "@/types";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -21,6 +21,7 @@ import {
   useDeletePartyMutation,
   useGetPartiesQuery,
 } from "@/features/partySlice";
+
 interface PartyTableProps {}
 
 const ITEMS_PER_PAGE = 5;
@@ -42,16 +43,17 @@ const PartyTable: React.FC<PartyTableProps> = () => {
         toast.error("Error, Deleting Party");
       });
   };
+
   const router = useRouter();
   const partyRecord = data?.party;
   const [filteredData, setFilteredData] = useState(partyRecord);
   const [showSearchInput, setShowSearchInput] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
-  const totalPages = Math.ceil(filteredData?.length / ITEMS_PER_PAGE);
-  const { data: session } = useSession();
+  const totalPages: number = Math.ceil(filteredData?.length / ITEMS_PER_PAGE);
+  const { data: session } = useSession() as SessionTypes;
 
-  const permissionCheck = session?.user.permissions.party.includes("delete");
+  const permissionCheck = session?.user?.permissions?.party?.includes("delete");
 
   const goToPage = (page: any) => {
     setCurrentPage(page);
@@ -91,10 +93,23 @@ const PartyTable: React.FC<PartyTableProps> = () => {
   const handleInputChange = (event: any) => {
     setSearchQuery(event.target.value);
   };
-
+  const getErrorMsg = (error: any) => {
+    if ("message" in error) {
+      return error.message; // Check if 'message' property exists
+    } else if ("data" in error && "status" in error) {
+      return `Status: ${error.status}, Data: ${JSON.stringify(error.data)}`; // Example: Customize error message based on 'status' and 'data'
+    } else {
+      return "Unknown error"; // Default message if the structure is not recognized
+    }
+  };
   return (
     <>
       <div className="transcations-record-page-wrapper container flex flex-col justify-center pt-[45px]">
+        <div className="table-head-wrapper w-full mt-10 flex items-center justify-between border-2 border-black py-4 px-4">
+          <div className="text-center">
+            <h1 className="title text-primary-clr w-full">Parties</h1>
+          </div>
+        </div>
         <div className="table-head-wrapper w-full mt-10 flex items-center justify-between border-2 border-black py-4 px-4">
           {!showSearchInput && (
             <>
@@ -133,93 +148,88 @@ const PartyTable: React.FC<PartyTableProps> = () => {
           <Table className="min-w-full divide-y divide-gray-200">
             <TableHeader className="border-2 border-black">
               <TableRow>
-                <TableHead className="text-center text-[11px] text-primary-clr font-bold uppercase border-2 border-black">
-                  ID
-                </TableHead>
-                <TableHead className="text-primary-clr text-[11px] text-center font-bold uppercase border-2 border-black">
+                <TableHead className="text-center text-[11px] md:text-[13px]">
                   Party Name
                 </TableHead>
-                <TableHead className="text-primary-clr text-[11px] text-center font-bold uppercase border-2 border-black">
+                <TableHead className="text-center text-[11px] md:text-[13px]">
                   Owner Name
                 </TableHead>
-                <TableHead className=" text-primary-clr text-[11px] text-center font-bold uppercase border-2 border-black">
+                <TableHead className="text-center text-[11px] md:text-[13px]">
                   Party Area
                 </TableHead>
-                <TableHead className=" text-primary-clr text-[11px] text-center font-bold uppercase border-2 border-black">
+                <TableHead className="text-center text-[11px] md:text-[13px]">
                   Address
                 </TableHead>
-                <TableHead className=" text-primary-clr text-[11px] text-center font-bold uppercase border-2 border-black">
+                <TableHead className="text-center text-[11px] md:text-[13px]">
                   Contact Number
                 </TableHead>
-                <TableHead className=" text-primary-clr text-[11px] text-center font-bold uppercase border-2 border-black">
+                <TableHead className="text-center text-[11px] md:text-[13px]">
                   Balance
                 </TableHead>
-                <TableHead className=" text-primary-clr text-[11px] text-center font-bold uppercase border-2 border-black">
+                <TableHead className="text-center text-[11px] md:text-[13px]">
                   Status
                 </TableHead>
-                <TableHead className=" text-primary-clr text-[11px] text-center font-bold uppercase border-2 border-black">
-                  Action
+                <TableHead className="text-center text-[11px] md:text-[13px]">
+                  Actions
                 </TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {currentItems &&
-                currentItems?.map((party: Party, index: number) => (
-                  <TableRow key={index}>
-                    <TableCell className="font-medium text-[11px] text-center border-2 border-black">
-                      {party?._id
-                        ? party?._id
-                            .substring(party?._id.length - 4)
-                            .toUpperCase()
-                        : ""}
-                    </TableCell>
-                    <TableCell className="px-6 py-4 text-[11px] whitespace-nowrap text-center border-2 border-black">
-                      {party.partyName}
-                    </TableCell>
-                    <TableCell className="text-center text-[11px] border-2 border-black">
-                      {party.ownerName}
-                    </TableCell>
-                    <TableCell className=" text-center text-[11px] border-2 border-black">
-                      {party.partyArea}
-                    </TableCell>
-                    <TableCell className=" text-center text-[11px] border-2 border-black">
-                      {party.address}
-                    </TableCell>
-                    <TableCell className=" text-center text-[11px] border-2 border-black">
-                      {party.contactNumber}
-                    </TableCell>
-                    <TableCell className=" text-center text-[11px] border-2 border-black">
-                      {party.balance}
-                    </TableCell>
-                    <TableCell className=" text-center text-[11px] border-2 border-black">
-                      {party.status}
-                    </TableCell>
-                    <TableCell className="border-2 border-black">
-                      <div className="flex justify-end gap-[20px]">
-                        <Link href={`/parties/editparty/${party?._id}`}>
-                          <FaPen size={20} className="text-primary-clr" />
-                        </Link>
-                        <button>
-                          {permissionCheck === false ? (
-                            <div></div>
-                          ) : (
-                            <MdDelete
-                              size={20}
-                              className="text-primary-clr"
-                              onClick={() =>
-                                handleDeleteParty(party?._id ? party._id : "")
-                              }
-                            />
-                          )}
-                        </button>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                ))}
+              {isLoading && (
+                <TableRow>
+                  <TableCell
+                    colSpan={8}
+                    className="text-center text-2xl font-bold py-5"
+                  >
+                    Loading...
+                  </TableCell>
+                </TableRow>
+              )}
+              {isError && (
+                <TableRow>
+                  <TableCell
+                    colSpan={8}
+                    className="text-center text-red-500 font-bold py-5"
+                  >
+                    Error fetching data: {getErrorMsg(error)}{" "}
+                    {/* Call a function to get the error message */}
+                  </TableCell>
+                </TableRow>
+              )}
+              {currentItems?.map((party: Party) => (
+                <TableRow key={party._id}>
+                  <TableCell className="text-center">
+                    {party.partyName}
+                  </TableCell>
+                  <TableCell className="text-center">
+                    {party.ownerName}
+                  </TableCell>
+                  <TableCell className="text-center">
+                    {party.partyArea}
+                  </TableCell>
+                  <TableCell className="text-center">{party.address}</TableCell>
+                  <TableCell className="text-center">
+                    {party.contactNumber}
+                  </TableCell>
+                  <TableCell className="text-center">{party.balance}</TableCell>
+                  <TableCell className="text-center">{party.status}</TableCell>
+                  <TableCell className="flex justify-center items-center gap-4 text-[20px] md:text-[22px]">
+                    <Link href={`/party/editParty?id=${party._id}`}>
+                      <FaPen className="text-green-800 cursor-pointer" />
+                    </Link>
+                    {permissionCheck && (
+                      <MdDelete
+                        className="text-red-500 cursor-pointer"
+                        onClick={() => handleDeleteParty(party._id!)}
+                      />
+                    )}
+                  </TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
           {totalPages > 1 && (
-            <div className="pagination-controls flex justify-center py-2 border-2 border-black px-4">
+            <div className="pagination-container flex justify-center mt-4">
               <button
                 onClick={goToFirstPage}
                 disabled={currentPage === 1}
@@ -234,8 +244,7 @@ const PartyTable: React.FC<PartyTableProps> = () => {
               >
                 <ChevronLeft className="w-[10px]" color="black" />
               </button>
-
-              {[...Array(totalPages).keys()].map((pageNum) => (
+              {Array.from(Array(totalPages).keys()).map((pageNum) => (
                 <button
                   key={pageNum}
                   onClick={() => goToPage(pageNum + 1)}
@@ -281,4 +290,5 @@ const PartyTable: React.FC<PartyTableProps> = () => {
     </>
   );
 };
+
 export default PartyTable;

@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { Inventory } from "@/types";
+import { Inventory, SessionTypes } from "@/types";
 import {
   Table,
   TableBody,
@@ -44,9 +44,10 @@ const InventoryTable: React.FC<InventoryTableProps> = () => {
         toast.error("Error, Deleting Inventory");
       });
   };
-  const { data: session } = useSession();
-  const permissionCheck =
-    session?.user.permissions.inventory.includes("delete");
+  const { data: session } = useSession() as SessionTypes;
+
+  const permissionCheck = session?.user?.permissions?.inventory?.includes("delete");
+
 
   const inventoryRecord = data?.inventory;
   const [filteredData, setFilteredData] = useState(inventoryRecord);
@@ -226,7 +227,8 @@ const InventoryTable: React.FC<InventoryTableProps> = () => {
               <ChevronLeft className="w-[10px]" color="black" />
             </button>
 
-            {[...Array(totalPages).keys()].map((pageNum) => (
+            { Array.from(Array(totalPages).keys()).map((pageNum) => (
+              
               <button
                 key={pageNum}
                 onClick={() => goToPage(pageNum + 1)}

@@ -39,11 +39,12 @@ import { signOut, useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 
 import Link from "next/link";
+import { SessionTypes } from "@/types";
 
 export default function SheetDemo() {
   const [isOpen, setIsOpen] = useState(false);
 
-  const { data } = useSession();
+  const { data } = useSession() as SessionTypes;
   const pathname = usePathname();
   let role = data?.user?.role;
   let permissions = data?.user?.permissions;

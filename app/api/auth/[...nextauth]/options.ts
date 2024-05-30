@@ -1,5 +1,6 @@
 import axios from "axios";
 import { getServerSession } from "next-auth/next";
+// @ts-ignore
 import {type NextAuthOptions}  from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 

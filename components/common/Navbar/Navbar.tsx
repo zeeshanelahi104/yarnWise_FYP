@@ -4,12 +4,13 @@
 
 "use client";
 import { Button } from "@/components/ui/button";
+import { SessionTypes } from "@/types";
 import { signOut } from "next-auth/react";
 import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 
 export default function Navbar() {
-  const { data: session } = useSession();
+  const { data: session } = useSession() as SessionTypes;
   const userRole = session?.user?.role;
   const pathname = usePathname();
 
