@@ -45,6 +45,26 @@ export default function AddProductForm() {
       
         let dataToSend = { ...product };
 
+        if (
+          !product.name ||
+          !product.brand ||
+          !product.count
+        ) {
+          alert("All Fields are required");
+          return;
+        }
+        if (product.count.length > 5) {
+          alert("Product Count Can't be greater than 5");
+          return;
+        }
+        const regex = /[^a-zA-Z\s]/; // Regular expression to check for numbers
+        if (
+          regex.test(product.name) ||
+          regex.test(product.brand)        ) {
+          alert("Names cannot contain numbers or characters. Please enter only alphabets.");
+          return;
+        }
+
         if (dataToSend._id) {
             delete dataToSend._id;
         }
@@ -103,7 +123,7 @@ export default function AddProductForm() {
           </div>
         </div>
 
-      <div className="add-product-btn mx-auto mt-10">
+      <div className="add-product-btn pb-5 mx-auto mt-10">
         <Button className="primaryBtn w-[150px] hover:bg-black  hover:text-white text-white" onClick={handleSave}>{id ? "Edit": "Add"} Product</Button>
       </div>
     </div>

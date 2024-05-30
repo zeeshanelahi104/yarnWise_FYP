@@ -8,7 +8,7 @@ export default function Page() {
   return (
     <>
       {/* <ProtectedRoute requiredPermissions={["view"]} entity="dashboard"> */}
-        <div>
+        <div className="">
           <div className="flex items-center flex-col py-5">
             <h2 className="font-bold">Welcome Back {session?.user.role}</h2>
           </div>

@@ -2,7 +2,10 @@
 import { Input } from "@/components/ui/input";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { signIn } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import toast from "react-hot-toast";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Broker } from "@/types";
 import {
@@ -11,7 +14,7 @@ import {
   useUpdateBrokerMutation,
 } from "@/features/brokerSlice";
 
-export default function AddBrokerForm() {
+const AddBrokerForm = () => {
   const params = useParams();
   const router = useRouter();
   const { id } = params;
@@ -38,6 +41,22 @@ export default function AddBrokerForm() {
 
   const handleSave = async (e: React.MouseEvent<HTMLButtonElement>) => {
     let dataToSend = { ...broker };
+
+    if (!broker.name || !broker.address || !broker.contactNumber) {
+      alert("All Fields are required");
+      return;
+    }
+    if (broker.contactNumber.length > 11) {
+      alert("Enter only 11 digits Phone Number");
+      return;
+    }
+    const regex = /[^a-zA-Z\s]/; // Regular expression to check for numbers
+    if (regex.test(broker.name)) {
+      alert(
+        "Name cannot contain numbers or characters. Please enter only alphabets."
+      );
+      return;
+    }
 
     if (dataToSend._id) {
       delete dataToSend._id;
@@ -83,7 +102,7 @@ export default function AddBrokerForm() {
         <div className="single-input flex flex-col gap-2">
           <label htmlFor="">Enter Broker Contact Number</label>
           <Input
-            type="number"
+            type="text"
             className="w-full border border-black font-bold mt-2"
             placeholder="Enter Broker Contact Number"
             value={broker?.contactNumber}
@@ -112,3 +131,4 @@ export default function AddBrokerForm() {
     </div>
   );
 };
+export default AddBrokerForm;

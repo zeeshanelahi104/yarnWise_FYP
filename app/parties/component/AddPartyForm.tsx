@@ -46,6 +46,29 @@ const AddPartyForm = () => {
 
   const handleSave = async (e: React.MouseEvent<HTMLButtonElement>) => {
     let dataToSend = { ...party };
+    if (
+      !party.partyArea ||
+      !party.partyName ||
+      !party.ownerName ||
+      !party.address ||
+      !party.contactNumber
+    ) {
+      alert("All Fields are required");
+      return;
+    }
+    if (party.contactNumber.length > 11) {
+      alert("Enter only 11 digits Phone Number");
+      return;
+    }
+    const regex = /[^a-zA-Z\s]/;
+    if (
+      regex.test(party.partyName) ||
+      regex.test(party.partyArea) ||
+      regex.test(party.ownerName)
+    ) {
+      alert("Names cannot contain numbers or characters. Please enter only alphabets.");
+      return;
+    }
 
     if (dataToSend._id) {
       delete dataToSend._id;
@@ -102,8 +125,7 @@ const AddPartyForm = () => {
             placeholder="Enter Party Name"
             value={party?.partyName}
             onChange={(e) => handleChange("partyName", e.target.value)}
-            pattern="[A-Za-z]{25}"
-            title="Enter name less than 25 characters. Don't use Numbers"
+            required
           />
         </div>
         <div className="single-input flex flex-col gap-1">
@@ -114,6 +136,7 @@ const AddPartyForm = () => {
             placeholder="Enter Party Contact Number"
             value={party?.ownerName}
             onChange={(e) => handleChange("ownerName", e.target.value)}
+            required
           />
         </div>
       </div>
@@ -126,6 +149,7 @@ const AddPartyForm = () => {
             placeholder="Enter Party Area"
             value={party?.partyArea}
             onChange={(e) => handleChange("partyArea", e.target.value)}
+            required
           />
         </div>
         <div className="single-input flex flex-col gap-1">
@@ -136,6 +160,7 @@ const AddPartyForm = () => {
             placeholder="Enter Party Address"
             value={party?.address}
             onChange={(e) => handleChange("address", e.target.value)}
+            required
           />
         </div>
       </div>
@@ -143,11 +168,14 @@ const AddPartyForm = () => {
         <div className="single-input flex flex-col gap-1">
           <label htmlFor="">Enter Party Contact Number</label>
           <Input
-            type="number"
+            type="text"
             className="w-full border border-black font-bold mt-2"
             placeholder="Enter Party Area"
             value={party?.contactNumber}
+            pattern="{11}"
+            title="Enter 11 digits phone number"
             onChange={(e) => handleChange("contactNumber", e.target.value)}
+            required
           />
         </div>
       </div>

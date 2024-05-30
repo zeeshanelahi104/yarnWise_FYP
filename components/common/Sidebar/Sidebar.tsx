@@ -1,18 +1,15 @@
+
+
+
 "use client";
 import { useState } from "react";
 import { FaHome, FaUser, FaTag, FaShoppingCart, FaUsers } from "react-icons/fa";
 import { PiSignOutBold } from "react-icons/pi";
-import { MdAddShoppingCart } from "react-icons/md";
+import { MdAddShoppingCart, MdRequestPage, MdBarChart } from "react-icons/md";
 import { IoIosOptions } from "react-icons/io";
-import { MdRequestPage, MdBarChart } from "react-icons/md";
 import { TiUserAdd } from "react-icons/ti";
 import Link from "next/link";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { signOut, useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import SheetDemo from "../Sheet/Sheet";
@@ -20,23 +17,16 @@ import SheetDemo from "../Sheet/Sheet";
 export default function Sidebar() {
   const { data } = useSession();
   const pathname = usePathname();
-  const role = data?.user?.role;
-  const permissions = data?.user?.permissions;
-
-  const hasPermission = (module: string, action: string) => {
+  let role = data?.user?.role;
+  let permissions = data?.user?.permissions;
+  const hasPermission = (module: any, action: any) => {
     if (!permissions) return false;
     const modulePermissions = permissions[module];
     if (!modulePermissions) return false;
     return modulePermissions.includes(action);
   };
 
-  const renderSidebarItem = (
-    module: string,
-    action: string,
-    icon: JSX.Element,
-    label: string,
-    href: string
-  ) => {
+  const renderSidebarItem = (module: any, action: any, icon: any, label: any, href: any) => {
     if (role === "admin" || hasPermission(module, action)) {
       return (
         <div className="sidebar-item-wrapper" key={label}>
@@ -54,23 +44,21 @@ export default function Sidebar() {
 
   return (
     <>
-      <div>
-        <SheetDemo />
-      </div>
+      <SheetDemo />
       <div
-        className={`w-[248px] sidebar-wrapper pt-10 lg:flex-col bg-[#1E282C] text-white min-h-screen 
-        ${
-          pathname === "/auth/login" ||
-          pathname === "/transactions/manage-transactions" ||
-          pathname === "/reports/transactions-report" || 
-          pathname === "/reports/broker" ||
-          pathname === "/reports/parties"
-            ? "hidden"
-            : "hidden lg:flex"
+        className={`sidebar-wrapper lg:flex-col bg-[#1E282C] text-white min-h-screen z-20 fixed top-0 left-0 w-60 h-full
+        ${pathname === "/auth/login" ||
+        pathname === "/transactions/manage-transactions" ||
+        pathname === "/reports/transactions-report" ||
+        pathname === "/reports/broker-report" ||
+        pathname === "/reports/party-report"
+          ? "hidden"
+          : "hidden lg:flex"
         }
         `}
       >
-        <div className="sidebar-items-wrapper w-[250px] flex flex-col gap-[20px]">
+        <img src="/images/logo.jpeg" alt="logo" className="text-center h-24 w-24 rounded-full p-4"/>
+        <div className="sidebar-items-wrapper pt-5 w-full flex flex-col gap-5">
           {renderSidebarItem(
             "dashboard",
             "view",
@@ -79,7 +67,7 @@ export default function Sidebar() {
             "/dashboard"
           )}
           <div>
-            <div className="sidebar-items-wrapper container w-[250px] flex flex-col gap-[20px]">
+            <div className="sidebar-items-wrapper container w-full flex flex-col gap-5">
               {renderSidebarItem(
                 "dashboard",
                 "view",
@@ -91,11 +79,7 @@ export default function Sidebar() {
                 <FaHome color="#008F89" size={20} /> Dashboard
               </Link>
               <div className="sidebar-item-wrapper">
-                <Accordion
-                  type="single"
-                  collapsible
-                  className="w-full space-y-2"
-                >
+                <Accordion type="single" collapsible className="w-full space-y-2">
                   <AccordionItem value="item-1">
                     <AccordionTrigger>
                       <div className="flex items-center space-x-4">
@@ -111,7 +95,7 @@ export default function Sidebar() {
                         </div>
                       </div>
                     </AccordionTrigger>
-                    <AccordionContent className="space-y-4 bg-[#2C3B41] p-1 ">
+                    <AccordionContent className="space-y-4 bg-[#2C3B41] p-1">
                       {renderSidebarItem(
                         "role",
                         "create",
@@ -119,7 +103,6 @@ export default function Sidebar() {
                         "Add Role",
                         "/roles/addrole"
                       )}
-
                       {renderSidebarItem(
                         "role",
                         "view",
@@ -144,7 +127,7 @@ export default function Sidebar() {
                         </div>
                       </div>
                     </AccordionTrigger>
-                    <AccordionContent className="space-y-4 bg-[#2C3B41] p-1 ">
+                    <AccordionContent className="space-y-4 bg-[#2C3B41] p-1">
                       {renderSidebarItem(
                         "user",
                         "create",
@@ -152,7 +135,6 @@ export default function Sidebar() {
                         "Add User",
                         "/users/adduser"
                       )}
-
                       {renderSidebarItem(
                         "user",
                         "view",
@@ -177,7 +159,7 @@ export default function Sidebar() {
                         </div>
                       </div>
                     </AccordionTrigger>
-                    <AccordionContent className="space-y-4 bg-[#2C3B41] p-1 ">
+                    <AccordionContent className="space-y-4 bg-[#2C3B41] p-1">
                       {renderSidebarItem(
                         "inventory",
                         "create",
@@ -185,7 +167,6 @@ export default function Sidebar() {
                         "Add Product",
                         "/inventory/addproduct"
                       )}
-
                       {renderSidebarItem(
                         "inventory",
                         "view",
@@ -199,10 +180,7 @@ export default function Sidebar() {
                     <AccordionTrigger>
                       <div className="flex items-center space-x-4">
                         <div className="sidebar-item-wrapper flex">
-                          <Link
-                            href={"/transactions/manage-transactions"}
-                            className="flex gap-4"
-                          >
+                          <Link href={"/transactions/manage-transactions"} className="flex gap-4">
                             <span className="flex justify-center items-center">
                               <MdRequestPage color="#008F89" size={20} />
                             </span>
@@ -213,7 +191,7 @@ export default function Sidebar() {
                         </div>
                       </div>
                     </AccordionTrigger>
-                    <AccordionContent className="space-y-4 bg-[#2C3B41] p-1 ">
+                    <AccordionContent className="space-y-4 bg-[#2C3B41] p-1">
                       {renderSidebarItem(
                         "transaction",
                         "create",
@@ -221,7 +199,6 @@ export default function Sidebar() {
                         "Add Transaction",
                         "/transactions/addtransaction"
                       )}
-
                       {renderSidebarItem(
                         "transaction",
                         "view",
@@ -246,7 +223,7 @@ export default function Sidebar() {
                         </div>
                       </div>
                     </AccordionTrigger>
-                    <AccordionContent className="space-y-4 bg-[#2C3B41] p-1 ">
+                    <AccordionContent className="space-y-4 bg-[#2C3B41] p-1">
                       {renderSidebarItem(
                         "broker",
                         "create",
@@ -254,7 +231,6 @@ export default function Sidebar() {
                         "Add Broker",
                         "/broker/addbroker"
                       )}
-
                       {renderSidebarItem(
                         "broker",
                         "view",
@@ -279,7 +255,7 @@ export default function Sidebar() {
                         </div>
                       </div>
                     </AccordionTrigger>
-                    <AccordionContent className="space-y-4 bg-[#2C3B41] p-1 ">
+                    <AccordionContent className="space-y-4 bg-[#2C3B41] p-1">
                       {renderSidebarItem(
                         "party",
                         "create",
@@ -287,7 +263,6 @@ export default function Sidebar() {
                         "Add Party",
                         "/parties/addParty"
                       )}
-
                       {renderSidebarItem(
                         "party",
                         "view",
@@ -332,10 +307,7 @@ export default function Sidebar() {
                   <span className="flex justify-center items-center">
                     <PiSignOutBold color="#008F89" size={20} />
                   </span>
-
-                  <button
-                    onClick={() => signOut({ callbackUrl: "/auth/login" })}
-                  >
+                  <button onClick={() => signOut({ callbackUrl: "/auth/login" })}>
                     <h4 className="flex justify-center items-center text-[15px]">
                       Sign Out
                     </h4>
