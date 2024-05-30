@@ -545,7 +545,7 @@ export default function AddTransactionForm() {
           <div>
             <Label>Total Bill</Label>
             <Input
-              type="text"
+              type="number"
               placeholder="Bill"
               className="rounded-[10px] w-full border-2 border-primary-clr"
               value={transaction?.totalBill}

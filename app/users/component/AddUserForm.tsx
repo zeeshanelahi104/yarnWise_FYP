@@ -382,6 +382,7 @@ export default function AddUserForm() {
                     placeholder="Enter Your First Name"
                     value={user.firstName}
                     onChange={(e) => handleChange("firstName", e.target.value)}
+                    
                   />
                 </label>
                 <label>
@@ -432,7 +433,7 @@ export default function AddUserForm() {
                   Enter Your Phone Number
                   <Input
                     className="rounded-[10px] mt-2 w-full text-black border border-primary-clr"
-                    type="text"
+                    type="number"
                     name="phoneNumber"
                     placeholder="Enter Your Phone Number"
                     value={user.phoneNumber}

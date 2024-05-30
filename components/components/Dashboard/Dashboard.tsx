@@ -17,8 +17,8 @@ export default function Dashboard() {
   const { data: inventories } = useGetInventoriesQuery();
   const {data : parties } = useGetPartiesQuery();
   const { data : brokers } = useGetBrokersQuery();
-  const brokersLength = brokers?.broker.length
-  const partiesLength = parties?.party.length;
+  const brokersLength = brokers?.broker?.length
+  const partiesLength = parties?.party?.length;
   const transactionsLength = transactions?.transaction?.length;
   const usersLength = users?.user?.length;
   const rolesLength = roles?.role?.length;

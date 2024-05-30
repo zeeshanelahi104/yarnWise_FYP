@@ -62,7 +62,9 @@ export default function Sidebar() {
         ${
           pathname === "/auth/login" ||
           pathname === "/transactions/manage-transactions" ||
-          pathname === "/reports/transactions-report"
+          pathname === "/reports/transactions-report" || 
+          pathname === "/reports/broker" ||
+          pathname === "/reports/parties"
             ? "hidden"
             : "hidden lg:flex"
         }

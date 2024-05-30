@@ -102,6 +102,8 @@ const AddPartyForm = () => {
             placeholder="Enter Party Name"
             value={party?.partyName}
             onChange={(e) => handleChange("partyName", e.target.value)}
+            pattern="[A-Za-z]{25}"
+            title="Enter name less than 25 characters. Don't use Numbers"
           />
         </div>
         <div className="single-input flex flex-col gap-1">
@@ -114,7 +116,6 @@ const AddPartyForm = () => {
             onChange={(e) => handleChange("ownerName", e.target.value)}
           />
         </div>
-        
       </div>
       <div className="add-party-form-inputs grid grid-cols-2 gap-2">
         <div className="single-input flex flex-col gap-1">
@@ -142,7 +143,7 @@ const AddPartyForm = () => {
         <div className="single-input flex flex-col gap-1">
           <label htmlFor="">Enter Party Contact Number</label>
           <Input
-            type="text"
+            type="number"
             className="w-full border border-black font-bold mt-2"
             placeholder="Enter Party Area"
             value={party?.contactNumber}
