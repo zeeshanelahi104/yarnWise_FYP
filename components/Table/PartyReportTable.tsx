@@ -20,7 +20,6 @@ import {
   useDeleteTransactionMutation,
   useGetTransactionsQuery,
 } from "@/features/transactionSlice";
-import { useSession } from "next-auth/react";
 interface TransactionTableProps {}
 
 const ITEMS_PER_PAGE = 5;
@@ -49,7 +48,7 @@ const PartyReportTable: React.FC<TransactionTableProps> = () => {
   const [showSearchInput, setShowSearchInput] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
-  const totalPages = Math.ceil(filteredData?.length / ITEMS_PER_PAGE);
+  const totalPages: number = Math.ceil(filteredData?.length / ITEMS_PER_PAGE);
   
   const goToPage = (page: any) => {
     setCurrentPage(page);
@@ -238,7 +237,7 @@ const PartyReportTable: React.FC<TransactionTableProps> = () => {
                 <ChevronLeft className="w-[10px]" color="black" />
               </button>
 
-              {[...Array(totalPages).keys()].map((pageNum) => (
+              {Array.from(Array(totalPages).keys()).map((pageNum) => (
                 <button
                   key={pageNum}
                   onClick={() => goToPage(pageNum + 1)}
