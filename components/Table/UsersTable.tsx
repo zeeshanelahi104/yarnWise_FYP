@@ -13,7 +13,7 @@ import { MdDelete } from "react-icons/md";
 import { useEffect, useState } from "react";
 import { useDeleteUserMutation, useGetUsersQuery } from "@/features/userSlice";
 import toast from "react-hot-toast";
-import { UserTypes } from "@/types";
+import { SessionTypes, UserTypes } from "@/types";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { FiChevronsLeft, FiChevronsRight } from "react-icons/fi";
 import { FaPen, FaSearch, FaArrowLeft } from "react-icons/fa";
@@ -31,9 +31,9 @@ const UsersTable: React.FC<UserTableProps> = () => {
   const [showSearchInput, setShowSearchInput] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
-  const totalPages = Math.ceil(filteredData?.length / ITEMS_PER_PAGE);
+  const totalPages: number = Math.ceil(filteredData?.length / ITEMS_PER_PAGE);
 
-  const { data: session } = useSession();
+  const { data: session } = useSession() as SessionTypes;
   const permissionCheck = session?.user.permissions.user.includes("delete");
 
   const handleDeleteUser = (id: string) => {
@@ -217,7 +217,7 @@ const UsersTable: React.FC<UserTableProps> = () => {
               <ChevronLeft className="w-[10px]" color="black" />
             </button>
 
-            {[...Array(totalPages).keys()].map((pageNum) => (
+            {Array.from(Array(totalPages).keys()).map((pageNum) => (
               <button
                 key={pageNum}
                 onClick={() => goToPage(pageNum + 1)}
