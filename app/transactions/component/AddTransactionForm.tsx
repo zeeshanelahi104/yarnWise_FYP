@@ -967,7 +967,7 @@ export default function AddTransactionForm() {
           await updateBalanceAndStatus(partyItem, newBalance, newStatus);
         }
       } else {
-        await updateTransaction({ id: transactionId, body: payload }).unwrap();
+        await updateTransaction({ transactionId, body: payload }).unwrap();
         toast.success("Transaction updated successfully");
 
         if (inventoryItem) {
@@ -1213,19 +1213,25 @@ export default function AddTransactionForm() {
             className="w-full p-2 border rounded"
           />
         </div>
-        <div className="mb-4">
-          <Label htmlFor="transactionDate">Transaction Date</Label>
-          <Input
-            type="date"
-            id="transactionDate"
-            value={transaction.transactionDate}
-            onChange={(e) => handleChange("transactionDate", e.target.value)}
-            className="w-full p-2 border rounded"
-            required
-          />
+        <div className="form-wrapper grid grid-cols-1 lg:grid-cols-2 gap-4">
+           <div>
+             <Label>Enter Broker Commission Percentage</Label>
+             <Input
+              type="number"
+              placeholder="Broker Commission Percentage"
+              className="rounded-[10px] w-full border-2 border-primary-clr"
+              value={transaction?.brokerCommissionPercentage}
+              onChange={(e) =>
+                handleChange(
+                  "brokerCommissionPercentage",
+                  parseFloat(e.target.value)
+                )
+              }
+            />
+          </div>
         </div>
         <Button
-          onClick={handleSubmit}
+          onClick={handleSave}
           className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
         >
           {transactionId === "add" ? "Add Transaction" : "Update Transaction"}
@@ -1235,4 +1241,3 @@ export default function AddTransactionForm() {
   );
 };
 
-export default TransactionForm;
