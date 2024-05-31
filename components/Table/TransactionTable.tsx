@@ -7,7 +7,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Transaction } from "@/types";
+import { SessionTypes, Transaction } from "@/types";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -49,8 +49,8 @@ const TransactionsTable: React.FC<TransactionTableProps> = () => {
   const [showSearchInput, setShowSearchInput] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
-  const totalPages = Math.ceil(filteredData?.length / ITEMS_PER_PAGE);
-  const { data: session } = useSession();
+  const totalPages: number = Math.ceil(filteredData?.length / ITEMS_PER_PAGE);
+  const { data: session } = useSession() as SessionTypes;
 
   const permissionCheck =
     session?.user?.permissions?.transaction?.includes("delete");
@@ -273,7 +273,7 @@ const TransactionsTable: React.FC<TransactionTableProps> = () => {
                 <ChevronLeft className="w-[10px]" color="black" />
               </button>
 
-              {[...Array(totalPages).keys()].map((pageNum) => (
+              {Array.from(Array(totalPages).keys()).map((pageNum) => (
                 <button
                   key={pageNum}
                   onClick={() => goToPage(pageNum + 1)}
