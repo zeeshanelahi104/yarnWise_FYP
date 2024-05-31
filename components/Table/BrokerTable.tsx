@@ -1,5 +1,5 @@
 "use client";
-import { Broker } from "@/types";
+import { Broker, SessionTypes } from "@/types";
 import {
   Table,
   TableBody,
@@ -49,8 +49,8 @@ const BrokerTable: React.FC<BrokerTableProps> = () => {
   const [showSearchInput, setShowSearchInput] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
-  const totalPages = Math.ceil(filteredData?.length / ITEMS_PER_PAGE);
-  const { data: session } = useSession();
+  const totalPages: number = Math.ceil(filteredData?.length / ITEMS_PER_PAGE);
+  const { data: session } = useSession() as SessionTypes;
 
   const permissionCheck = session?.user.permissions.broker.includes("delete");
 
@@ -210,7 +210,7 @@ const BrokerTable: React.FC<BrokerTableProps> = () => {
               <ChevronLeft className="w-[10px]" color="black" />
             </button>
 
-            {[...Array(totalPages).keys()].map((pageNum) => (
+            {Array.from(Array(totalPages).keys()).map((pageNum) => (
               <button
                 key={pageNum}
                 onClick={() => goToPage(pageNum + 1)}
