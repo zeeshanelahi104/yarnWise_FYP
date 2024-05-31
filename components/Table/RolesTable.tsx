@@ -20,11 +20,11 @@ import { FaPen, FaSearch, FaArrowLeft } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { TiTick, TiTimes } from "react-icons/ti";
 import { useSession } from "next-auth/react";
-import { Role, SessionTypes } from "@/types";
+import { SessionTypes } from "@/types";
 
 const ITEMS_PER_PAGE = 5;
 
-const RoleTable: React.FC<Role> = () => {
+const RoleTable: React.FC<{}> = () => {
   const { data, isLoading, isSuccess, isError, error } = useGetRolesQuery();
   const [deleteRole] = useDeleteRoleMutation();
   const rolesRecord = data?.role;
