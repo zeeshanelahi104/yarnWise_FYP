@@ -7,30 +7,19 @@ import { Toaster } from 'react-hot-toast';
 import '@radix-ui/themes/styles.css';
 import { Theme } from '@radix-ui/themes';
 import { AuthProvider } from '@/context/AuthProvider';
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode } from 'react';
 import SessionProviderWrapper from '@/components/SessionProviderWrapper';
 import Navbar from '@/components/common/Navbar/Navbar';
 import { metadata } from './metadata';
-
-const inter = Inter({ subsets: ['latin'] });
 
 interface RootLayoutProps {
   children?: ReactNode;
   session?: any;
   applyMargins?: boolean;
 }
+const inter = Inter({ subsets: ['latin'] });
 
 export default function RootLayout({ children, session, applyMargins = true }: RootLayoutProps) {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  // if (!mounted) {
-  //   return null;
-  // }
-
   return (
     <html lang="en">
       <head>
@@ -48,7 +37,7 @@ export default function RootLayout({ children, session, applyMargins = true }: R
                   <div className="flex-1">
                     <Toaster />
                     <Navbar />
-                    <div className={`flex-1 ${applyMargins ? 'ml-60 mt-[3rem] mb-5' : ''}`}>
+                    <div className={applyMargins ? 'ml-60 mt-[3rem] mb-5' : ''}>
                       {children}
                     </div>
                   </div>

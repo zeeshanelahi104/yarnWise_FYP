@@ -13,10 +13,6 @@ const Page = () => {
   return (
     <ProtectedRoute requiredPermissions={["view"]} entity="party">
       <div className="m-4 mt-14 min-h-[100vh] bg-white text-light-primary p-4 rounded">
-        <div className="page-header flex justify-between">
-          <div className="back-icon"></div>
-          <div className="page-title title text-primary-clr">Parties</div>
-        </div>
         {isLoading && <Loader style="items-center h-[70vh]" />}
         {!isLoading && <PartyTable />}
       </div>

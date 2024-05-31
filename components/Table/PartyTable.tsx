@@ -105,11 +105,9 @@ const PartyTable: React.FC<PartyTableProps> = () => {
   return (
     <>
       <div className="transcations-record-page-wrapper container flex flex-col justify-center pt-[45px]">
-        <div className="table-head-wrapper w-full mt-10 flex items-center justify-between border-2 border-black py-4 px-4">
           <div className="text-center">
             <h1 className="title text-primary-clr w-full">Parties</h1>
           </div>
-        </div>
         <div className="table-head-wrapper w-full mt-10 flex items-center justify-between border-2 border-black py-4 px-4">
           {!showSearchInput && (
             <>
