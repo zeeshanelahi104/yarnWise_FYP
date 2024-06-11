@@ -76,6 +76,29 @@ export default function AddUserForm() {
     if (dataToSend._id) {
       delete dataToSend._id;
     }
+    if (
+      !user.firstName ||
+      !user.lastName ||
+      !user.email ||
+      !user.address ||
+      !user.phoneNumber ||
+      !user.password
+    ) {
+      alert("All Fields are required");
+      return;
+    }
+    if (user.phoneNumber.length > 11) {
+      alert("Enter only 11 digits Phone Number");
+      return;
+    }
+    const regex = /[^a-zA-Z\s]/; // Regular expression to check for numbers
+    if (
+      regex.test(user.firstName) ||
+      regex.test(user.lastName)
+    ) {
+      alert("Names cannot contain numbers or characters. Please enter only alphabets.");
+      return;
+    }
 
     if (id) {
       updateUser({ userId, body: dataToSend })

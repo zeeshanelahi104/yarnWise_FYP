@@ -909,6 +909,12 @@ export default function AddTransactionForm() {
         item.brand === transaction.brandName
     );
 
+    if(!transaction.productCount || !transaction.brandName 
+      || !transaction.brokerName || !transaction.partyArea || !transaction.partyName 
+      || !transaction.credit || !transaction.debit || !transaction.productName){
+      alert("All Fields Are Required")
+    }
+
     const partyItem = parties.find(
       (item) =>
         item.partyName === transaction.partyName &&
