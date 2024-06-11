@@ -7,7 +7,6 @@ import React, {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {signIn } from "next-auth/react";
-import RootLayout from "@/app/layout";
 type LoginInput = {
   email: string;
   password: string;
@@ -30,14 +29,13 @@ const Page = () => {
     });
   };
   return (
-    <RootLayout applyMargins={false}>
-    <div className="login-page-wrapper container bg-login-bg h-[100vh]">
+    <div className="login-page-wrapper bg-login-bg h-[100vh]">
   
       <div className="flex flex-col justify-center items-center">
-      <h1 className="text-white flex justify-center items-center pt-10 text-[40px] font-bold uppercase">
+      <h1 className="text-white flex justify-center items-center py-10 text-[40px] font-bold uppercase">
         Login
       </h1>
-        <div className="login-form-wrapper bg-[#D9D9D9] flex justify-center items-center rounded-[10px] w-full md:w-[450px] p-5">
+        <div className="login-form-wrapper bg-[#D9D9D9] flex justify-center items-center rounded-[10px] w-[450px] md:w-[450px] p-5">
           <div className="login-form-inner-wrapper w-full">
             <form onSubmit={handleSubmit} className="w-full">
               <div className="login-fields mt-5 flex flex-col justify-center items-center gap-5 w-full">
@@ -73,8 +71,6 @@ const Page = () => {
         </div>
       </div>
     </div>
-    </RootLayout>
-
   );
 };
 

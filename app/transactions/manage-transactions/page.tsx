@@ -21,12 +21,10 @@ const Page = () => {
 
   return (
     <ProtectedRoute requiredPermissions={["view"]} entity="transaction">
-      <RootLayout applyMargins={false}>
         <div className="mx-4 min-h-[100vh] bg-white text-light-primary rounded">
           {isLoading && <Loader style="items-center h-[70vh]" />}
           {!isLoading && <TransactionTable />}
         </div>
-      </RootLayout>
     </ProtectedRoute>
   );
 };

@@ -78,7 +78,12 @@ export default function SheetDemo() {
   };
 
   return (
-    <div className="block lg:hidden mb-[50px]">
+    <div
+      className={`lg:hidden mb-[50px]${
+        pathname === "/auth/login" ? "sm:hidden md:hidden" : "hidden lg:flex"
+      }
+    `}
+    >
       <Sheet>
         <SheetTrigger asChild>
           <Button variant="outline">
@@ -87,17 +92,7 @@ export default function SheetDemo() {
         </SheetTrigger>
         <SheetContent side={"left"}>
           <div
-            className={`w-full sidebar-wrapper pt-10 lg:flex-col bg-[#1E282C] text-black min-h-screen 
-        ${
-          pathname === "/auth/login" ||
-          pathname === "/transactions/manage-transactions" ||
-          pathname === "/reports/transactions-report" ||
-          pathname === "/reports/broker-report" ||
-          pathname === "/reports/party-report"
-            ? "hidden"
-            : "hidden lg:flex"
-        }
-        `}
+            className={`w-full sidebar-wrapper pt-10 lg:flex-col bg-[#1E282C] text-black min-h-screen `}
           >
             <div className="sidebar-items-wrapper w-[250px] flex flex-col gap-[20px]">
               {renderSidebarItem(

@@ -15,7 +15,6 @@ import { MdDelete } from "react-icons/md";
 import { FiChevronsLeft, FiChevronsRight } from "react-icons/fi";
 import { FaPen, FaPrint, FaSearch, FaArrowLeft } from "react-icons/fa";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { ArrowLeft } from "lucide-react";
 import {
   useDeleteTransactionMutation,
   useGetTransactionsQuery,
@@ -95,7 +94,7 @@ const TransactionsTable: React.FC<TransactionTableProps> = () => {
 
   return (
     <>
-      <div className="transcations-record-page-wrapper container flex flex-col justify-center pt-[45px]">
+      <div className="transcations-record-page-wrapper flex flex-col justify-center pt-[45px]">
         <div className="page-header flex justify-between">
           <div className="back-btn">
             <Link href={"/"}>
@@ -302,15 +301,6 @@ const TransactionsTable: React.FC<TransactionTableProps> = () => {
               </button>
             </div>
           )}
-        </div>
-        <div className="flex justify-end mt-10">
-          <button
-            className="flex justify-end uppercase font-bold"
-            onClick={() => window.print()}
-          >
-            Print
-            <FaPrint size={25} className="ml-2" />
-          </button>
         </div>
       </div>
     </>

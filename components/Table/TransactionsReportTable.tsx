@@ -95,7 +95,7 @@ const TransactionsReportTable: React.FC<TransactionTableProps> = () => {
 
   return (
     <>
-      <div className="transcations-record-page-wrapper container flex flex-col justify-center pt-[45px]">
+      <div className="transcations-record-page-wrapper flex flex-col justify-center pt-[45px]">
         <div className="page-header flex justify-between">
           <div className="back-btn">
             <Link href={"/"}>

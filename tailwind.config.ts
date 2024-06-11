@@ -7,23 +7,35 @@ const config = {
     './components/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
     // './src/**/*.{ts,tsx}',
-	],
+  ],
   prefix: "",
   theme: {
     container: {
       center: true,
       padding: "1rem",
       screens: {
-        "2xl": "1400px",
+
+        'sm': '425px',
+
+        'md': '640px',
+        // => @media (min-width: 640px) { ... }
+
+        'lg': '1024px',
+        // => @media (min-width: 1024px) { ... }
+
+        'xl': '1440px',
+        // => @media (min-width: 1280px) { ... }
+
+        'xxl': '1920px'
       },
     },
     extend: {
-      colors:{
-      'primary-clr' : "#008F89"
-    },
-    backgroundImage:{
-      'login-bg':'url(../assets/images/login_bg.jpg)'
-    },
+      colors: {
+        'primary-clr': "#008F89"
+      },
+      backgroundImage: {
+        'login-bg': 'url(../assets/images/login_bg.jpg)'
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },

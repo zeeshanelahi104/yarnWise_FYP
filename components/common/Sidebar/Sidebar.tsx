@@ -3,7 +3,8 @@
 
 "use client";
 import { useState } from "react";
-import { FaHome, FaUser, FaTag, FaShoppingCart, FaUsers } from "react-icons/fa";
+import { FaUserGroup,FaUserPen } from "react-icons/fa6";
+import { FaHome, FaUser, FaTag, FaShoppingCart, FaUsers,FaUserTie } from "react-icons/fa";
 import { PiSignOutBold } from "react-icons/pi";
 import { MdAddShoppingCart, MdRequestPage, MdBarChart } from "react-icons/md";
 import { IoIosOptions } from "react-icons/io";
@@ -45,7 +46,9 @@ export default function Sidebar() {
 
   return (
     <>
+    <div className="hidden md:flex">
       <SheetDemo />
+      </div>
       <div
         className={`sidebar-wrapper lg:flex-col bg-[#1E282C] text-white min-h-screen z-20 fixed top-0 left-0 w-60 h-full
         ${pathname === "/auth/login" ||
@@ -87,7 +90,7 @@ export default function Sidebar() {
                         <div className="sidebar-item-wrapper flex">
                           <Link href={"/roles"} className="flex gap-4">
                             <span className="flex justify-center items-center">
-                              <FaUsers color="#008F89" size={20} />
+                              <FaUserTie color="#008F89" size={20} />
                             </span>
                             <h4 className="flex justify-center items-center text-[15px]">
                               Roles
@@ -107,7 +110,7 @@ export default function Sidebar() {
                       {renderSidebarItem(
                         "role",
                         "view",
-                        <FaUsers color="#008F89" size={20} />,
+                        <FaUserPen color="#008F89" size={20} />,
                         "Manage Roles",
                         "/roles"
                       )}
@@ -139,7 +142,7 @@ export default function Sidebar() {
                       {renderSidebarItem(
                         "user",
                         "view",
-                        <FaUsers color="#008F89" size={20} />,
+                        <FaUserPen color="#008F89" size={20} />,
                         "Manage Users",
                         "/users"
                       )}
@@ -228,14 +231,14 @@ export default function Sidebar() {
                       {renderSidebarItem(
                         "broker",
                         "create",
-                        <FaTag color="#008F89" size={20} />,
+                        <TiUserAdd color="#008F89" size={20} />,
                         "Add Broker",
                         "/broker/addbroker"
                       )}
                       {renderSidebarItem(
                         "broker",
                         "view",
-                        <FaShoppingCart color="#008F89" size={20} />,
+                        <FaUserPen color="#008F89" size={20} />,
                         "Manage Brokers",
                         "/broker"
                       )}
@@ -247,7 +250,7 @@ export default function Sidebar() {
                         <div className="sidebar-item-wrapper flex">
                           <Link href={"/parties"} className="flex gap-4">
                             <span className="flex justify-center items-center">
-                              <MdRequestPage color="#008F89" size={20} />
+                              <FaUserGroup color="#008F89" size={20} />
                             </span>
                             <h4 className="flex justify-center items-center text-[15px]">
                               Parties
@@ -260,14 +263,14 @@ export default function Sidebar() {
                       {renderSidebarItem(
                         "party",
                         "create",
-                        <FaTag color="#008F89" size={20} />,
+                        <TiUserAdd color="#008F89" size={20} />,
                         "Add Party",
                         "/parties/addParty"
                       )}
                       {renderSidebarItem(
                         "party",
                         "view",
-                        <FaShoppingCart color="#008F89" size={20} />,
+                        <FaUserPen color="#008F89" size={20} />,
                         "Manage Parties",
                         "/parties"
                       )}
@@ -286,7 +289,7 @@ export default function Sidebar() {
                       </Link>
                     </div>
                   </div>
-                  <div className="flex items-center space-x-4 py-2">
+                  {/* <div className="flex items-center space-x-4 py-2">
                     <div className="sidebar-item-wrapper flex">
                       {renderSidebarItem(
                         "profile",
@@ -299,11 +302,11 @@ export default function Sidebar() {
                         <FaUser color="#008F89" size={20} /> Profile
                       </Link>
                     </div>
-                  </div>
+                  </div> */}
                 </Accordion>
               </div>
 
-              <div className="sidebar-item-wrapper space-x-4">
+              {/* <div className="sidebar-item-wrapper space-x-4">
                 <div className="sidebar-item-wrapper flex gap-4">
                   <span className="flex justify-center items-center">
                     <PiSignOutBold color="#008F89" size={20} />
@@ -314,7 +317,7 @@ export default function Sidebar() {
                     </h4>
                   </button>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
