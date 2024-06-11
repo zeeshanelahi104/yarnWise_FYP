@@ -30,7 +30,9 @@ const TransactionsTable: React.FC<TransactionTableProps> = () => {
   const [deleteTransaction] = useDeleteTransactionMutation();
 
   const handleDeleteTransaction = (id: string) => {
-    deleteTransaction(id)
+    const confirmed = confirm("Are you sure?")
+    if(confirmed){
+      deleteTransaction(id)
       .unwrap()
       .then(() => {
         toast.success("Transaction Deleted");
@@ -41,6 +43,8 @@ const TransactionsTable: React.FC<TransactionTableProps> = () => {
       .catch(() => {
         toast.error("Error, Deleting Transaction");
       });
+    }
+    
   };
   const transactionRecord = data?.transaction;
   const [filteredData, setFilteredData] = useState(transactionRecord);
@@ -51,8 +55,9 @@ const TransactionsTable: React.FC<TransactionTableProps> = () => {
   const totalPages: number = Math.ceil(filteredData?.length / ITEMS_PER_PAGE);
   const { data: session } = useSession() as SessionTypes;
 
-  const permissionCheck =
-    session?.user?.permissions?.transaction?.includes("delete");
+  const DeleteCheck = session?.user.permissions.broker.includes("delete");
+
+  const UpdateCheck = session?.user.permissions.broker.includes("update");
   const goToPage = (page: any) => {
     setCurrentPage(page);
   };
@@ -231,13 +236,18 @@ const TransactionsTable: React.FC<TransactionTableProps> = () => {
                     </TableCell>
                     <TableCell className="border-2 border-black">
                       <div className="flex justify-end gap-[20px]">
-                        <Link
-                          href={`/transactions/edittransaction/${transaction?._id}`}
-                        >
-                          <FaPen size={20} className="text-primary-clr" />
-                        </Link>
-                        {permissionCheck === false ? (
-                          <div></div>
+                        {UpdateCheck === false ? (
+                          ``
+                        ) : (
+                          <Link
+                            href={`/transactions/edittransaction/${transaction?._id}`}
+                          >
+                            <FaPen size={20} className="text-primary-clr" />
+                          </Link>
+                        )}
+
+                        {DeleteCheck === false ? (
+                          ``
                         ) : (
                           <button
                             onClick={() =>
@@ -308,7 +318,6 @@ const TransactionsTable: React.FC<TransactionTableProps> = () => {
 };
 export default TransactionsTable;
 
-
 // "use client";
 // import {
 //   Table,
@@ -357,7 +366,7 @@ export default TransactionsTable;
 //   const [searchQuery, setSearchQuery] = useState("");
 
 //   const totalPages = Math.ceil(filteredData?.length / ITEMS_PER_PAGE);
-  
+
 //   const permissionCheck = session?.user?.permissions?.transaction?.includes("delete");
 
 //   const goToPage = (page: number) => {

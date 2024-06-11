@@ -31,17 +31,20 @@ const BrokerTable: React.FC<BrokerTableProps> = () => {
   const [deleteBroker] = useDeleteBrokerMutation();
 
   const handleDeleteBroker = (id: string) => {
-    deleteBroker(id)
-      .unwrap()
-      .then(() => {
-        toast.success("Broker Deleted");
-        setFilteredData((prevData: any[]) =>
-          prevData.filter((item) => item._id !== id)
-        );
-      })
-      .catch(() => {
-        toast.error("Error, Deleting Broker");
-      });
+    const confirmed = confirm("Are you sure?");
+    if (confirmed) {
+      deleteBroker(id)
+        .unwrap()
+        .then(() => {
+          toast.success("Broker Deleted");
+          setFilteredData((prevData: any[]) =>
+            prevData.filter((item) => item._id !== id)
+          );
+        })
+        .catch(() => {
+          toast.error("Error, Deleting Broker");
+        });
+    }
   };
   const router = useRouter();
   const brokerRecord = data?.broker;
@@ -52,7 +55,9 @@ const BrokerTable: React.FC<BrokerTableProps> = () => {
   const totalPages: number = Math.ceil(filteredData?.length / ITEMS_PER_PAGE);
   const { data: session } = useSession() as SessionTypes;
 
-  const permissionCheck = session?.user.permissions.broker.includes("delete");
+  const DeleteCheck = session?.user.permissions.broker.includes("delete");
+
+  const UpdateCheck = session?.user.permissions.broker.includes("update");
 
   const goToPage = (page: any) => {
     setCurrentPage(page);
@@ -173,10 +178,15 @@ const BrokerTable: React.FC<BrokerTableProps> = () => {
 
                 <TableCell className="border-2 border-black">
                   <div className="flex justify-end gap-[20px]">
-                    <Link href={`/broker/editbroker/${broker?._id}`}>
-                      <FaPen className="text-primary-clr cursor-pointer mt-1" />
-                    </Link>
-                    {permissionCheck === false ? (
+                    {UpdateCheck === false ? (
+                      ``
+                    ) : (
+                      <Link href={`/broker/editbroker/${broker?._id}`}>
+                        <FaPen className="text-primary-clr cursor-pointer mt-1" />
+                      </Link>
+                    )}
+
+                    {DeleteCheck === false ? (
                       <div></div>
                     ) : (
                       <MdDelete

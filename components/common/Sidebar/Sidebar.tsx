@@ -3,7 +3,7 @@
 
 "use client";
 import { useState } from "react";
-import { FaUserGroup,FaUserPen } from "react-icons/fa6";
+import { FaUserGroup,FaUserPen,FaHandshakeSimple } from "react-icons/fa6";
 import { FaHome, FaUser, FaTag, FaShoppingCart, FaUsers,FaUserTie } from "react-icons/fa";
 import { PiSignOutBold } from "react-icons/pi";
 import { MdAddShoppingCart, MdRequestPage, MdBarChart } from "react-icons/md";
@@ -122,7 +122,7 @@ export default function Sidebar() {
                         <div className="sidebar-item-wrapper flex">
                           <Link href={"/users"} className="flex gap-4">
                             <span className="flex justify-center items-center">
-                              <FaUser color="#008F89" size={20} />
+                              <FaUsers color="#008F89" size={20} />
                             </span>
                             <h4 className="flex justify-center items-center text-[15px]">
                               Users
@@ -218,7 +218,7 @@ export default function Sidebar() {
                         <div className="sidebar-item-wrapper flex">
                           <Link href={"#"} className="flex gap-4">
                             <span className="flex justify-center items-center">
-                              <MdRequestPage color="#008F89" size={20} />
+                              <FaHandshakeSimple color="#008F89" size={20} />
                             </span>
                             <h4 className="flex justify-center items-center text-[15px]">
                               Brokers

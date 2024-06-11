@@ -32,22 +32,25 @@ const InventoryTable: React.FC<InventoryTableProps> = () => {
   const [deleteInventory] = useDeleteInventoryMutation();
 
   const handleDeleteInventory = (id: string) => {
-    deleteInventory(id)
-      .unwrap()
-      .then(() => {
-        toast.success("Inventory Deleted");
-        setFilteredData((prevData: any[]) =>
-          prevData.filter((item) => item._id !== id)
-        );
-      })
-      .catch(() => {
-        toast.error("Error, Deleting Inventory");
-      });
+    const confirmed = confirm("Are you Sure?");
+    if (confirmed) {
+      deleteInventory(id)
+        .unwrap()
+        .then(() => {
+          toast.success("Inventory Deleted");
+          setFilteredData((prevData: any[]) =>
+            prevData.filter((item) => item._id !== id)
+          );
+        })
+        .catch(() => {
+          toast.error("Error, Deleting Inventory");
+        });
+    }
   };
   const { data: session } = useSession() as SessionTypes;
 
-  const permissionCheck = session?.user?.permissions?.inventory?.includes("delete");
-
+  const DeleteCheck = session?.user?.permissions?.inventory?.includes("delete");
+  const UpdateCheck = session?.user?.permissions?.inventory?.includes("update");
 
   const inventoryRecord = data?.inventory;
   const [filteredData, setFilteredData] = useState(inventoryRecord);
@@ -188,11 +191,16 @@ const InventoryTable: React.FC<InventoryTableProps> = () => {
                 </TableCell>
                 <TableCell className="border-2 border-black">
                   <div className="flex justify-end gap-[20px]">
-                    <Link href={`/inventory/editproduct/${inventory?._id}`}>
-                      <FaPen className="text-primary-clr cursor-pointer mt-1" />
-                    </Link>
-                    {permissionCheck === false ? (
-                      <div></div>
+                    {UpdateCheck === false ? (
+                      ``
+                    ) : (
+                      <Link href={`/inventory/editproduct/${inventory?._id}`}>
+                        <FaPen className="text-primary-clr cursor-pointer mt-1" />
+                      </Link>
+                    )}
+
+                    {DeleteCheck === false ? (
+                      ``
                     ) : (
                       <MdDelete
                         size={20}
@@ -227,8 +235,7 @@ const InventoryTable: React.FC<InventoryTableProps> = () => {
               <ChevronLeft className="w-[10px]" color="black" />
             </button>
 
-            { Array.from(Array(totalPages).keys()).map((pageNum) => (
-              
+            {Array.from(Array(totalPages).keys()).map((pageNum) => (
               <button
                 key={pageNum}
                 onClick={() => goToPage(pageNum + 1)}

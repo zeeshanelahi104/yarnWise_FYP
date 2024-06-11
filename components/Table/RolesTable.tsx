@@ -1,5 +1,3 @@
-
-
 "use client";
 import { useState, useEffect } from "react";
 import {
@@ -14,7 +12,7 @@ import {
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { FiChevronsLeft, FiChevronsRight } from "react-icons/fi";
 import { useDeleteRoleMutation, useGetRolesQuery } from "@/features/roleSlice";
-import Link from "next/link"
+import Link from "next/link";
 import toast from "react-hot-toast";
 import { FaPen, FaSearch, FaArrowLeft } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
@@ -37,7 +35,7 @@ const RoleTable: React.FC<{}> = () => {
   const { data: session } = useSession() as SessionTypes;
 
   const permissionCheck = session?.user?.permissions?.role.includes("delete");
-  
+
   const goToPage = (page: any) => {
     setCurrentPage(page);
   };
@@ -79,17 +77,20 @@ const RoleTable: React.FC<{}> = () => {
   };
 
   const handleDeleteRole = (id: string) => {
-    deleteRole(id)
-      .unwrap()
-      .then(() => {
-        toast.success("Role Deleted");
-        setFilteredData((prevData: any[]) =>
-          prevData.filter((item) => item._id !== id)
-        );
-      })
-      .catch(() => {
-        toast.error("Error, Deleting Role");
-      });
+    const confirmed = confirm("Are you sure?");
+    if (confirmed) {
+      deleteRole(id)
+        .unwrap()
+        .then(() => {
+          toast.success("Role Deleted");
+          setFilteredData((prevData: any[]) =>
+            prevData.filter((item) => item._id !== id)
+          );
+        })
+        .catch(() => {
+          toast.error("Error, Deleting Role");
+        });
+    }
   };
 
   return (
@@ -230,7 +231,7 @@ const RoleTable: React.FC<{}> = () => {
             >
               <ChevronLeft className="w-[10px]" color="black" />
             </button>
-             { Array.from(Array(totalPages).keys()).map((pageNum) => (
+            {Array.from(Array(totalPages).keys()).map((pageNum) => (
               <button
                 key={pageNum}
                 onClick={() => goToPage(pageNum + 1)}

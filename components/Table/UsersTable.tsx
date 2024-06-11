@@ -34,20 +34,23 @@ const UsersTable: React.FC<UserTableProps> = () => {
   const totalPages: number = Math.ceil(filteredData?.length / ITEMS_PER_PAGE);
 
   const { data: session } = useSession() as SessionTypes;
-  const permissionCheck = session?.user.permissions.user.includes("delete");
-
+  const DeleteCheck = session?.user.permissions.user.includes("delete");
+  const UpdateCheck = session?.user.permissions.user.includes("update");
   const handleDeleteUser = (id: string) => {
-    deleteUser(id)
-      .unwrap()
-      .then(() => {
-        toast.success("User Deleted");
-        setFilteredData((prevData: any[]) =>
-          prevData.filter((item) => item._id !== id)
-        );
-      })
-      .catch(() => {
-        toast.error("Error, Deleting User");
-      });
+    const confirmed = confirm("Are you sure?");
+    if (confirmed) {
+      deleteUser(id)
+        .unwrap()
+        .then(() => {
+          toast.success("User Deleted");
+          setFilteredData((prevData: any[]) =>
+            prevData.filter((item) => item._id !== id)
+          );
+        })
+        .catch(() => {
+          toast.error("Error, Deleting User");
+        });
+    }
   };
 
   const goToPage = (page: any) => {
@@ -180,10 +183,15 @@ const UsersTable: React.FC<UserTableProps> = () => {
                 </TableCell>
                 <TableCell className="border-2 border-black">
                   <div className="flex justify-end gap-[20px]">
-                    <Link href={`/users/edituser/${user?._id}`}>
-                      <FaPen className="text-primary-clr cursor-pointer mt-1" />
-                    </Link>
-                    {permissionCheck === false ? (
+                    {UpdateCheck === false ? (
+                      ``
+                    ) : (
+                      <Link href={`/users/edituser/${user?._id}`}>
+                        <FaPen className="text-primary-clr cursor-pointer mt-1" />
+                      </Link>
+                    )}
+
+                    {DeleteCheck === false ? (
                       <div></div>
                     ) : (
                       <MdDelete

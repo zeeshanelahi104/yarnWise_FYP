@@ -31,7 +31,9 @@ const PartyTable: React.FC<PartyTableProps> = () => {
   const [deleteParty] = useDeletePartyMutation();
 
   const handleDeleteParty = (id: string) => {
-    deleteParty(id)
+    const confirmed = confirm("Are you sure?")
+    if(confirmed){
+      deleteParty(id)
       .unwrap()
       .then(() => {
         toast.success("Party Deleted");
@@ -42,6 +44,8 @@ const PartyTable: React.FC<PartyTableProps> = () => {
       .catch(() => {
         toast.error("Error, Deleting Party");
       });
+    }
+    
   };
 
   const router = useRouter();
