@@ -133,7 +133,7 @@ const AddPartyForm = () => {
           <Input
             type="text"
             className="w-full border border-black font-bold mt-2"
-            placeholder="Enter Party Contact Number"
+            placeholder="Enter Party Owner Name"
             value={party?.ownerName}
             onChange={(e) => handleChange("ownerName", e.target.value)}
             required
@@ -157,7 +157,7 @@ const AddPartyForm = () => {
           <Input
             type="text"
             className="w-full border border-black font-bold mt-2"
-            placeholder="Enter Party Address"
+            placeholder="Enter Address"
             value={party?.address}
             onChange={(e) => handleChange("address", e.target.value)}
             required
@@ -170,7 +170,7 @@ const AddPartyForm = () => {
           <Input
             type="text"
             className="w-full border border-black font-bold mt-2"
-            placeholder="Enter Party Area"
+            placeholder="Enter Contact Number"
             value={party?.contactNumber}
             pattern="{11}"
             title="Enter 11 digits phone number"
