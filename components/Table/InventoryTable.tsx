@@ -204,7 +204,7 @@ const InventoryTable: React.FC<InventoryTableProps> = () => {
                     ) : (
                       <MdDelete
                         size={20}
-                        className="text-primary-clr cursor-pointer"
+                        className="text-red-500 cursor-pointer"
                         onClick={() =>
                           handleDeleteInventory(
                             inventory?._id ? inventory._id : ""

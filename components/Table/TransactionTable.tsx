@@ -256,7 +256,7 @@ const TransactionsTable: React.FC<TransactionTableProps> = () => {
                               )
                             }
                           >
-                            <MdDelete size={20} className="text-primary-clr" />
+                            <MdDelete size={20} className="text-red-500" />
                           </button>
                         )}
                       </div>

@@ -202,7 +202,7 @@ const RoleTable: React.FC<{}> = () => {
                       ) : (
                         <MdDelete
                           size={20}
-                          className="text-primary-clr"
+                          className="text-red-500"
                           onClick={() =>
                             handleDeleteRole(role?._id ? role._id : "")
                           }

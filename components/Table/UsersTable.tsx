@@ -196,7 +196,7 @@ const UsersTable: React.FC<UserTableProps> = () => {
                     ) : (
                       <MdDelete
                         size={20}
-                        className="text-primary-clr cursor-pointer"
+                        className="text-red-500 cursor-pointer"
                         onClick={() =>
                           handleDeleteUser(user?._id ? user._id : "")
                         }

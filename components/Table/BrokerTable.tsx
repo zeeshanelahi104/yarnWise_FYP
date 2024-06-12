@@ -191,7 +191,7 @@ const BrokerTable: React.FC<BrokerTableProps> = () => {
                     ) : (
                       <MdDelete
                         size={20}
-                        className="text-primary-clr cursor-pointer"
+                        className="text-red-500 cursor-pointer"
                         onClick={() =>
                           handleDeleteBroker(broker?._id ? broker._id : "")
                         }

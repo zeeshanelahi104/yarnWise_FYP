@@ -148,7 +148,7 @@ const PartyTable: React.FC<PartyTableProps> = () => {
         </div>
         <div className="transactions-table">
           <Table className="min-w-full divide-y divide-gray-200">
-            <TableHeader className="border-2 border-black">
+            <TableHeader className="">
               <TableRow>
                 <TableHead className="text-center text-[11px] md:text-[13px]">
                   Party Name
