@@ -4,9 +4,9 @@ import AddBrokerForm from "../../component/AddBrokerForm";
 
 const Page = () => {
   return (
-      <div>
-        <AddBrokerForm />
-      </div>
+    <ProtectedRoute requiredPermissions={["update"]} entity="broker">
+      <AddBrokerForm />
+    </ProtectedRoute>
   );
 };
 

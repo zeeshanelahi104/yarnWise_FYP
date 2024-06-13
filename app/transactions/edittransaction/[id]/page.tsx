@@ -4,9 +4,9 @@ import ProtectedRoute from "@/components/PrivateRoute";
 
 const Page = () => {
   return (
-    <>
-        <AddTransactionForm />
-    </>
+    <ProtectedRoute requiredPermissions={["update"]} entity="transaction">
+      <AddTransactionForm />
+    </ProtectedRoute>
   );
 };
 

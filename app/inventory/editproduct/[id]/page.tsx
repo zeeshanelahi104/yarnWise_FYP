@@ -1,15 +1,13 @@
-import React from 'react'
-import AddProductForm from '../../component/AddProductForm'
-import ProtectedRoute from '@/components/PrivateRoute'
+import React from "react";
+import AddProductForm from "../../component/AddProductForm";
+import ProtectedRoute from "@/components/PrivateRoute";
 
 const Page = () => {
   return (
-    
-    <div>
-      <AddProductForm/>
-    </div>
-    
-  )
-}
+    <ProtectedRoute requiredPermissions={["update"]} entity="inventory">
+      <AddProductForm />
+    </ProtectedRoute>
+  );
+};
 
-export default Page
+export default Page;
