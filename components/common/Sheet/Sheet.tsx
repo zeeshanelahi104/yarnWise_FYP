@@ -1,8 +1,7 @@
 "use client";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { FaUserGroup,FaUserPen,FaHandshakeSimple } from "react-icons/fa6";
 import {
   FaHome,
   FaUser,
@@ -94,7 +93,7 @@ export default function SheetDemo() {
           <div
             className={`w-full sidebar-wrapper pt-10 lg:flex-col bg-[#1E282C] text-black min-h-screen `}
           >
-            <div className="sidebar-items-wrapper w-[250px] flex flex-col gap-[20px]">
+            <div className="sidebar-items-wrapper text-white w-[250px] flex flex-col gap-[20px]">
               {renderSidebarItem(
                 "dashboard",
                 "view",
@@ -270,7 +269,7 @@ export default function SheetDemo() {
                             <div className="sidebar-item-wrapper flex">
                               <Link href={"#"} className="flex gap-4">
                                 <span className="flex justify-center items-center">
-                                  <MdRequestPage color="#008F89" size={20} />
+                                  <FaHandshakeSimple color="#008F89" size={20} />
                                 </span>
                                 <h4 className="flex justify-center items-center text-[15px]">
                                   Brokers
@@ -283,7 +282,7 @@ export default function SheetDemo() {
                           {renderSidebarItem(
                             "broker",
                             "create",
-                            <FaTag color="#008F89" size={20} />,
+                            <TiUserAdd color="#008F89" size={20} />,
                             "Add Broker",
                             "/broker/addbroker"
                           )}
@@ -291,7 +290,7 @@ export default function SheetDemo() {
                           {renderSidebarItem(
                             "broker",
                             "view",
-                            <FaShoppingCart color="#008F89" size={20} />,
+                            <FaUserPen color="#008F89" size={20} />,
                             "Manage Brokers",
                             "/broker"
                           )}
@@ -303,7 +302,7 @@ export default function SheetDemo() {
                             <div className="sidebar-item-wrapper flex">
                               <Link href={"/parties"} className="flex gap-4">
                                 <span className="flex justify-center items-center">
-                                  <MdRequestPage color="#008F89" size={20} />
+                                  <FaUserGroup color="#008F89" size={20} />
                                 </span>
                                 <h4 className="flex justify-center items-center text-[15px]">
                                   Parties
@@ -316,7 +315,7 @@ export default function SheetDemo() {
                           {renderSidebarItem(
                             "party",
                             "create",
-                            <FaTag color="#008F89" size={20} />,
+                            <TiUserAdd color="#008F89" size={20} />,
                             "Add Party",
                             "/parties/addParty"
                           )}
@@ -324,7 +323,7 @@ export default function SheetDemo() {
                           {renderSidebarItem(
                             "party",
                             "view",
-                            <FaShoppingCart color="#008F89" size={20} />,
+                            <FaUserPen color="#008F89" size={20} />,
                             "Manage Parties",
                             "/parties"
                           )}
@@ -343,38 +342,11 @@ export default function SheetDemo() {
                           </Link>
                         </div>
                       </div>
-                      <div className="flex items-center space-x-4 py-2">
-                        <div className="sidebar-item-wrapper flex">
-                          {renderSidebarItem(
-                            "profile",
-                            "view",
-                            <FaUser color="#008F89" size={20} />,
-                            "Profile",
-                            "/profile"
-                          )}
-                          <Link href={"/profile"} className="inline-flex gap-4">
-                            <FaUser color="#008F89" size={20} /> Profile
-                          </Link>
-                        </div>
-                      </div>
+                      
                     </Accordion>
                   </div>
 
-                  <div className="sidebar-item-wrapper space-x-4">
-                    <div className="sidebar-item-wrapper flex gap-4">
-                      <span className="flex justify-center items-center">
-                        <PiSignOutBold color="#008F89" size={20} />
-                      </span>
-
-                      <button
-                        onClick={() => signOut({ callbackUrl: "/auth/login" })}
-                      >
-                        <h4 className="flex justify-center items-center text-[15px]">
-                          Sign Out
-                        </h4>
-                      </button>
-                    </div>
-                  </div>
+                  
                 </div>
               </div>
             </div>

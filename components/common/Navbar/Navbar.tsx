@@ -1,7 +1,3 @@
-
-// }
-
-
 "use client";
 import { Button } from "@/components/ui/button";
 import { SessionTypes } from "@/types";
@@ -33,7 +29,7 @@ export default function Navbar() {
         <div className="logo-wrapper"></div>
         <div className="heading-section flex flex-col text-center">
           <h1 className="font-bold">Welcome to YarnWise</h1>
-          <p className="mb-0 -mt-3">
+          <p className="mb-0">
             A digital platform, where you can manage your inventory
           </p>
         </div>

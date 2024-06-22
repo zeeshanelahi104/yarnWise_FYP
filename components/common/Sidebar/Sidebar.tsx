@@ -1,6 +1,3 @@
-
-
-
 "use client";
 import { useState } from "react";
 import { FaUserGroup,FaUserPen,FaHandshakeSimple } from "react-icons/fa6";
@@ -46,7 +43,7 @@ export default function Sidebar() {
 
   return (
     <>
-    <div className="hidden md:flex">
+    <div className="block md:hidden">
       <SheetDemo />
       </div>
       <div

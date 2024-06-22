@@ -46,7 +46,7 @@ export default function RootLayout({ children, session }: RootLayoutProps) {
                       pathname === "/reports/broker-report" ||
                       pathname === "/reports/party-report"
                         ? ""
-                        : "ml-60 mt-[6rem] mb-5"
+                        : "ml-0 mt-0 mb-0 lg:ml-60 lg:mt-[6rem] lg:mb-5"
                     }
         `}
                     >

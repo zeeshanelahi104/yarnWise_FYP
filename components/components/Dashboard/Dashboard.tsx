@@ -26,8 +26,8 @@ export default function Dashboard() {
   return (
     <>
       <div className="dashboard-items-wrapper flex justify-center items-center container">
-        <div className="items-wrapper flex justify-between flex-wrap gap-5 py-5 w-full">
-          <div className="single-item bg-red-500 flex flex-col justify-between lg:w-[30%] md:w-[45%] sm:w-full">
+        <div className="items-wrapper grid grid-cols-1 lg:grid-cols-3 gap-5 py-5 w-full">
+          <div className="single-item bg-red-500 flex flex-col justify-between  sm:w-full">
             <div className="flex justify-between p-5">
               <div className="count flex flex-col justify-between gap-4 text-white text-[20px]">
                 <p className="font-bold text-[30px]">{usersLength}</p>
@@ -49,7 +49,7 @@ export default function Dashboard() {
             </div>
           </div>
 
-          <div className="single-item bg-[#00A65A] flex flex-col justify-between lg:w-[30%] md:w-[45%] sm:w-full">
+          <div className="single-item bg-[#00A65A] flex flex-col justify-between  sm:w-full">
             <div className="flex justify-between p-5">
               <div className="count flex flex-col justify-between gap-4 text-white text-[20px]">
                 <p className="font-bold text-[30px]">{rolesLength}</p>
@@ -70,7 +70,7 @@ export default function Dashboard() {
               </button>
             </div>
           </div>
-          <div className="single-item bg-blue-400 flex flex-col justify-between lg:w-[30%] md:w-[45%] sm:w-full">
+          <div className="single-item bg-blue-400 flex flex-col justify-between  sm:w-full">
             <div className="flex justify-between p-5">
               <div className="count flex flex-col justify-between gap-4 text-white text-[20px]">
                 <p className="font-bold text-[30px]">{inventoriesLength}</p>
@@ -91,7 +91,7 @@ export default function Dashboard() {
               </button>
             </div>
           </div>
-          <div className="single-item bg-yellow-400 flex flex-col justify-between lg:w-[30%] md:w-[45%] sm:w-full">
+          <div className="single-item bg-yellow-400 flex flex-col justify-between  sm:w-full">
             <div className="flex justify-between p-5">
               <div className="count flex flex-col justify-between gap-4 text-white text-[20px]">
                 <p className="font-bold text-[30px]">{transactionsLength}</p>
@@ -113,7 +113,7 @@ export default function Dashboard() {
             </div>
           </div>
 
-          <div className="single-item bg-orange-500 flex flex-col justify-between lg:w-[30%] md:w-[45%] sm:w-full">
+          <div className="single-item bg-orange-500 flex flex-col justify-between  sm:w-full">
             <div className="flex justify-between p-5">
               <div className="count flex flex-col justify-between gap-4 text-white text-[20px]">
                 <p className="font-bold text-[30px]">{partiesLength}</p>
@@ -134,7 +134,7 @@ export default function Dashboard() {
               </button>
             </div>
           </div>
-          <div className="single-item bg-[#9846cf] flex flex-col justify-between lg:w-[30%] md:w-[45%] sm:w-full">
+          <div className="single-item bg-[#9846cf] flex flex-col justify-between  sm:w-full">
             <div className="flex justify-between p-5">
               <div className="count flex flex-col justify-between gap-4 text-white text-[20px]">
                 <p className="font-bold text-[30px]">{brokersLength}</p>
