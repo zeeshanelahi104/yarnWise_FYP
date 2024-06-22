@@ -182,7 +182,7 @@ export default function AddUserForm() {
           </h1>
           <div className="register-form-wrapper container">
             <div className="register-form-inner-wrapper rounded-[10px]">
-              <div className="registration-fields-wrapper grid grid-cols-2 gap-8">
+              <div className="registration-fields-wrapper grid grid-cols-1 md:grid-cols-2 gap-8">
                 <label>
                   Enter First Name
                   <Input

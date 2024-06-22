@@ -116,7 +116,7 @@ const AddPartyForm = () => {
       <h1 className="title text-primary-clr text-center">
         {id ? "Edit" : "Add"} Party
       </h1>
-      <div className="add-party-form-inputs grid grid-cols-2 gap-2">
+      <div className="add-party-form-inputs grid grid-cols-1 md:grid-cols-2 gap-2">
         <div className="single-input flex flex-col gap-1">
           <label htmlFor="">Enter Party Name</label>
           <Input
@@ -140,7 +140,7 @@ const AddPartyForm = () => {
           />
         </div>
       </div>
-      <div className="add-party-form-inputs grid grid-cols-2 gap-2">
+      <div className="add-party-form-inputs grid grid-cols-1 md:grid-cols-2 gap-2">
         <div className="single-input flex flex-col gap-1">
           <label htmlFor="">Enter Party Area</label>
           <Input
@@ -164,7 +164,7 @@ const AddPartyForm = () => {
           />
         </div>
       </div>
-      <div className="add-party-form-inputs grid grid-cols-2 gap-2">
+      <div className="add-party-form-inputs grid grid-cols-1 md:grid-cols-2 gap-2">
         <div className="single-input flex flex-col gap-1">
           <label htmlFor="">Enter Party Contact Number</label>
           <Input

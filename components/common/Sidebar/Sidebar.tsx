@@ -43,7 +43,7 @@ export default function Sidebar() {
 
   return (
     <>
-    <div className="block md:hidden">
+    <div className="block lg:hidden">
       <SheetDemo />
       </div>
       <div

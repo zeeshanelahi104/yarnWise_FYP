@@ -88,7 +88,7 @@ const AddBrokerForm = () => {
       <h1 className="title text-primary-clr text-center">
         {id ? "Edit" : "Add"} Broker
       </h1>
-      <div className="add-broker-form-inputs grid grid-cols-2 gap-2">
+      <div className="add-broker-form-inputs grid grid-cols-1 md:grid-cols-2 gap-2">
         <div className="single-input flex flex-col gap-2">
           <label htmlFor="">Enter Broker Name</label>
           <Input

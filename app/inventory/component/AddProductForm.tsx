@@ -88,8 +88,8 @@ export default function AddProductForm() {
     <div className="add-product-form container flex flex-col mx-auto pt-[45px]">
       <h1 className="title text-primary-clr text-center">{id ? "Edit": "Add"} Product</h1>
 
-        <div className="w-full add-product-form mt-[50px] flex justify-center">
-          <div className="grid grid-cols-1 justify-center items-center w-[50%]  gap-8">
+        <div className="w-full add-product-form mt-[50px] ">
+          <div className="grid grid-cols-1 md:grid-cols-2 justify-center items-center gap-8">
             <label>
               Enter Product Name
               <Input
