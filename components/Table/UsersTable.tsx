@@ -32,25 +32,25 @@ const UsersTable: React.FC<UserTableProps> = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const totalPages: number = Math.ceil(filteredData?.length / ITEMS_PER_PAGE);
-
+  const [open, setOpen] = useState(false);
+  const [userId, setUserId] = useState("");
   const { data: session } = useSession() as SessionTypes;
   const DeleteCheck = session?.user.permissions.user.includes("delete");
   const UpdateCheck = session?.user.permissions.user.includes("update");
-  const handleDeleteUser = (id: string) => {
-    const confirmed = confirm("Are you sure?");
-    if (confirmed) {
+  const handleDeleteUser = () => {
+    const id = userId;
       deleteUser(id)
-        .unwrap()
-        .then(() => {
-          toast.success("User Deleted");
-          setFilteredData((prevData: any[]) =>
-            prevData.filter((item) => item._id !== id)
-          );
-        })
-        .catch(() => {
-          toast.error("Error, Deleting User");
-        });
-    }
+      .unwrap()
+      .then(() => {
+        toast.success("User Deleted");
+        setOpen(false);
+        setFilteredData((prevData: any[]) =>
+          prevData.filter((item) => item._id !== id)
+        );
+      })
+      .catch(() => {
+        toast.error("Error, Deleting User");
+      });
   };
 
   const goToPage = (page: any) => {
@@ -198,8 +198,10 @@ const UsersTable: React.FC<UserTableProps> = () => {
                         size={20}
                         className="text-red-500 cursor-pointer"
                         onClick={() =>
-                          handleDeleteUser(user?._id ? user._id : "")
-                        }
+                          {
+                            setOpen(!open);
+                            setUserId( user?._id ? user._id : "")
+                          }}
                       />
                     )}
                   </div>
@@ -255,6 +257,29 @@ const UsersTable: React.FC<UserTableProps> = () => {
           </div>
         )}
       </div>
+      {open && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white dark:bg-slate-900 rounded-lg shadow-lg p-6 w-[450px] relative">
+            <h1 className="text-xl font-semibold mb-4 text-center">
+              Are you sure you want to delete this user?
+            </h1>
+            <div className="flex items-center justify-between mt-4">
+              <button
+                className="w-[120px] h-[40px] bg-primary-clr text-white rounded hover:bg-green-700"
+                onClick={() => setOpen(false)}
+              >
+                Cancel
+              </button>
+              <button
+                className="w-[120px] h-[40px] bg-red-500 text-white rounded hover:bg-red-600"
+                onClick={handleDeleteUser}
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

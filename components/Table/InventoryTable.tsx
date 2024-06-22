@@ -31,27 +31,27 @@ const InventoryTable: React.FC<InventoryTableProps> = () => {
     useGetInventoriesQuery();
   const [deleteInventory] = useDeleteInventoryMutation();
 
-  const handleDeleteInventory = (id: string) => {
-    const confirmed = confirm("Are you Sure?");
-    if (confirmed) {
+  const handleDeleteInventory = () => {
+    const id = inventoryId;
       deleteInventory(id)
-        .unwrap()
-        .then(() => {
-          toast.success("Inventory Deleted");
-          setFilteredData((prevData: any[]) =>
-            prevData.filter((item) => item._id !== id)
-          );
-        })
-        .catch(() => {
-          toast.error("Error, Deleting Inventory");
-        });
-    }
+      .unwrap()
+      .then(() => {
+        toast.success("Inventory Deleted");
+        setOpen(false);
+        setFilteredData((prevData: any[]) =>
+          prevData.filter((item) => item._id !== id)
+        );
+      })
+      .catch(() => {
+        toast.error("Error, Deleting Inventory");
+      });
   };
   const { data: session } = useSession() as SessionTypes;
 
   const DeleteCheck = session?.user?.permissions?.inventory?.includes("delete");
   const UpdateCheck = session?.user?.permissions?.inventory?.includes("update");
-
+  const [open, setOpen] = useState(false);
+  const [inventoryId, setInventoryId] = useState("");
   const inventoryRecord = data?.inventory;
   const [filteredData, setFilteredData] = useState(inventoryRecord);
   const [showSearchInput, setShowSearchInput] = useState(false);
@@ -206,10 +206,10 @@ const InventoryTable: React.FC<InventoryTableProps> = () => {
                         size={20}
                         className="text-red-500 cursor-pointer"
                         onClick={() =>
-                          handleDeleteInventory(
-                            inventory?._id ? inventory._id : ""
-                          )
-                        }
+                          {
+                            setOpen(!open);
+                            setInventoryId( inventory?._id ? inventory._id : "")
+                          }}
                       />
                     )}
                   </div>
@@ -274,6 +274,29 @@ const InventoryTable: React.FC<InventoryTableProps> = () => {
           <FaPrint size={25} className="ml-2" />
         </button>
       </div>
+      {open && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white dark:bg-slate-900 rounded-lg shadow-lg p-6 w-[450px] relative">
+            <h1 className="text-xl font-semibold mb-4 text-center">
+              Are you sure you want to delete this inventory?
+            </h1>
+            <div className="flex items-center justify-between mt-4">
+              <button
+                className="w-[120px] h-[40px] bg-primary-clr text-white rounded hover:bg-green-700"
+                onClick={() => setOpen(false)}
+              >
+                Cancel
+              </button>
+              <button
+                className="w-[120px] h-[40px] bg-red-500 text-white rounded hover:bg-red-600"
+                onClick={handleDeleteInventory}
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

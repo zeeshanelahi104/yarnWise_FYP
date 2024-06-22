@@ -31,7 +31,8 @@ const RoleTable: React.FC<{}> = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const totalPages: number = Math.ceil(filteredData.length / ITEMS_PER_PAGE);
-
+  const [open, setOpen] = useState(false);
+  const [roleId, setRoleId] = useState("");
   const { data: session } = useSession() as SessionTypes;
 
   const permissionCheck = session?.user?.permissions?.role.includes("delete");
@@ -76,22 +77,22 @@ const RoleTable: React.FC<{}> = () => {
     setSearchQuery(event.target.value);
   };
 
-  const handleDeleteRole = (id: string) => {
-    const confirmed = confirm("Are you sure?");
-    if (confirmed) {
+  const handleDeleteRole = () => {
+    const id = roleId;
       deleteRole(id)
-        .unwrap()
-        .then(() => {
-          toast.success("Role Deleted");
-          setFilteredData((prevData: any[]) =>
-            prevData.filter((item) => item._id !== id)
-          );
-        })
-        .catch(() => {
-          toast.error("Error, Deleting Role");
-        });
-    }
+      .unwrap()
+      .then(() => {
+        toast.success("Role Deleted");
+        setOpen(false);
+        setFilteredData((prevData: any[]) =>
+          prevData.filter((item) => item._id !== id)
+        );
+      })
+      .catch(() => {
+        toast.error("Error, Deleting Role");
+      });
   };
+
 
   return (
     <div className=" container flex flex-col flex-1 w-full">
@@ -204,8 +205,10 @@ const RoleTable: React.FC<{}> = () => {
                           size={20}
                           className="text-red-500"
                           onClick={() =>
-                            handleDeleteRole(role?._id ? role._id : "")
-                          }
+                            {
+                              setOpen(!open);
+                              setRoleId( role?._id ? role._id : "")
+                            }}
                         />
                       )}
                     </button>
@@ -261,6 +264,29 @@ const RoleTable: React.FC<{}> = () => {
           </div>
         )}
       </div>
+      {open && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white dark:bg-slate-900 rounded-lg shadow-lg p-6 w-[450px] relative">
+            <h1 className="text-xl font-semibold mb-4 text-center">
+              Are you sure you want to delete this role?
+            </h1>
+            <div className="flex items-center justify-between mt-4">
+              <button
+                className="w-[120px] h-[40px] bg-primary-clr text-white rounded hover:bg-green-700"
+                onClick={() => setOpen(false)}
+              >
+                Cancel
+              </button>
+              <button
+                className="w-[120px] h-[40px] bg-red-500 text-white rounded hover:bg-red-600"
+                onClick={handleDeleteRole}
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

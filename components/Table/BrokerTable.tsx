@@ -30,21 +30,20 @@ const BrokerTable: React.FC<BrokerTableProps> = () => {
   const { data, isLoading, isSuccess, isError, error } = useGetBrokersQuery();
   const [deleteBroker] = useDeleteBrokerMutation();
 
-  const handleDeleteBroker = (id: string) => {
-    const confirmed = confirm("Are you sure?");
-    if (confirmed) {
+  const handleDeleteBroker = () => {
+    const id = brokerId;
       deleteBroker(id)
-        .unwrap()
-        .then(() => {
-          toast.success("Broker Deleted");
-          setFilteredData((prevData: any[]) =>
-            prevData.filter((item) => item._id !== id)
-          );
-        })
-        .catch(() => {
-          toast.error("Error, Deleting Broker");
-        });
-    }
+      .unwrap()
+      .then(() => {
+        toast.success("Broker Deleted");
+        setOpen(false);
+        setFilteredData((prevData: any[]) =>
+          prevData.filter((item) => item._id !== id)
+        );
+      })
+      .catch(() => {
+        toast.error("Error, Deleting Broker");
+      });
   };
   const router = useRouter();
   const brokerRecord = data?.broker;
@@ -52,6 +51,8 @@ const BrokerTable: React.FC<BrokerTableProps> = () => {
   const [showSearchInput, setShowSearchInput] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
+  const [open, setOpen] = useState(false);
+  const [brokerId, setBrokerId] = useState("");
   const totalPages: number = Math.ceil(filteredData?.length / ITEMS_PER_PAGE);
   const { data: session } = useSession() as SessionTypes;
 
@@ -193,8 +194,10 @@ const BrokerTable: React.FC<BrokerTableProps> = () => {
                         size={20}
                         className="text-red-500 cursor-pointer"
                         onClick={() =>
-                          handleDeleteBroker(broker?._id ? broker._id : "")
-                        }
+                          {
+                            setOpen(!open);
+                            setBrokerId( broker?._id ? broker._id : "")
+                          }}
                       />
                     )}
                   </div>
@@ -259,6 +262,29 @@ const BrokerTable: React.FC<BrokerTableProps> = () => {
           <FaPrint size={25} className="ml-2" />
         </button>
       </div>
+      {open && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white dark:bg-slate-900 rounded-lg shadow-lg p-6 w-[450px] relative">
+            <h1 className="text-xl font-semibold mb-4 text-center">
+              Are you sure you want to delete this broker?
+            </h1>
+            <div className="flex items-center justify-between mt-4">
+              <button
+                className="w-[120px] h-[40px] bg-primary-clr text-white rounded hover:bg-green-700"
+                onClick={() => setOpen(false)}
+              >
+                Cancel
+              </button>
+              <button
+                className="w-[120px] h-[40px] bg-red-500 text-white rounded hover:bg-red-600"
+                onClick={handleDeleteBroker}
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
