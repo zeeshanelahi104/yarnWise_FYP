@@ -19,6 +19,7 @@ import {
   useDeleteTransactionMutation,
   useGetTransactionsQuery,
 } from "@/features/transactionSlice";
+import { format } from "date-fns";
 import { useSession } from "next-auth/react";
 interface TransactionTableProps {}
 
@@ -31,7 +32,7 @@ const TransactionsTable: React.FC<TransactionTableProps> = () => {
 
   const handleDeleteTransaction = () => {
     const id = transactionId;
-      deleteTransaction(id)
+    deleteTransaction(id)
       .unwrap()
       .then(() => {
         toast.success("Transaction Deleted");
@@ -100,7 +101,7 @@ const TransactionsTable: React.FC<TransactionTableProps> = () => {
   return (
     <>
       <div className="transcations-record-page-wrapper flex flex-col justify-center pt-[45px]">
-        <div className="page-header flex justify-between">
+        <div className="page-header flex items-center justify-between">
           <div className="back-btn">
             <Link href={"/"}>
               <FaArrowLeft />
@@ -184,11 +185,18 @@ const TransactionsTable: React.FC<TransactionTableProps> = () => {
                   Balance
                 </TableHead>
                 <TableHead className=" text-primary-clr text-[9px] text-center font-bold uppercase border-2 border-black">
+                  Transaction Date
+                </TableHead>
+                <TableHead className=" text-primary-clr text-[9px] text-center font-bold uppercase border-2 border-black">
                   Status
                 </TableHead>
-                <TableHead className=" text-primary-clr text-center font-bold uppercase border-2 border-black">
-                  Action
-                </TableHead>
+                {DeleteCheck || UpdateCheck ? (
+                  <TableHead className="text-primary-clr text-center font-bold uppercase border-2 border-black">
+                    Action
+                  </TableHead>
+                ) : (
+                  ``
+                )}
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -232,6 +240,9 @@ const TransactionsTable: React.FC<TransactionTableProps> = () => {
                       {transaction.balance}
                     </TableCell>
                     <TableCell className=" text-center text-[11px] border-2 border-black">
+                      {format(transaction.createdAt,"yyyy-MM-dd")}
+                    </TableCell>
+                    <TableCell className=" text-center text-[11px] border-2 border-black">
                       {transaction.status}
                     </TableCell>
                     <TableCell className="border-2 border-black">
@@ -250,11 +261,12 @@ const TransactionsTable: React.FC<TransactionTableProps> = () => {
                           ``
                         ) : (
                           <button
-                            onClick={() =>
-                              {
-                                setOpen(!open);
-                                setTransactionId( transaction?._id ? transaction._id : "")
-                              }}
+                            onClick={() => {
+                              setOpen(!open);
+                              setTransactionId(
+                                transaction?._id ? transaction._id : ""
+                              );
+                            }}
                           >
                             <MdDelete size={20} className="text-red-500" />
                           </button>
@@ -313,28 +325,28 @@ const TransactionsTable: React.FC<TransactionTableProps> = () => {
           )}
         </div>
         {open && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white dark:bg-slate-900 rounded-lg shadow-lg p-6 w-[450px] relative">
-            <h1 className="text-xl font-semibold mb-4 text-center">
-              Are you sure you want to delete this transaction?
-            </h1>
-            <div className="flex items-center justify-between mt-4">
-              <button
-                className="w-[120px] h-[40px] bg-primary-clr text-white rounded hover:bg-green-700"
-                onClick={() => setOpen(false)}
-              >
-                Cancel
-              </button>
-              <button
-                className="w-[120px] h-[40px] bg-red-500 text-white rounded hover:bg-red-600"
-                onClick={handleDeleteTransaction}
-              >
-                Delete
-              </button>
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="bg-white dark:bg-slate-900 rounded-lg shadow-lg p-6 w-[450px] relative">
+              <h1 className="text-xl font-semibold mb-4 text-center">
+                Are you sure you want to delete this transaction?
+              </h1>
+              <div className="flex items-center justify-between mt-4">
+                <button
+                  className="w-[120px] h-[40px] bg-primary-clr text-white rounded hover:bg-green-700"
+                  onClick={() => setOpen(false)}
+                >
+                  Cancel
+                </button>
+                <button
+                  className="w-[120px] h-[40px] bg-red-500 text-white rounded hover:bg-red-600"
+                  onClick={handleDeleteTransaction}
+                >
+                  Delete
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
       </div>
     </>
   );

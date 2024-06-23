@@ -20,6 +20,9 @@ import {
   useDeleteTransactionMutation,
   useGetTransactionsQuery,
 } from "@/features/transactionSlice";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { format } from "date-fns";
 import { useSession } from "next-auth/react";
 interface TransactionTableProps {}
 
@@ -49,8 +52,21 @@ const BrokerReportTable: React.FC<TransactionTableProps> = () => {
   const [showSearchInput, setShowSearchInput] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  useEffect(() => {
+    if (startDate && endDate) {
+      const filtered = transactionRecord.filter((record) => {
+        const recordDate = new Date(record.createdAt); // Adjust if your date is in different format
+        return recordDate >= startDate && recordDate <= endDate;
+      });
+      setFilteredData(filtered);
+    } else {
+      setFilteredData(transactionRecord);
+    }
+  }, [startDate, endDate, transactionRecord]);
   const totalPages: number = Math.ceil(filteredData?.length / ITEMS_PER_PAGE);
-  
+
   const goToPage = (page: any) => {
     setCurrentPage(page);
   };
@@ -73,7 +89,7 @@ const BrokerReportTable: React.FC<TransactionTableProps> = () => {
 
   const handleSearch = () => {
     const filteredData = transactionRecord?.filter((item: any) =>
-      item.productName.toLowerCase().includes(searchQuery.toLowerCase())
+      item.brokerName.toLowerCase().includes(searchQuery.toLowerCase())
     );
     setFilteredData(filteredData);
   };
@@ -92,8 +108,8 @@ const BrokerReportTable: React.FC<TransactionTableProps> = () => {
 
   return (
     <>
-      <div className="transcations-record-page-wrapper flex flex-col justify-center pt-[45px]">
-        <div className="page-header flex justify-between">
+      <div className="transcations-record-page-wrapper px-10 flex flex-col justify-center pt-[45px]">
+        <div className="page-header flex items-center justify-between">
           <div className="back-btn">
             <Link href={"/reports"}>
               <FaArrowLeft />
@@ -104,7 +120,27 @@ const BrokerReportTable: React.FC<TransactionTableProps> = () => {
           </div>
           <div></div>
         </div>
-
+        <div className="flex justify-center gap-5 mt-5">
+          <h5>Filter Record By Date</h5>
+          <DatePicker
+            selected={startDate}
+            onChange={(date) => setStartDate(date)}
+            selectsStart
+            startDate={startDate}
+            className="border border-black"
+            endDate={endDate}
+            placeholderText="Select start date"
+          />
+          <DatePicker
+            selected={endDate}
+            onChange={(date) => setEndDate(date)}
+            selectsEnd
+            className="border border-black"
+            startDate={startDate}
+            endDate={endDate}
+            placeholderText="Select end date"
+          />
+        </div>
         <div className="table-head-wrapper w-full mt-10 flex items-center justify-between border-2 border-black py-4 px-4">
           {!showSearchInput && (
             <>
@@ -128,7 +164,7 @@ const BrokerReportTable: React.FC<TransactionTableProps> = () => {
                 value={searchQuery}
                 onChange={handleInputChange}
                 className="px-2 w-full focus:outline-none rounded"
-                placeholder="Search by Product Name..."
+                placeholder="Search by Broker Name..."
               />
               <button
                 onClick={handleSearch}
@@ -156,6 +192,9 @@ const BrokerReportTable: React.FC<TransactionTableProps> = () => {
 
                 <TableHead className=" text-primary-clr text-[9px] text-center font-bold uppercase border-2 border-black">
                   Total Bill
+                </TableHead>
+                <TableHead className=" text-primary-clr text-[9px] text-center font-bold uppercase border-2 border-black">
+                  Transaction Date
                 </TableHead>
                 <TableHead className=" text-primary-clr text-[9px] text-center font-bold uppercase border-2 border-black">
                   Party Details
@@ -189,6 +228,9 @@ const BrokerReportTable: React.FC<TransactionTableProps> = () => {
                     </TableCell>
                     <TableCell className=" text-center text-[11px] border-2 border-black">
                       {transaction.totalBill}
+                    </TableCell>
+                    <TableCell className=" text-center text-[11px] border-2 border-black">
+                      {format(transaction.createdAt, "yyyy-MM-dd")}
                     </TableCell>
                     <TableCell className=" text-center text-[11px] border-2 border-black">
                       {transaction.partyName} , {transaction.partyArea}

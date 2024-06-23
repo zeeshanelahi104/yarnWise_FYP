@@ -20,6 +20,9 @@ import {
   useDeleteTransactionMutation,
   useGetTransactionsQuery,
 } from "@/features/transactionSlice";
+import { format } from "date-fns";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { useSession } from "next-auth/react";
 interface TransactionTableProps {}
 
@@ -49,6 +52,19 @@ const TransactionsReportTable: React.FC<TransactionTableProps> = () => {
   const [showSearchInput, setShowSearchInput] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  useEffect(() => {
+    if (startDate && endDate) {
+      const filtered = transactionRecord.filter((record) => {
+        const recordDate = new Date(record.createdAt); // Adjust if your date is in different format
+        return recordDate >= startDate && recordDate <= endDate;
+      });
+      setFilteredData(filtered);
+    } else {
+      setFilteredData(transactionRecord);
+    }
+  }, [startDate, endDate, transactionRecord]);
   const totalPages: number = Math.ceil(filteredData?.length / ITEMS_PER_PAGE);
   const { data: session } = useSession() as SessionTypes;
 
@@ -95,8 +111,8 @@ const TransactionsReportTable: React.FC<TransactionTableProps> = () => {
 
   return (
     <>
-      <div className="transcations-record-page-wrapper flex flex-col justify-center pt-[45px]">
-        <div className="page-header flex justify-between">
+      <div className="transcations-record-page-wrapper px-10 flex flex-col justify-center pt-[45px]">
+        <div className="page-header flex items-center justify-between">
           <div className="back-btn">
             <Link href={"/"}>
               <FaArrowLeft />
@@ -107,7 +123,27 @@ const TransactionsReportTable: React.FC<TransactionTableProps> = () => {
           </div>
           <div></div>
         </div>
-
+        <div className="flex justify-center gap-5 mt-5">
+          <h5>Filter Record By Date</h5>
+          <DatePicker
+            selected={startDate}
+            onChange={(date) => setStartDate(date)}
+            selectsStart
+            startDate={startDate}
+            className="border border-black"
+            endDate={endDate}
+            placeholderText="Select start date"
+          />
+          <DatePicker
+            selected={endDate}
+            onChange={(date) => setEndDate(date)}
+            selectsEnd
+            className="border border-black"
+            startDate={startDate}
+            endDate={endDate}
+            placeholderText="Select end date"
+          />
+        </div>
         <div className="table-head-wrapper w-full mt-10 flex items-center justify-between border-2 border-black py-4 px-4">
           {!showSearchInput && (
             <>
@@ -171,6 +207,9 @@ const TransactionsReportTable: React.FC<TransactionTableProps> = () => {
                   Transaction Type
                 </TableHead>
                 <TableHead className=" text-primary-clr text-[9px] text-center font-bold uppercase border-2 border-black">
+                  Transaction Date
+                </TableHead>
+                <TableHead className=" text-primary-clr text-[9px] text-center font-bold uppercase border-2 border-black">
                   Debit
                 </TableHead>
                 <TableHead className=" text-primary-clr text-[9px] text-center font-bold uppercase border-2 border-black">
@@ -214,6 +253,9 @@ const TransactionsReportTable: React.FC<TransactionTableProps> = () => {
 
                     <TableCell className=" text-center text-[11px] border-2 border-black">
                       {transaction.transactionType}
+                    </TableCell>
+                    <TableCell className=" text-center text-[11px] border-2 border-black">
+                      {format(transaction.createdAt, "yyyy-MM-dd")}
                     </TableCell>
                     <TableCell className=" text-center text-[11px] border-2 border-black">
                       {transaction.debit}

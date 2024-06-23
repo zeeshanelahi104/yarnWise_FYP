@@ -32,7 +32,7 @@ const PartyTable: React.FC<PartyTableProps> = () => {
 
   const handleDeleteParty = () => {
     const id = partyId;
-      deleteParty(id)
+    deleteParty(id)
       .unwrap()
       .then(() => {
         toast.success("Party Deleted");
@@ -57,7 +57,8 @@ const PartyTable: React.FC<PartyTableProps> = () => {
   const totalPages: number = Math.ceil(filteredData?.length / ITEMS_PER_PAGE);
   const { data: session } = useSession() as SessionTypes;
 
-  const permissionCheck = session?.user?.permissions?.party?.includes("delete");
+  const DeleteCheck = session?.user?.permissions?.party?.includes("delete");
+  const UpdateCheck = session?.user?.permissions?.party?.includes("update");
 
   const goToPage = (page: any) => {
     setCurrentPage(page);
@@ -109,9 +110,9 @@ const PartyTable: React.FC<PartyTableProps> = () => {
   return (
     <>
       <div className="transcations-record-page-wrapper container flex flex-col justify-center pt-[45px]">
-          <div className="text-center">
-            <h1 className="title text-primary-clr w-full">Parties</h1>
-          </div>
+        <div className="text-center">
+          <h1 className="title text-primary-clr w-full">Parties</h1>
+        </div>
         <div className="table-head-wrapper w-full mt-10 flex items-center justify-between border-2 border-black py-4 px-4">
           {!showSearchInput && (
             <>
@@ -171,9 +172,13 @@ const PartyTable: React.FC<PartyTableProps> = () => {
                 <TableHead className="text-center text-[11px] md:text-[13px]">
                   Status
                 </TableHead>
-                <TableHead className="text-center text-[11px] md:text-[13px]">
-                  Actions
-                </TableHead>
+                {DeleteCheck || UpdateCheck ? (
+                  <TableHead className="text-primary-clr text-center font-bold uppercase border-2 border-black">
+                    Action
+                  </TableHead>
+                ) : (
+                  ``
+                )}
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -216,17 +221,21 @@ const PartyTable: React.FC<PartyTableProps> = () => {
                   <TableCell className="text-center">{party.balance}</TableCell>
                   <TableCell className="text-center">{party.status}</TableCell>
                   <TableCell className="flex justify-center items-center gap-4 text-[20px] md:text-[22px]">
-                    <Link href={`/party/editParty?id=${party._id}`}>
-                      <FaPen className="text-green-800 cursor-pointer" />
-                    </Link>
-                    {permissionCheck && (
+                    {UpdateCheck === false ? (
+                      ``
+                    ) : (
+                      <Link href={`/party/editParty?id=${party._id}`}>
+                        <FaPen className="text-green-800 cursor-pointer" />
+                      </Link>
+                    )}
+
+                    {DeleteCheck && (
                       <MdDelete
                         className="text-red-500 cursor-pointer"
-                        onClick={() =>
-                          {
-                            setOpen(!open);
-                            setPartyId( party?._id ? party._id : "")
-                          }}
+                        onClick={() => {
+                          setOpen(!open);
+                          setPartyId(party?._id ? party._id : "");
+                        }}
                       />
                     )}
                   </TableCell>
@@ -293,28 +302,28 @@ const PartyTable: React.FC<PartyTableProps> = () => {
           </button>
         </div>
         {open && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white dark:bg-slate-900 rounded-lg shadow-lg p-6 w-[450px] relative">
-            <h1 className="text-xl font-semibold mb-4 text-center">
-              Are you sure you want to delete this party?
-            </h1>
-            <div className="flex items-center justify-between mt-4">
-              <button
-                className="w-[120px] h-[40px] bg-primary-clr text-white rounded hover:bg-green-700"
-                onClick={() => setOpen(false)}
-              >
-                Cancel
-              </button>
-              <button
-                className="w-[120px] h-[40px] bg-red-500 text-white rounded hover:bg-red-600"
-                onClick={handleDeleteParty}
-              >
-                Delete
-              </button>
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="bg-white dark:bg-slate-900 rounded-lg shadow-lg p-6 w-[450px] relative">
+              <h1 className="text-xl font-semibold mb-4 text-center">
+                Are you sure you want to delete this party?
+              </h1>
+              <div className="flex items-center justify-between mt-4">
+                <button
+                  className="w-[120px] h-[40px] bg-primary-clr text-white rounded hover:bg-green-700"
+                  onClick={() => setOpen(false)}
+                >
+                  Cancel
+                </button>
+                <button
+                  className="w-[120px] h-[40px] bg-red-500 text-white rounded hover:bg-red-600"
+                  onClick={handleDeleteParty}
+                >
+                  Delete
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
       </div>
     </>
   );

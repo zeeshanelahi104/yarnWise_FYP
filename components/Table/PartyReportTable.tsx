@@ -16,13 +16,16 @@ import { FiChevronsLeft, FiChevronsRight } from "react-icons/fi";
 import { FaPen, FaPrint, FaSearch, FaArrowLeft } from "react-icons/fa";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { ArrowLeft } from "lucide-react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import {
   useDeleteTransactionMutation,
   useGetTransactionsQuery,
 } from "@/features/transactionSlice";
+import { format } from "date-fns";
 interface TransactionTableProps {}
 
-const ITEMS_PER_PAGE = 5;
+const ITEMS_PER_PAGE = 8;
 
 const PartyReportTable: React.FC<TransactionTableProps> = () => {
   const { data, isLoading, isSuccess, isError, error } =
@@ -44,12 +47,27 @@ const PartyReportTable: React.FC<TransactionTableProps> = () => {
   };
   const transactionRecord = data?.transaction;
   const [filteredData, setFilteredData] = useState(transactionRecord);
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  useEffect(() => {
+    if (startDate && endDate) {
+      const filtered = transactionRecord.filter((record) => {
+        const recordDate = new Date(record.createdAt); // Adjust if your date is in different format
+        return recordDate >= startDate && recordDate <= endDate;
+      });
+      setFilteredData(filtered);
+    } else {
+      setFilteredData(transactionRecord);
+    }
+  }, [startDate, endDate, transactionRecord]);
+  
 
   const [showSearchInput, setShowSearchInput] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
+
   const totalPages: number = Math.ceil(filteredData?.length / ITEMS_PER_PAGE);
-  
+
   const goToPage = (page: any) => {
     setCurrentPage(page);
   };
@@ -72,7 +90,7 @@ const PartyReportTable: React.FC<TransactionTableProps> = () => {
 
   const handleSearch = () => {
     const filteredData = transactionRecord?.filter((item: any) =>
-      item.productName.toLowerCase().includes(searchQuery.toLowerCase())
+      item.partyName.toLowerCase().includes(searchQuery.toLowerCase())
     );
     setFilteredData(filteredData);
   };
@@ -91,8 +109,8 @@ const PartyReportTable: React.FC<TransactionTableProps> = () => {
 
   return (
     <>
-      <div className="transcations-record-page-wrapper flex flex-col justify-center pt-[45px]">
-        <div className="page-header flex justify-between">
+      <div className="transcations-record-page-wrapper px-10 flex flex-col justify-center pt-[45px]">
+        <div className="page-header flex items-center justify-between">
           <div className="back-btn">
             <Link href={"/reports"}>
               <FaArrowLeft />
@@ -103,7 +121,27 @@ const PartyReportTable: React.FC<TransactionTableProps> = () => {
           </div>
           <div></div>
         </div>
-
+        <div className="flex justify-center gap-5 mt-5">
+          <h5>Filter Record By Date</h5>
+          <DatePicker
+            selected={startDate}
+            onChange={(date) => setStartDate(date)}
+            selectsStart
+            startDate={startDate}
+            className="border border-black"
+            endDate={endDate}
+            placeholderText="Select start date"
+          />
+          <DatePicker
+            selected={endDate}
+            onChange={(date) => setEndDate(date)}
+            selectsEnd
+            className="border border-black"
+            startDate={startDate}
+            endDate={endDate}
+            placeholderText="Select end date"
+          />
+        </div>
         <div className="table-head-wrapper w-full mt-10 flex items-center justify-between border-2 border-black py-4 px-4">
           {!showSearchInput && (
             <>
@@ -127,7 +165,7 @@ const PartyReportTable: React.FC<TransactionTableProps> = () => {
                 value={searchQuery}
                 onChange={handleInputChange}
                 className="px-2 w-full focus:outline-none rounded"
-                placeholder="Search by Product Name..."
+                placeholder="Search by Party Name..."
               />
               <button
                 onClick={handleSearch}
@@ -138,6 +176,7 @@ const PartyReportTable: React.FC<TransactionTableProps> = () => {
             </div>
           )}
         </div>
+
         <div className="transactions-table">
           <Table className="min-w-full divide-y divide-gray-200">
             <TableHeader className="border-2 border-black">
@@ -163,6 +202,9 @@ const PartyReportTable: React.FC<TransactionTableProps> = () => {
                   Transaction Type
                 </TableHead>
                 <TableHead className=" text-primary-clr text-[9px] text-center font-bold uppercase border-2 border-black">
+                  Transaction Date
+                </TableHead>
+                <TableHead className=" text-primary-clr text-[9px] text-center font-bold uppercase border-2 border-black">
                   Debit
                 </TableHead>
                 <TableHead className=" text-primary-clr text-[9px] text-center font-bold uppercase border-2 border-black">
@@ -177,8 +219,8 @@ const PartyReportTable: React.FC<TransactionTableProps> = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {currentItems &&
-                currentItems?.map((transaction: Transaction, index: number) => (
+              {filteredData &&
+                filteredData?.map((transaction: any, index: number) => (
                   <TableRow key={index}>
                     <TableCell className="font-medium text-[9px] text-center border-2 border-black">
                       {transaction?._id
@@ -203,6 +245,9 @@ const PartyReportTable: React.FC<TransactionTableProps> = () => {
 
                     <TableCell className=" text-center text-[11px] border-2 border-black">
                       {transaction.transactionType}
+                    </TableCell>
+                    <TableCell className=" text-center text-[11px] border-2 border-black">
+                      {format(transaction.createdAt, "yyyy-MM-dd")}
                     </TableCell>
                     <TableCell className=" text-center text-[11px] border-2 border-black">
                       {transaction.debit}

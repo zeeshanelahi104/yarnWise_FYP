@@ -162,9 +162,13 @@ const InventoryTable: React.FC<InventoryTableProps> = () => {
               <TableHead className=" text-primary-clr text-center font-bold uppercase border-2 border-black">
                 Stock
               </TableHead>
-              <TableHead className=" text-primary-clr text-center font-bold uppercase border-2 border-black">
-                Action
-              </TableHead>
+              {DeleteCheck || UpdateCheck ? (
+                  <TableHead className="text-primary-clr text-center font-bold uppercase border-2 border-black">
+                    Action
+                  </TableHead>
+                ) : (
+                  ``
+                )}
             </TableRow>
           </TableHeader>
           <TableBody>

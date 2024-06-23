@@ -44,6 +44,7 @@ export interface UserTypes {
     credit: number;
     balance: number;
     status: string;
+    createdAt:string;
   }
   export interface Role {
     _id?:string;

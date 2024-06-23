@@ -39,7 +39,7 @@ const UsersTable: React.FC<UserTableProps> = () => {
   const UpdateCheck = session?.user.permissions.user.includes("update");
   const handleDeleteUser = () => {
     const id = userId;
-      deleteUser(id)
+    deleteUser(id)
       .unwrap()
       .then(() => {
         toast.success("User Deleted");
@@ -152,9 +152,13 @@ const UsersTable: React.FC<UserTableProps> = () => {
               <TableHead className="text-primary-clr text-center font-bold uppercase border-2 border-black">
                 Address
               </TableHead>
-              <TableHead className="text-primary-clr text-center font-bold uppercase border-2 border-black">
-                Action
-              </TableHead>
+              {DeleteCheck || UpdateCheck ? (
+                <TableHead className="text-primary-clr text-center font-bold uppercase border-2 border-black">
+                  Action
+                </TableHead>
+              ) : (
+                ``
+              )}
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -197,11 +201,10 @@ const UsersTable: React.FC<UserTableProps> = () => {
                       <MdDelete
                         size={20}
                         className="text-red-500 cursor-pointer"
-                        onClick={() =>
-                          {
-                            setOpen(!open);
-                            setUserId( user?._id ? user._id : "")
-                          }}
+                        onClick={() => {
+                          setOpen(!open);
+                          setUserId(user?._id ? user._id : "");
+                        }}
                       />
                     )}
                   </div>

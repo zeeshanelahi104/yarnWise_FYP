@@ -35,7 +35,8 @@ const RoleTable: React.FC<{}> = () => {
   const [roleId, setRoleId] = useState("");
   const { data: session } = useSession() as SessionTypes;
 
-  const permissionCheck = session?.user?.permissions?.role.includes("delete");
+  const DeleteCheck = session?.user?.permissions?.role.includes("delete");
+  const UpdateCheck = session?.user?.permissions?.role.includes("update");
 
   const goToPage = (page: any) => {
     setCurrentPage(page);
@@ -79,7 +80,7 @@ const RoleTable: React.FC<{}> = () => {
 
   const handleDeleteRole = () => {
     const id = roleId;
-      deleteRole(id)
+    deleteRole(id)
       .unwrap()
       .then(() => {
         toast.success("Role Deleted");
@@ -92,7 +93,6 @@ const RoleTable: React.FC<{}> = () => {
         toast.error("Error, Deleting Role");
       });
   };
-
 
   return (
     <div className=" container flex flex-col flex-1 w-full">
@@ -143,9 +143,13 @@ const RoleTable: React.FC<{}> = () => {
               <TableHead className="text-primary-clr text-center font-bold uppercase border-2 border-black">
                 Permissions
               </TableHead>
-              <TableHead className=" text-primary-clr text-center font-bold uppercase border-2 border-black">
-                Action
-              </TableHead>
+              {DeleteCheck || UpdateCheck ? (
+                <TableHead className="text-primary-clr text-center font-bold uppercase border-2 border-black">
+                  Action
+                </TableHead>
+              ) : (
+                ``
+              )}
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -194,21 +198,25 @@ const RoleTable: React.FC<{}> = () => {
                 </TableCell>
                 <TableCell className="border-2 border-black">
                   <div className="flex justify-end gap-[20px]">
-                    <Link href={`/roles/editrole/${role?._id}`}>
-                      <FaPen size={20} className="text-primary-clr" />
-                    </Link>
+                    {UpdateCheck === false ? (
+                      ``
+                    ) : (
+                      <Link href={`/roles/editrole/${role?._id}`}>
+                        <FaPen size={20} className="text-primary-clr" />
+                      </Link>
+                    )}
+
                     <button>
-                      {permissionCheck === false ? (
+                      {DeleteCheck === false ? (
                         <div></div>
                       ) : (
                         <MdDelete
                           size={20}
                           className="text-red-500"
-                          onClick={() =>
-                            {
-                              setOpen(!open);
-                              setRoleId( role?._id ? role._id : "")
-                            }}
+                          onClick={() => {
+                            setOpen(!open);
+                            setRoleId(role?._id ? role._id : "");
+                          }}
                         />
                       )}
                     </button>

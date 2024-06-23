@@ -32,7 +32,7 @@ const BrokerTable: React.FC<BrokerTableProps> = () => {
 
   const handleDeleteBroker = () => {
     const id = brokerId;
-      deleteBroker(id)
+    deleteBroker(id)
       .unwrap()
       .then(() => {
         toast.success("Broker Deleted");
@@ -154,9 +154,13 @@ const BrokerTable: React.FC<BrokerTableProps> = () => {
               <TableHead className=" text-primary-clr text-center font-bold uppercase border-2 border-black">
                 Address
               </TableHead>
-              <TableHead className=" text-primary-clr text-center font-bold uppercase border-2 border-black">
-                Action
-              </TableHead>
+              {DeleteCheck || UpdateCheck ? (
+                <TableHead className="text-primary-clr text-center font-bold uppercase border-2 border-black">
+                  Action
+                </TableHead>
+              ) : (
+                ``
+              )}
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -193,11 +197,10 @@ const BrokerTable: React.FC<BrokerTableProps> = () => {
                       <MdDelete
                         size={20}
                         className="text-red-500 cursor-pointer"
-                        onClick={() =>
-                          {
-                            setOpen(!open);
-                            setBrokerId( broker?._id ? broker._id : "")
-                          }}
+                        onClick={() => {
+                          setOpen(!open);
+                          setBrokerId(broker?._id ? broker._id : "");
+                        }}
                       />
                     )}
                   </div>
