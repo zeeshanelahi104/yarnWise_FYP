@@ -106,7 +106,13 @@ const PartyReportTable: React.FC<TransactionTableProps> = () => {
   const handleInputChange = (event: any) => {
     setSearchQuery(event.target.value);
   };
+  const handleStartDateChange = (date: Date | null) => {
+    setStartDate(date);
+  };
 
+  const handleEndDateChange = (date: Date | null) => {
+    setEndDate(date);
+  };
   return (
     <>
       <div className="transcations-record-page-wrapper px-10 flex flex-col justify-center pt-[45px]">
@@ -124,23 +130,23 @@ const PartyReportTable: React.FC<TransactionTableProps> = () => {
         <div className="flex justify-center gap-5 mt-5">
           <h5>Filter Record By Date</h5>
           <DatePicker
-            selected={startDate}
-            onChange={(date) => setStartDate(date)}
-            selectsStart
-            startDate={startDate}
-            className="border border-black"
-            endDate={endDate}
-            placeholderText="Select start date"
-          />
-          <DatePicker
-            selected={endDate}
-            onChange={(date) => setEndDate(date)}
-            selectsEnd
-            className="border border-black"
-            startDate={startDate}
-            endDate={endDate}
-            placeholderText="Select end date"
-          />
+          selected={startDate}
+          onChange={handleStartDateChange}
+          selectsStart
+          startDate={startDate}
+          endDate={endDate}
+          className="border border-black"
+          placeholderText="Select start date"
+        />
+        <DatePicker
+          selected={endDate}
+          onChange={handleEndDateChange}
+          selectsEnd
+          startDate={startDate}
+          endDate={endDate}
+          className="border border-black"
+          placeholderText="Select end date"
+        />
         </div>
         <div className="table-head-wrapper w-full mt-10 flex items-center justify-between border-2 border-black py-4 px-4">
           {!showSearchInput && (
