@@ -1,6 +1,14 @@
 // index.js or server.js
 
-import connectDB, { PORT } from '';
+import express from 'express';
+import cors from 'cors';
+import { connectDB, PORT } from './connectDB.js';
+
+// Initialize Express app
+const app = express();
+
+// Apply CORS middleware
+app.use(cors());
 
 // Connect to MongoDB
 connectDB();
