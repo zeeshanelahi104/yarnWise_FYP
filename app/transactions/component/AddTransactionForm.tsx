@@ -68,6 +68,7 @@ export default function AddTransactionForm() {
     credit: 0,
     balance: 0,
     status: "",
+    createdAt: ""
   });
 
   const [inventories, setInventories] = useState<InventoryItem[]>([]);
@@ -380,6 +381,7 @@ export default function AddTransactionForm() {
           debit: 0,
           credit: 0,
           balance: 0,
+          createdAt:"",
           status: "",
         });
         toast.success("Transaction updated successfully");
@@ -423,6 +425,7 @@ export default function AddTransactionForm() {
           credit: 0,
           balance: 0,
           status: "",
+          createdAt: ""
         });
         router.push("/transactions");
       })
