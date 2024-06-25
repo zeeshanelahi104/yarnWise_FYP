@@ -49,8 +49,8 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials) {
         try {
-          const url = "https://yarnwise209.vercel.app/api/getUserRole" 
-          // || "https://yarnwise209.vercel.app/api/getUserRole";
+          // const url = "https://yarnwise209.vercel.app/api/getUserRole"; 
+          const url = `http://localhost:3000/api/getUserRole`;
           const postData = { email: credentials?.email };
           const response = await axios.post(url, postData);
           const user = response.data.data[0];

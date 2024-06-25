@@ -57,7 +57,7 @@ export interface UserTypes {
     name: string;
     address: string;
     contactNumber: string;
-    
+    brokerCommision: number;
   }
  
   export interface Party {

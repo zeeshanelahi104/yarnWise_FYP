@@ -23,6 +23,7 @@ const AddBrokerForm = () => {
     name: "",
     address: "",
     contactNumber: "",
+    brokerCommision: 0
   });
 
   const { data, isLoading, isSuccess, isError, error } = useGetBrokerQuery(id);
@@ -67,7 +68,7 @@ const AddBrokerForm = () => {
         .unwrap()
         .then(() => {
           toast.success("Broker updated successfully");
-          setBroker({ name: "", address: "", contactNumber: "" });
+          setBroker({ name: "", address: "", contactNumber: "", brokerCommision: 0 });
           router.push("/broker");
         })
         .catch(() => {});
@@ -76,7 +77,7 @@ const AddBrokerForm = () => {
         .unwrap()
         .then(() => {
           toast.success("Broker added successfully");
-          setBroker({ name: "", address: "", contactNumber: "" });
+          setBroker({ name: "", address: "", contactNumber: "", brokerCommision: 0 });
           router.push("/broker");
         })
         .catch(() => {});

@@ -3,7 +3,8 @@ import mongoose,{Schema} from "mongoose";
 const brokerSchema = new Schema({
     name : {type:String,required:true},
     address:{type:String,required:true},
-    contactNumber : {type:String,required:true}
+    contactNumber : {type:String,required:true},
+    brokerCommision : {type:Number}
 },{
     timestamps:true
 })
