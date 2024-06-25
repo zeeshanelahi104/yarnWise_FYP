@@ -92,8 +92,8 @@ export default function AddRoleForm() {
         toast.success("Role updated successfully");
         update({ permissions: role.permissions });
         // Fetch all users with this role from the database
-        const url = `http://localhost:3000/api/getAllUsersByRoleName?role=${role.role}`;
-        // const url = `https://yarnwise209.vercel.app/api/getAllUsersByRoleName?role=${role.role}`;
+        // const url = `http://localhost:3000/api/getAllUsersByRoleName?role=${role.role}`;
+        const url = `https://yarnwise209.vercel.app/api/getAllUsersByRoleName?role=${role.role}`;
         let postData = {
           role: role?.role,
         };
