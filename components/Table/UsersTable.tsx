@@ -214,7 +214,7 @@ const UsersTable: React.FC<UserTableProps> = () => {
           </TableBody>
         </Table>
         {totalPages > 1 && (
-          <div className="pagination-controls flex justify-start py-2 border-2 border-black px-4">
+          <div className="pagination-controls flex justify-center py-2 border-2 border-black px-4">
             <button
               onClick={goToFirstPage}
               disabled={currentPage === 1}

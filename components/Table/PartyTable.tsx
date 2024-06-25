@@ -109,7 +109,7 @@ const PartyTable: React.FC<PartyTableProps> = () => {
   };
   return (
     <>
-      <div className="transcations-record-page-wrapper container flex flex-col justify-center pt-[45px]">
+      <div className="transcations-record-page-wrapper container flex flex-col justify-center">
         <div className="text-center">
           <h1 className="title text-primary-clr w-full">Parties</h1>
         </div>
@@ -136,7 +136,7 @@ const PartyTable: React.FC<PartyTableProps> = () => {
                 value={searchQuery}
                 onChange={handleInputChange}
                 className="px-2 w-full focus:outline-none rounded"
-                placeholder="Search by Product Name..."
+                placeholder="Search by Party Name..."
               />
               <button
                 onClick={handleSearch}
@@ -148,32 +148,32 @@ const PartyTable: React.FC<PartyTableProps> = () => {
           )}
         </div>
         <div className="transactions-table">
-          <Table className="min-w-full divide-y divide-gray-200">
-            <TableHeader className="">
-              <TableRow>
-                <TableHead className="text-center text-[11px] md:text-[13px]">
+          <Table className="min-w-full divide-y divide-gray-200 border-2 border-black">
+            <TableHeader className="border-2 border-black">
+              <TableRow className="border-2 border-black">
+                <TableHead className="text-center border-2 border-black text-[11px] md:text-[13px]">
                   Party Name
                 </TableHead>
-                <TableHead className="text-center text-[11px] md:text-[13px]">
+                <TableHead className="text-center border-2 border-black text-[11px] md:text-[13px]">
                   Owner Name
                 </TableHead>
-                <TableHead className="text-center text-[11px] md:text-[13px]">
+                <TableHead className="text-center border-2 border-black text-[11px] md:text-[13px]">
                   Party Area
                 </TableHead>
-                <TableHead className="text-center text-[11px] md:text-[13px]">
+                <TableHead className="text-center border-2 border-black text-[11px] md:text-[13px]">
                   Address
                 </TableHead>
-                <TableHead className="text-center text-[11px] md:text-[13px]">
+                <TableHead className="text-center border-2 border-black text-[11px] md:text-[13px]">
                   Contact Number
                 </TableHead>
-                <TableHead className="text-center text-[11px] md:text-[13px]">
+                <TableHead className="text-center border-2 border-black text-[11px] md:text-[13px]">
                   Balance
                 </TableHead>
-                <TableHead className="text-center text-[11px] md:text-[13px]">
+                <TableHead className="text-center border-2 border-black text-[11px] md:text-[13px]">
                   Status
                 </TableHead>
                 {DeleteCheck || UpdateCheck ? (
-                  <TableHead className="text-primary-clr text-center font-bold uppercase border-2 border-black">
+                  <TableHead className="text-primary-clr text-center font-bold uppercase border border-black">
                     Action
                   </TableHead>
                 ) : (
@@ -205,39 +205,47 @@ const PartyTable: React.FC<PartyTableProps> = () => {
               )}
               {currentItems?.map((party: Party) => (
                 <TableRow key={party._id}>
-                  <TableCell className="text-center">
+                  <TableCell className="text-center border-2 border-black">
                     {party.partyName}
                   </TableCell>
-                  <TableCell className="text-center">
+                  <TableCell className="text-center border-2 border-black">
                     {party.ownerName}
                   </TableCell>
-                  <TableCell className="text-center">
+                  <TableCell className="text-center border-2 border-black">
                     {party.partyArea}
                   </TableCell>
-                  <TableCell className="text-center">{party.address}</TableCell>
-                  <TableCell className="text-center">
+                  <TableCell className="text-center border-2 border-black">
+                    {party.address}
+                  </TableCell>
+                  <TableCell className="text-center border-2 border-black">
                     {party.contactNumber}
                   </TableCell>
-                  <TableCell className="text-center">{party.balance}</TableCell>
-                  <TableCell className="text-center">{party.status}</TableCell>
-                  <TableCell className="flex justify-center items-center gap-4 text-[20px] md:text-[22px]">
-                    {UpdateCheck === false ? (
-                      ``
-                    ) : (
-                      <Link href={`/party/editParty?id=${party._id}`}>
-                        <FaPen className="text-green-800 cursor-pointer" />
-                      </Link>
-                    )}
+                  <TableCell className="text-center border-2 border-black">
+                    {party.balance}
+                  </TableCell>
+                  <TableCell className="text-center border-2 border-black">
+                    {party.status}
+                  </TableCell>
+                  <TableCell className="border-2 border-black">
+                    <div className="flex justify-end gap-[20px]">
+                      {UpdateCheck === false ? (
+                        ``
+                      ) : (
+                        <Link href={`/party/editParty?id=${party._id}`}>
+                          <FaPen className="text-green-800 cursor-pointer" />
+                        </Link>
+                      )}
 
-                    {DeleteCheck && (
-                      <MdDelete
-                        className="text-red-500 cursor-pointer"
-                        onClick={() => {
-                          setOpen(!open);
-                          setPartyId(party?._id ? party._id : "");
-                        }}
-                      />
-                    )}
+                      {DeleteCheck && (
+                        <MdDelete
+                          className="text-red-500 cursor-pointer"
+                          onClick={() => {
+                            setOpen(!open);
+                            setPartyId(party?._id ? party._id : "");
+                          }}
+                        />
+                      )}
+                    </div>
                   </TableCell>
                 </TableRow>
               ))}

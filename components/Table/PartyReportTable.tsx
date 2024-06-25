@@ -25,7 +25,7 @@ import {
 import { format } from "date-fns";
 interface TransactionTableProps {}
 
-const ITEMS_PER_PAGE = 8;
+const ITEMS_PER_PAGE = 10;
 
 const PartyReportTable: React.FC<TransactionTableProps> = () => {
   const { data, isLoading, isSuccess, isError, error } =

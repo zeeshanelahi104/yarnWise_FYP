@@ -26,7 +26,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useSession } from "next-auth/react";
 interface TransactionTableProps {}
 
-const ITEMS_PER_PAGE = 5;
+const ITEMS_PER_PAGE = 10;
 
 const TransactionsReportTable: React.FC<TransactionTableProps> = () => {
   const { data, isLoading, isSuccess, isError, error } =
