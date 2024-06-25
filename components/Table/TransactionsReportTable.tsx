@@ -120,7 +120,7 @@ const TransactionsReportTable: React.FC<TransactionTableProps> = () => {
       <div className="transcations-record-page-wrapper px-10 flex flex-col justify-center pt-[45px]">
         <div className="page-header flex items-center justify-between">
           <div className="back-btn">
-            <Link href={"/"}>
+            <Link href={"/reports"}>
               <FaArrowLeft />
             </Link>
           </div>
@@ -130,14 +130,14 @@ const TransactionsReportTable: React.FC<TransactionTableProps> = () => {
           <div></div>
         </div>
         <div className="flex justify-center gap-5 mt-5">
-          <h5>Filter Record By Date</h5>
+          <h5 className="font-bold text-[20px]">Filter Record By Date</h5>
           <DatePicker
           selected={startDate}
           onChange={handleStartDateChange}
           selectsStart
           startDate={startDate}
           endDate={endDate}
-          className="border border-black"
+          className="border border-black p-1"
           placeholderText="Select start date"
         />
         <DatePicker
@@ -146,7 +146,7 @@ const TransactionsReportTable: React.FC<TransactionTableProps> = () => {
           selectsEnd
           startDate={startDate}
           endDate={endDate}
-          className="border border-black"
+          className="border border-black p-1"
           placeholderText="Select end date"
         />
         </div>

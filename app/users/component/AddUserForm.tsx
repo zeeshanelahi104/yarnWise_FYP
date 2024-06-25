@@ -87,6 +87,10 @@ export default function AddUserForm() {
       alert("All Fields are required");
       return;
     }
+    if(user.password.length < 8){
+      alert("Please Enter Password Of minimum 8 characters")
+      return;
+    }
     if (user.phoneNumber.length > 11) {
       alert("Enter only 11 digits Phone Number");
       return;
@@ -222,7 +226,7 @@ export default function AddUserForm() {
                     className="rounded-[10px] mt-2 w-full text-black border border-primary-clr "
                     type="password"
                     name="password"
-                    placeholder="Enter Your Password"
+                    placeholder="Enter Password of minimum 8 characters"
                     value={user.password}
                     onChange={(e) => handleChange("password", e.target.value)}
                   />

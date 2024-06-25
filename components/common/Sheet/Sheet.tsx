@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { FaUserGroup,FaUserPen,FaHandshakeSimple } from "react-icons/fa6";
+import { FaUserGroup, FaUserPen, FaHandshakeSimple } from "react-icons/fa6";
 import {
   FaHome,
   FaUser,
@@ -85,15 +85,15 @@ export default function SheetDemo() {
     >
       <Sheet>
         <SheetTrigger asChild>
-          <Button variant="outline">
-            <GiHamburgerMenu className="text-primary-clr" size={15} />
+          <Button className="">
+            <GiHamburgerMenu className="text-primary-clr" size={25} />
           </Button>
         </SheetTrigger>
         <SheetContent side={"left"}>
           <div
             className={`w-full sidebar-wrapper pt-10 lg:flex-col bg-[#1E282C] text-black min-h-screen `}
           >
-            <div className="sidebar-items-wrapper text-white w-[250px] flex flex-col gap-[20px]">
+            <div className="sidebar-items-wrapper text-white w-full flex flex-col gap-[20px]">
               {renderSidebarItem(
                 "dashboard",
                 "view",
@@ -101,17 +101,8 @@ export default function SheetDemo() {
                 "Dashboard",
                 "/dashboard"
               )}
-              <div
-              // className={`w-64 sidebar-wrapper pt-10 lg:flex-col bg-[#1E282C] text-white min-h-screen
-              // ${
-              //   pathname === "/auth/login" ||
-              //   pathname === "/transactions/manage-transactions"
-              //     ? "hidden w-0"
-              //     : "hidden lg:flex"
-              // }
-              // `}
-              >
-                <div className="sidebar-items-wrapper container  w-[250px] flex flex-col gap-[20px]">
+              <div>
+                <div className="sidebar-items-wrapper container  w-full flex flex-col gap-[20px]">
                   {renderSidebarItem(
                     "dashboard",
                     "view",
@@ -269,7 +260,10 @@ export default function SheetDemo() {
                             <div className="sidebar-item-wrapper flex">
                               <Link href={"#"} className="flex gap-4">
                                 <span className="flex justify-center items-center">
-                                  <FaHandshakeSimple color="#008F89" size={20} />
+                                  <FaHandshakeSimple
+                                    color="#008F89"
+                                    size={20}
+                                  />
                                 </span>
                                 <h4 className="flex justify-center items-center text-[15px]">
                                   Brokers
@@ -342,11 +336,8 @@ export default function SheetDemo() {
                           </Link>
                         </div>
                       </div>
-                      
                     </Accordion>
                   </div>
-
-                  
                 </div>
               </div>
             </div>

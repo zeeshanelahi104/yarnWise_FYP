@@ -4,6 +4,7 @@ import { SessionTypes } from "@/types";
 import { signOut } from "next-auth/react";
 import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
+import SheetDemo from "../Sheet/Sheet";
 
 export default function Navbar() {
   const { data: session } = useSession() as SessionTypes;
@@ -12,6 +13,37 @@ export default function Navbar() {
 
   return (
     <>
+      <div
+        className={`mobile-navbar  justify-between items-center p-3 bg-[#1E282C]
+          ${
+            pathname === "/auth/login" ||
+            pathname === "/transactions/manage-transactions" ||
+            pathname === "/reports/transactions-report" ||
+            pathname === "/reports/broker-report" ||
+            pathname === "/reports/party-report"
+              ? "hidden"
+              : "flex lg:hidden"
+          }`}
+      >
+        <div className="sheet-wrapper">
+          <SheetDemo />
+        </div>
+        <div className="logo-wrapper">
+          <img
+            src="/images/logo.jpeg"
+            alt="logo"
+            className="text-center h-24 w-24 rounded-full p-4"
+          />
+        </div>
+        <div className="logout-btn">
+          <Button
+            className="primaryBtn px-5 hover:bg-black  hover:text-white text-white rounded-xl"
+            onClick={() => signOut({ callbackUrl: "/auth/login" })}
+          >
+            Sign Out
+          </Button>
+        </div>
+      </div>
       <div
         className={`navbar-wrapper flex justify-between items-center bg-[#1E282C] text-white fixed z-10  top-0 w-[calc(100%-15rem)]
         ${
@@ -44,7 +76,7 @@ export default function Navbar() {
             />
           </div>
           <div className="logout-btn">
-          <Button
+            <Button
               className="primaryBtn px-5 hover:bg-black  hover:text-white text-white rounded-xl"
               onClick={() => signOut({ callbackUrl: "/auth/login" })}
             >

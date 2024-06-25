@@ -43,9 +43,9 @@ export default function Sidebar() {
 
   return (
     <>
-    <div className="block lg:hidden">
+    {/* <div className={`${pathname === "/auth/login" ? "hidden" : "block lg:hidden"} `}>
       <SheetDemo />
-      </div>
+      </div> */}
       <div
         className={`sidebar-wrapper lg:flex-col bg-[#1E282C] text-white min-h-screen z-20 fixed top-0 left-0 w-60 h-full
         ${pathname === "/auth/login" ||

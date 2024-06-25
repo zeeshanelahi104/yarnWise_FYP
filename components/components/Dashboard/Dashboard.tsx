@@ -26,7 +26,7 @@ export default function Dashboard() {
   return (
     <>
       <div className="dashboard-items-wrapper flex justify-center items-center container">
-        <div className="items-wrapper grid grid-cols-1 lg:grid-cols-3 gap-5 py-5 w-full">
+        <div className="items-wrapper grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 py-5 w-full">
           <div className="single-item bg-red-500 flex flex-col justify-between  sm:w-full">
             <div className="flex justify-between p-5">
               <div className="count flex flex-col justify-between gap-4 text-white text-[20px]">

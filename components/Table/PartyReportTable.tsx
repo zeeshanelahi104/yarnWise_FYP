@@ -128,14 +128,14 @@ const PartyReportTable: React.FC<TransactionTableProps> = () => {
           <div></div>
         </div>
         <div className="flex justify-center gap-5 mt-5">
-          <h5>Filter Record By Date</h5>
+          <h5 className="font-bold text-[20px]">Filter Record By Date</h5>
           <DatePicker
           selected={startDate}
           onChange={handleStartDateChange}
           selectsStart
           startDate={startDate}
           endDate={endDate}
-          className="border border-black"
+          className="border border-black p-1"
           placeholderText="Select start date"
         />
         <DatePicker
@@ -144,7 +144,7 @@ const PartyReportTable: React.FC<TransactionTableProps> = () => {
           selectsEnd
           startDate={startDate}
           endDate={endDate}
-          className="border border-black"
+          className="border border-black p-1"
           placeholderText="Select end date"
         />
         </div>
