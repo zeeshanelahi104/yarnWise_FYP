@@ -56,8 +56,8 @@ const Page = () => {
         <h1 className="text-white flex justify-center items-center py-10 text-[40px] font-bold uppercase">
           Login
         </h1>
-        <div className="login-form-wrapper bg-[#D9D9D9] flex justify-center items-center rounded-[10px] w-[450px] md:w-[450px] p-5">
-          <div className="login-form-inner-wrapper px-5 md:px-0 w-full">
+        <div className="login-form-wrapper bg-[#D9D9D9] flex justify-center items-center rounded-[10px] w-full md:w-[450px] p-5">
+          <div className="login-form-inner-wrapper  w-full">
             <form onSubmit={handleSubmit} className="w-full">
               <div className="login-fields mt-5 flex flex-col justify-center items-center gap-5 w-full">
                 <Input

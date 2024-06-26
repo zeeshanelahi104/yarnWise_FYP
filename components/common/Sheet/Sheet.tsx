@@ -93,7 +93,7 @@ export default function SheetDemo() {
           <div
             className={`w-[75%] sidebar-wrapper pt-10 lg:flex-col bg-[#1E282C] text-black min-h-screen `}
           >
-            <div className="sidebar-items-wrapper text-white w-full flex flex-col gap-[20px]">
+            <div className="sidebar-items-wrapper text-white w-[75%] flex flex-col gap-[20px]">
               {renderSidebarItem(
                 "dashboard",
                 "view",
@@ -102,7 +102,7 @@ export default function SheetDemo() {
                 "/dashboard"
               )}
               <div>
-                <div className="sidebar-items-wrapper container  w-full flex flex-col gap-[20px]">
+                <div className="sidebar-items-wrapper container w-full flex flex-col gap-[20px]">
                   {renderSidebarItem(
                     "dashboard",
                     "view",
