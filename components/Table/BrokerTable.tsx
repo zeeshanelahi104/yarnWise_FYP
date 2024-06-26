@@ -262,15 +262,6 @@ const BrokerTable: React.FC<BrokerTableProps> = () => {
           </div>
         )}
       </div>
-      <div className="flex justify-end mt-10">
-        <button
-          className="flex justify-end uppercase font-bold"
-          onClick={() => window.print()}
-        >
-          Print
-          <FaPrint size={25} className="ml-2" />
-        </button>
-      </div>
       {open && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white dark:bg-slate-900 rounded-lg shadow-lg p-6 w-[450px] relative">
