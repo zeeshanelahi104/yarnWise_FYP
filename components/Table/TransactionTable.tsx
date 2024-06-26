@@ -31,7 +31,7 @@ import {
   useGetPartiesQuery,
   useUpdatePartyMutation,
 } from "@/features/partySlice";
-import { useGetBrokersQuery } from "@/features/brokerSlice";
+import { useGetBrokersQuery, useUpdateBrokerMutation } from "@/features/brokerSlice";
 interface TransactionTableProps {}
 
 const ITEMS_PER_PAGE = 5;
@@ -60,6 +60,7 @@ interface BrokerItem {
   name: string;
   address: string;
   contactNumber: string;
+  brokerCommision: number;
 }
 
 const TransactionsTable: React.FC<TransactionTableProps> = () => {
@@ -91,9 +92,10 @@ const TransactionsTable: React.FC<TransactionTableProps> = () => {
   const [deleteTransaction] = useDeleteTransactionMutation();
   const [updateInventory] = useUpdateInventoryMutation();
   const [updateParty] = useUpdatePartyMutation();
+  const [updateBroker] = useUpdateBrokerMutation();
   const { data: inventoriesData } = useGetInventoriesQuery();
   const { data: partiesData,refetch: refetchParties} = useGetPartiesQuery();
-  const { data: brokersData } = useGetBrokersQuery();
+  const { data: brokersData,refetch } = useGetBrokersQuery();
   const { data: transactions } = useGetTransactionQuery(transactionId);
 
   useEffect(() => {
@@ -148,7 +150,21 @@ const TransactionsTable: React.FC<TransactionTableProps> = () => {
     }).unwrap();
     await refetchParties();
   };
-
+  const updateBrokerFunc = async (
+    brokerItem: BrokerItem,
+    newBrokerCommition: number
+  ) => {
+    if (!brokerItem._id) {
+      console.error("Broker item ID is undefined. Cannot update brokerCommission.");
+      return;
+    }
+    const updatedBroker = { ...brokerItem, brokerCommision: newBrokerCommition };
+    await updateBroker({
+      brokerId: brokerItem._id,
+      body: updatedBroker,
+    }).unwrap();
+    await refetch();
+  };
   const handleDeleteTransaction = async () => {
     try {
       await deleteTransaction(transactionId).unwrap();
@@ -173,7 +189,10 @@ const TransactionsTable: React.FC<TransactionTableProps> = () => {
           item.partyName === transaction.partyName &&
           item.partyArea === transaction.partyArea
       );
-
+      const brokerItem = brokers.find(
+        (item) =>
+          item.name === transaction.brokerName
+      );
       if (oldInventoryItem) {
         const newStock =
           transactions.transaction.transactionType === "Purchase"
@@ -206,7 +225,9 @@ const TransactionsTable: React.FC<TransactionTableProps> = () => {
         newBalance = Math.abs(newBalance);
         await updateBalanceAndStatus(partyItem, newBalance, newStatus);
       }
-
+      let newBrokerCommition = 0;
+      newBrokerCommition = brokerItem.brokerCommision  - transactions.transaction.brokerCommissionPercentage;
+      await updateBrokerFunc(brokerItem, newBrokerCommition)
       setFilteredData((prevData: any[]) =>
         prevData.filter((item) => item._id !== transactionId)
       );

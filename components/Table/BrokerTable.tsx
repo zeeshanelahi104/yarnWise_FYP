@@ -154,6 +154,9 @@ const BrokerTable: React.FC<BrokerTableProps> = () => {
               <TableHead className=" text-primary-clr text-center font-bold uppercase border-2 border-black">
                 Address
               </TableHead>
+              <TableHead className=" text-primary-clr text-center font-bold uppercase border-2 border-black">
+                Broker Comisssion
+              </TableHead>
               {DeleteCheck || UpdateCheck ? (
                 <TableHead className="text-primary-clr text-center font-bold uppercase border-2 border-black">
                   Action
@@ -179,6 +182,9 @@ const BrokerTable: React.FC<BrokerTableProps> = () => {
                 </TableCell>
                 <TableCell className="text-center border-2 border-black">
                   {broker.address}
+                </TableCell>
+                <TableCell className="text-center border-2 border-black">
+                  {broker.brokerCommision}
                 </TableCell>
 
                 <TableCell className="border-2 border-black">

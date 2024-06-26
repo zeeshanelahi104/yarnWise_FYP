@@ -6,11 +6,12 @@ import { ReactNode } from 'react';
 interface SessionProviderWrapperProps {
   children: ReactNode;
   session: any;
+  status: any;
 }
 
 const SessionProviderWrapper = ({ children, session }: SessionProviderWrapperProps) => {
   return (
-    <SessionProvider session={session}>
+    <SessionProvider session={session} >
       {children}
     </SessionProvider>
   );

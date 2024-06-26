@@ -20,7 +20,7 @@ import {
   useGetPartiesQuery,
   useUpdatePartyMutation,
 } from "@/features/partySlice";
-import { useGetBrokersQuery } from "@/features/brokerSlice";
+import { useGetBrokersQuery, useUpdateBrokerMutation } from "@/features/brokerSlice";
 
 // Define InventoryItem interface
 interface InventoryItem {
@@ -45,6 +45,7 @@ interface BrokerItem {
   name: string;
   address: string;
   contactNumber: string;
+  brokerCommision: number;
 }
 
 export default function AddTransactionForm() {
@@ -82,10 +83,12 @@ export default function AddTransactionForm() {
   const [addTransaction] = useAddTransactionMutation();
   const [updateTransaction] = useUpdateTransactionMutation();
   const [updateInventory] = useUpdateInventoryMutation();
+  const [updateBroker] = useUpdateBrokerMutation();
   const [updateParty] = useUpdatePartyMutation();
   const { data: inventoriesData, refetch } = useGetInventoriesQuery();
   const { data: partiesData } = useGetPartiesQuery();
   const { data: brokersData } = useGetBrokersQuery();
+  
 
   useEffect(() => {
     if (transactions && transactions.transaction) {
@@ -110,11 +113,20 @@ export default function AddTransactionForm() {
     "Transactions to check in update before",
     transactions?.transaction?.credit
   );
-
+  const newProductCountValue = transaction.productCount; 
+  const oldProductCountValue = transactions?.transaction?.productCount; 
+  const newProductCountNumericValue = parseInt(newProductCountValue);
+  const oldProductCountNumericValue = parseInt(oldProductCountValue);
   // Calculate totalBill whenever quantity or unitPrice changes
   useEffect(() => {
     let newDebit = 0;
+    let newBrokerCom = 0;
     const newTotalBill = transaction.quantity * transaction.unitPrice;
+    if(newProductCountNumericValue<= 50){
+      newBrokerCom = (30-3.6)*transaction.quantity;
+    } else{
+      newBrokerCom = (40-4.8)*transaction.quantity;
+    }
     const remainingAmount = transaction.credit - newTotalBill;
     if (remainingAmount < 0) {
       newDebit = remainingAmount * -1;
@@ -125,6 +137,7 @@ export default function AddTransactionForm() {
       ...prevTransaction,
       totalBill: newTotalBill,
       debit: newDebit,
+      brokerCommissionPercentage: newBrokerCom
     }));
   }, [
     transaction.quantity,
@@ -259,10 +272,21 @@ export default function AddTransactionForm() {
       body: updatedParty,
     }).unwrap();
   };
-  const newProductCountValue = transaction.productCount; 
-  const oldProductCountValue = transactions?.transaction?.productCount; 
-  const newProductCountNumericValue = parseInt(newProductCountValue);
-  const oldProductCountNumericValue = parseInt(oldProductCountValue);
+  const updateBrokerFunc = async (
+    brokerItem: BrokerItem,
+    newBrokerCommition: number
+  ) => {
+    if (!brokerItem._id) {
+      console.error("Broker item ID is undefined. Cannot update brokerCommission.");
+      return;
+    }
+    const updatedBroker = { ...brokerItem, brokerCommision: newBrokerCommition };
+    await updateBroker({
+      brokerId: brokerItem._id,
+      body: updatedBroker,
+    }).unwrap();
+    await refetch();
+  };
   const handleSave = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     // if (
@@ -291,6 +315,10 @@ export default function AddTransactionForm() {
         item.partyName === transaction.partyName &&
         item.partyArea === transaction.partyArea
     );
+    const brokerItem = brokers.find(
+      (item) =>
+        item.name === transaction.brokerName
+    );
 
     if (transaction.transactionType === "Sale" && inventoryItem) {
       if (inventoryItem.stock === 0) {
@@ -312,6 +340,7 @@ export default function AddTransactionForm() {
     // Calculate new balance and status
     let newBalance = 0;
     let newStatus = "";
+    let newBrokerCommition = 0;
 
     if (partyItem) {
       if (partyItem.status === "Dr") {
@@ -345,7 +374,6 @@ export default function AddTransactionForm() {
                 : oldInventoryItem.stock -
                   (transaction.quantity - transactions.transaction.quantity);
             await updateStock(inventoryItem, newStock);
-            console.log(" 🚀first step: stock", newStock);
           }
 
           // const updatedInventoryItem = inventories.find(
@@ -395,8 +423,11 @@ export default function AddTransactionForm() {
             }
             newStatus = newBalance < 0 ? "Dr" : "Cr";
             newBalance = Math.abs(newBalance);
+            
             await updateBalanceAndStatus(partyItem, newBalance, newStatus);
           }
+          newBrokerCommition = brokerItem.brokerCommision + (transaction.brokerCommissionPercentage - transactions.transaction.brokerCommissionPercentage);
+            await updateBrokerFunc(brokerItem, newBrokerCommition)
           setTransaction({
             productName: "",
             productCount: "",
@@ -459,6 +490,8 @@ export default function AddTransactionForm() {
               newBalance = Math.abs(newBalance);
               await updateBalanceAndStatus(partyItem, newBalance, newStatus);
             }
+            newBrokerCommition = brokerItem.brokerCommision + transaction.brokerCommissionPercentage
+            await updateBrokerFunc(brokerItem, newBrokerCommition)
             setTransaction({
               productName: "",
               productCount: "",

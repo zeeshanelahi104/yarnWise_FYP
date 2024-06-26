@@ -1,24 +1,34 @@
 "use client";
-import ProtectedRoute from "@/components/PrivateRoute";
-import Dashboard from "@/components/components/Dashboard/Dashboard";
+import { useEffect } from "react";
+import { redirect } from "next/navigation";
 import { useSession } from "next-auth/react";
-import RootLayout from "./layout";
 import { SessionTypes } from "@/types";
+import Dashboard from "@/components/components/Dashboard/Dashboard";
+import Loader from "@/components/Loader";
 
 export default function Page() {
   const { data: session, status } = useSession() as SessionTypes;
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      redirect("/auth/login");
+    }
+  }, [status]);
+
+  if (status === "loading") {
+    return <Loader style="items-center h-[70vh]" />;
+  }
+
   return (
     <>
-    {/* <RootLayout session={session}> */}
-      {/* <ProtectedRoute requiredPermissions={["view"]} entity="dashboard"> */}
-        <div className="">
+      {session && (
+        <>
           <div className="flex items-center flex-col py-5">
             <h2 className="font-bold">Welcome Back {session?.user.role}</h2>
           </div>
           <Dashboard />
-        </div>
-      {/* </ProtectedRoute> */}
-      {/* </RootLayout> */}
+        </>
+      )}
     </>
   );
 }

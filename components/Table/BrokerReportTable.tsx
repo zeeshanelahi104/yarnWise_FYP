@@ -239,7 +239,7 @@ const BrokerReportTable: React.FC<TransactionTableProps> = () => {
                     {transaction.brokerName}
                   </TableCell>
                   <TableCell className="text-center text-[11px] border-2 border-black">
-                    {transaction.brokerCommissionPercentage}%
+                    {transaction.brokerCommissionPercentage}
                   </TableCell>
                   
                 </TableRow>
