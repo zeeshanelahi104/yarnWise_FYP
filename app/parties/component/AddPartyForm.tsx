@@ -3,11 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
 import toast from "react-hot-toast";
-import Link from "next/link";
-import users from "@/models/user";
-import axios from "axios";
 import { Party } from "@/types";
 import {
   useAddPartyMutation,

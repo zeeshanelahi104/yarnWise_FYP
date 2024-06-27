@@ -29,6 +29,7 @@ const ITEMS_PER_PAGE = 5;
 const InventoryTable: React.FC<InventoryTableProps> = () => {
   const { data, isLoading, isSuccess, isError, error } =
     useGetInventoriesQuery();
+    console.log("Inventory Data at Inventory Table", data);
   const [deleteInventory] = useDeleteInventoryMutation();
 
   const handleDeleteInventory = () => {
@@ -57,7 +58,7 @@ const InventoryTable: React.FC<InventoryTableProps> = () => {
   const [showSearchInput, setShowSearchInput] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
-  const totalPages = Math.ceil(filteredData.length / ITEMS_PER_PAGE);
+  const totalPages = Math.ceil(filteredData?.length / ITEMS_PER_PAGE);
 
   const goToPage = (page: any) => {
     setCurrentPage(page);
@@ -80,7 +81,7 @@ const InventoryTable: React.FC<InventoryTableProps> = () => {
   };
 
   const handleSearch = () => {
-    const filteredData = inventoryRecord.filter((item: any) =>
+    const filteredData = inventoryRecord?.filter((item: any) =>
       item.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
     setFilteredData(filteredData);
@@ -97,8 +98,8 @@ const InventoryTable: React.FC<InventoryTableProps> = () => {
   }, [searchQuery]);
 
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const endIndex = Math.min(startIndex + ITEMS_PER_PAGE, filteredData.length);
-  const currentItems = filteredData.slice(startIndex, endIndex);
+  const endIndex = Math.min(startIndex + ITEMS_PER_PAGE, filteredData?.length);
+  const currentItems = filteredData?.slice(startIndex, endIndex);
 
   const handleInputChange = (event: any) => {
     setSearchQuery(event.target.value);
@@ -172,7 +173,7 @@ const InventoryTable: React.FC<InventoryTableProps> = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {currentItems.map((inventory: Inventory, index: number) => (
+            {currentItems?.map((inventory: Inventory, index: number) => (
               <TableRow key={index}>
                 <TableCell className="px-6 py-4 whitespace-nowrap font-medium text-center border-2 border-black">
                   {inventory?._id

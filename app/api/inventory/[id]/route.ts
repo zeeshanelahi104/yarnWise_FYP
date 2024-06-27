@@ -70,13 +70,10 @@ export const PUT = async (request: NextRequest, { params }: { params: { id: stri
     }, { status: 500 });
   }
 };
-export const GET = async (request: NextRequest, { params }: { params: { id: string } }) => {
-  console.log("Received PUT request for inventory ID:", params?.id);
 
+export const GET = async (request: NextRequest, { params }: { params: { id: string } }) => {
   try {
     const db = await connectDB();
-    const req = await request.json();
-    console.log("Received data:", req);
     const inventoryId = params?.id ? new ObjectId(params.id) : null;
 
     const query = inventoryId ? { _id: inventoryId } : {};
@@ -97,7 +94,6 @@ export const GET = async (request: NextRequest, { params }: { params: { id: stri
     });
 
   } catch (error) {
-    console.log("🚀 ~ PUT ~ error:", error);
     return NextResponse.json({
       success: false,
       error: "Internal Server Error"

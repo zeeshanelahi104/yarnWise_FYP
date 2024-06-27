@@ -231,7 +231,7 @@ const PartyTable: React.FC<PartyTableProps> = () => {
                       {UpdateCheck === false ? (
                         ``
                       ) : (
-                        <Link href={`/party/editParty?id=${party._id}`}>
+                        <Link href={`/parties/editparty/${party._id}`}>
                           <FaPen className="text-green-800 cursor-pointer" />
                         </Link>
                       )}
