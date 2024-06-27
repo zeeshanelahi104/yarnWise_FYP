@@ -23,7 +23,7 @@ const AddBrokerForm = () => {
     name: "",
     address: "",
     contactNumber: "",
-    brokerCommision: 0
+    brokerCommision: 0,
   });
 
   const { data, isLoading, isSuccess, isError, error } = useGetBrokerQuery(id);
@@ -35,7 +35,10 @@ const AddBrokerForm = () => {
       setBroker(data.broker);
     }
   }, [data]);
-
+  const countDigits = (contactNumber: string) => {
+    const numericString = contactNumber.replace(/\D/g, ""); // Remove non-numeric characters
+    return numericString.length; // Return the length of the numeric string
+  };
   const handleChange = (field: string, value: any) => {
     setBroker((prevData) => ({ ...prevData, [field]: value }));
   };
@@ -47,7 +50,7 @@ const AddBrokerForm = () => {
       alert("All Fields are required");
       return;
     }
-    if (broker.contactNumber.length > 11) {
+    if (countDigits(broker.contactNumber) !== 11) {
       alert("Enter only 11 digits Phone Number");
       return;
     }
@@ -68,7 +71,12 @@ const AddBrokerForm = () => {
         .unwrap()
         .then(() => {
           toast.success("Broker updated successfully");
-          setBroker({ name: "", address: "", contactNumber: "", brokerCommision: 0 });
+          setBroker({
+            name: "",
+            address: "",
+            contactNumber: "",
+            brokerCommision: 0,
+          });
           router.push("/broker");
         })
         .catch(() => {});
@@ -77,7 +85,12 @@ const AddBrokerForm = () => {
         .unwrap()
         .then(() => {
           toast.success("Broker added successfully");
-          setBroker({ name: "", address: "", contactNumber: "", brokerCommision: 0 });
+          setBroker({
+            name: "",
+            address: "",
+            contactNumber: "",
+            brokerCommision: 0,
+          });
           router.push("/broker");
         })
         .catch(() => {});
@@ -104,10 +117,16 @@ const AddBrokerForm = () => {
           <label htmlFor="">Enter Broker Contact Number</label>
           <Input
             type="text"
+            inputMode="numeric"
+            pattern="[0-9]*"
             className="w-full border border-black font-bold mt-2"
             placeholder="Enter Broker Contact Number"
             value={broker?.contactNumber}
             onChange={(e) => handleChange("contactNumber", e.target.value)}
+            onInput={(e) => {
+              const target = e.target as HTMLInputElement;
+              target.value = target.value.replace(/\D/g, "");
+            }}
           />
         </div>
         <div className="single-input flex flex-col gap-2">

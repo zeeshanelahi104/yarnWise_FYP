@@ -56,7 +56,7 @@ const AddPartyForm = () => {
       alert("All Fields are required");
       return;
     }
-    if (party.contactNumber.length > 11) {
+    if (party.contactNumber.length !== 11) {
       alert("Enter only 11 digits Phone Number");
       return;
     }
@@ -169,12 +169,17 @@ const AddPartyForm = () => {
           <label htmlFor="">Enter Party Contact Number</label>
           <Input
             type="text"
+            inputMode="numeric"
+            pattern="[0-9]*"
             className="w-full border border-black font-bold mt-2"
             placeholder="Enter Contact Number"
             value={party?.contactNumber}
-            pattern="{11}"
             title="Enter 11 digits phone number"
             onChange={(e) => handleChange("contactNumber", e.target.value)}
+            onInput={(e) => {
+              const target = e.target as HTMLInputElement;
+              target.value = target.value.replace(/\D/g, "");
+            }}
             required
           />
         </div>

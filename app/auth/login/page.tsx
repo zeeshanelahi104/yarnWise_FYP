@@ -27,10 +27,6 @@ const Page = () => {
       toast.error("Email and password are required.");
       return;
     }
-    if (inputs.password.length < 8) {
-      toast.error("Password should be at least 8 characters.");
-      return;
-    }
 
     // Sign in using credentials
     const res = await signIn("credentials", {

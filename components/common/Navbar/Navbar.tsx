@@ -61,7 +61,7 @@ export default function Navbar() {
         <div className="logo-wrapper"></div>
         <div className="heading-section flex flex-col text-center">
           <h1 className="font-bold">Welcome to YarnWise</h1>
-          <p className="mb-0">
+          <p className="mb-0 mt-[-12px]">
             A digital platform, where you can manage your inventory
           </p>
         </div>
